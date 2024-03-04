@@ -1,0 +1,25 @@
+{
+  "plugins": ["simple-import-sort"],
+  "extends": [
+    "@remix-run/eslint-config",
+    "@remix-run/eslint-config/node",
+    "prettier"
+  ],
+  "rules": {
+    "simple-import-sort/exports": "error",
+    "simple-import-sort/imports": "error",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/camelcase": "off",
+    "no-console": "error",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "argsIgnorePattern": "^_" }
+    ],
+    "@typescript-eslint/no-var-requires": "error",
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "prefer-const": "error",
+    "@typescript-eslint/consistent-type-imports": "off"
+  },
+  "ignorePatterns": ["public/build", "public/remix-beeps"]
+}
