@@ -59,9 +59,9 @@ export default function App() {
     <>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
@@ -91,10 +91,10 @@ export default function App() {
           </div>
         </div>
         <script src={`/remix-beeps/js/jquery-min.js`} />
-        <script src={`/remix-beeps/js/beep-element.js`} />
-        <script src={`/remix-beeps/js/beep-video.js`} />
         <script src={`/remix-beeps/js/custom.js`} />
+        <script src={`/remix-beeps/js/beep-element.js`} />
         <script src="https://unpkg.com/swiper/swiper-bundle.min.js" />
+        <script src={`/remix-beeps/js/beep-video.js`} />
         <script src={`/remix-beeps/js/videoEvent.js`} />
 
         {/* <script src="//imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
