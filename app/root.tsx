@@ -18,6 +18,7 @@ import SvgIcons from "./components/Layout/SvgIcons";
 import Login from "./components/Layout/Login";
 import LanguageSwitch from "./components/Layout/LanguageSwitch";
 import MoreSwipe from "./components/Layout/MoreSwipe";
+import { useEffect } from "react";
 
 export const meta: MetaFunction = () => ({
   title: "NDTV Video Listing page",
@@ -55,13 +56,24 @@ export function Layout({ children }: any) {
 }
 
 export default function App() {
+  useEffect(() => {
+    console.log("hello from root.tsx app");
+  }, []);
   return (
     <>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
