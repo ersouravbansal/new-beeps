@@ -1,6 +1,18 @@
-import React from 'react'
+import { Link } from '@remix-run/react';
+import React, { useState } from 'react'
 
 const VideoSlide = ({ videourl, title }: any) => {
+  const CopyLink =()=>{
+    const currentURL = window.location.href;
+
+    navigator.clipboard.writeText(currentURL)
+      .then(() => {
+        console.log('URL copied to clipboard:', currentURL);
+      })
+      .catch((error) => {
+        console.error('Error copying URL to clipboard:', error);
+      });
+  }
   return (
     <>
                       <div className="swiper-slide BepSl_li">
@@ -87,15 +99,15 @@ const VideoSlide = ({ videourl, title }: any) => {
                                       </a>
                                     </li>
                                     <li className="SSR_drp-nav-li">
-                                      <a
+                                      <div
                                         className="SSR_drp-nav-lnk"
-                                        href="javascript:void(0)"
+                                        onClick={CopyLink}
                                       >
                                         <svg className="vj_icn vj_copy-link vj_ss-icn">
                                           <use xlinkHref="#vj_copy-link"></use>
                                         </svg>
                                         Copy Link
-                                      </a>
+                                      </div>
                                     </li>
                                   </ul>
                                 </div>
