@@ -2,10 +2,11 @@
 const { mountRoutes } = require('remix-mount-routes')
 
 const basePath = process.env.REMIX_BASEPATH ?? ''
+console.log("BasePath is:", basePath);
 
 
 module.exports = {
-  ignoredRouteFiles: ["**/.*"],
+  ignoredRouteFiles: ["**/.*","**/*.css"],
   publicPath: `${basePath}/build/`,
   assetsBuildDirectory: `public${basePath}/build`,
   // appDirectory: "app",

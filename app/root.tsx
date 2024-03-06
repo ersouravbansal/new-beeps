@@ -1,67 +1,58 @@
-import { MetaFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
   Meta,
+  MetaFunction,
   Outlet,
   Scripts,
   ScrollRestoration,
   isRouteErrorResponse,
   useRouteError,
 } from "@remix-run/react";
+import { useEffect } from "react";
 import { version } from "package.json";
-import atfStyleUrl from "../public/remix-beeps/styles/atf.css";
-import atfBeepsDetailUrl from "../public/remix-beeps/styles/atfBeepsDetail.css";
 import Header from "./components/Layout/Header";
 import SideNavigation from "./components/Layout/SideNavigation";
 import SvgIcons from "./components/Layout/SvgIcons";
 import Login from "./components/Layout/Login";
 import LanguageSwitch from "./components/Layout/LanguageSwitch";
 import MoreSwipe from "./components/Layout/MoreSwipe";
-import { useEffect } from "react";
 
-export const meta: MetaFunction = () => ({
-  title: "NDTV Video Listing page",
-  viewport:
-    "width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no",
-  "apple-mobile-web-app-capable": "yes",
-  "apple-mobile-web-app-status-bar-style": "black-translucent",
-  "msapplication-tap-highlight": "no",
-  "google-site-verification": "yThRoDT_1iDUIum7IPIGT96Y-8rpvmFwlYBBK9EMGXM",
-  "Content-Type": "text/html; charset=UTF-8",
-  "content-language": "en",
-  "X-UA-Compatible": "IE=edge",
-  "x-web-version": "v" + version,
-  "og:image": "https://cdn.ndtv.com/common/images/ogndtv.png",
-  "og:title": "NDTV Video Listing page",
-});
+export const meta: MetaFunction = () => [
+  { name: "title", content: "NDTV Video Listing page" },
+  {
+    name: "viewport",
+    content:
+      "width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no",
+  },
+  { name: "apple-mobile-web-app-capable", content: "yes" },
+  {
+    name: "apple-mobile-web-app-status-bar-style",
+    content: "black-translucent",
+  },
+  { name: "msapplication-tap-highlight", content: "no" },
+  {
+    name: "google-site-verification",
+    content: "yThRoDT_1iDUIum7IPIGT96Y-8rpvmFwlYBBK9EMGXM",
+  },
+  { httpEquiv: "Content-Type", content: "text/html; charset=UTF-8" },
+  { name: "content-language", content: "en" },
+  { httpEquiv: "X-UA-Compatible", content: "IE=edge" },
+  { name: "x-web-version", content: "v" + version },
+  {
+    property: "og:image",
+    content: "https://cdn.ndtv.com/common/images/ogndtv.png",
+  },
+  { property: "og:title", content: "NDTV Video Listing page" },
+];
 
 export function Layout({ children }: any) {
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
-      </head>
-      <body>
-        {children}
-        <Scripts />
-        <ScrollRestoration />
-        <LiveReload />
-      </body>
-    </html>
-  );
-}
-
-export default function App() {
-  useEffect(() => {
-    console.log("hello from root.tsx app");
-  }, []);
-  return (
-    <>
-      <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -86,36 +77,39 @@ export default function App() {
         />
       </head>
       <body className="nav-trigger Vd-list Vd-Lst-pg">
-        <SvgIcons />
-        <Header />
-        <SideNavigation />
-        <Login />
-        <LanguageSwitch />
-        <MoreSwipe />
-        <div>
-          {/*======[ Side nav Overlay ]======*/}
-          <a href="#0" className="overlay__side-nav" />
-          {/*====== Back to top ======*/}
-          <div className="back-to-top">
-            <svg className="vj_icn vj_arrow-up">
-              <use xlinkHref="#vj_arrow-up" />
-            </svg>
-          </div>
-        </div>
-        <script src={`/remix-beeps/js/jquery-min.js`} />
-        <script src={`/remix-beeps/js/custom.js`} />
-        <script src={`/remix-beeps/js/beep-element.js`} />
-        <script src="https://unpkg.com/swiper/swiper-bundle.min.js" />
-        <script src={`/remix-beeps/js/beep-video.js`} />
-        <script src={`/remix-beeps/js/videoEvent.js`} />
-
-        {/* <script src="//imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
-        <script
-          async
-          src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
-        />
-*/}
+        {children}
+        <Scripts />
+        <ScrollRestoration />
+        <LiveReload />
+        <script src={`/remix-beeps/js/jquery-min.js`}></script>
+        <script src={`/remix-beeps/js/custom.js`}></script>
+        <script src={`/remix-beeps/js/beep-element.js`}></script>
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+        <script src={`/remix-beeps/js/beep-video.js`}></script>
       </body>
+    </html>
+  );
+}
+
+export default function App() {
+  return (
+    <>
+      <SvgIcons />
+      <Header />
+      <SideNavigation />
+      <Login />
+      <LanguageSwitch />
+      <MoreSwipe />
+      <div>
+        {/*======[ Side nav Overlay ]======*/}
+        <a href="#0" className="overlay__side-nav" />
+        {/*====== Back to top ======*/}
+        <div className="back-to-top">
+          <svg className="vj_icn vj_arrow-up">
+            <use xlinkHref="#vj_arrow-up" />
+          </svg>
+        </div>
+      </div>
     </>
   );
 }

@@ -78,7 +78,7 @@ const Login = () => {
                         </span>
                         <div className="LogCty_drop">
                           <div className="LogCty-srch">
-                            <div className="LogCty-srch_cn"><input placeholder="Select Country" autoComplete="off" type="text" id="usr" aria-label="search country" className="LogCty-srch_inp" auto-id defaultValue />
+                            <div className="LogCty-srch_cn"><input placeholder="Select Country" autoComplete="off" type="text" id="usr" aria-label="search country" className="LogCty-srch_inp" auto-id="true" defaultValue />
                               <button type="submit" className="LogCty-srch_btn"><svg className="vj_icn vj_search">
                                   <use xlinkHref="#vj_search" />
                                 </svg></button>
