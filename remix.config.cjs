@@ -2,7 +2,7 @@
 const { mountRoutes } = require('remix-mount-routes')
 
 const basePath = process.env.REMIX_BASEPATH ?? ''
-console.log("BasePath is:", basePath);
+// console.log("BasePath is:", basePath);
 
 
 module.exports = {
