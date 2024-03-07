@@ -154,12 +154,14 @@ const Content = (props: {
       }
   
       function playActiveSlideVideo(swiper) {
-          var activeSlide = swiper.slides[swiper.activeIndex];
-          var activeSlideVideo = activeSlide.querySelector('video');
-          if (activeSlideVideo) {
-              activeSlideVideo.play();
-          }
-      }
+        var activeSlide = swiper.slides[swiper.activeIndex];
+        if (activeSlide) {
+            var activeSlideVideo = activeSlide.querySelector('video');
+            if (activeSlideVideo) {
+                activeSlideVideo.play();
+            }
+        }
+    }
   });
   
   },[])
