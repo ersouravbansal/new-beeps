@@ -13,7 +13,7 @@ const Content = (props: {
   catId?: number;
   catName?: string;
 }) => {
-  let mySwiper:any;
+  // let mySwiper:any;
   const isVideoAvailable = (props.videoData?.results?.length || 0) > 0;
   useEffect(()=>{
     $(function () {
@@ -231,15 +231,19 @@ const Content = (props: {
                   )}
                   <div ref={props.ref1}></div>
                 </div>
-                <div className="swiper-button-prev BepNv_prv" onClick={()=>{
-                  mySwiper.slidePrev();
-                }}>
+                <div className="swiper-button-prev BepNv_prv" 
+                // onClick={()=>{
+                //   mySwiper.slidePrev();
+                // }}
+                >
                   {/* <svg class="vj_icn vj_arrow-up">
                   <use xlink:href="#vj_arrow-up"></use>
                 </svg> */}
                 </div>
-                <div className="swiper-button-next BepNv_nxt"  onClick={()=>{
-                  mySwiper.slideNext();}}>
+                <div className="swiper-button-next BepNv_nxt"  
+                // onClick={()=>{
+                //   mySwiper.slideNext();}}
+                  >
                   {/* <svg class="vj_icn vj_arrow-down">
                   <use xlink:href="#vj_arrow-down"></use>
                 </svg> */}
