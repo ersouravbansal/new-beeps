@@ -17,6 +17,7 @@ import SvgIcons from "./components/Layout/SvgIcons";
 import Login from "./components/Layout/Login";
 import LanguageSwitch from "./components/Layout/LanguageSwitch";
 import MoreSwipe from "./components/Layout/MoreSwipe";
+import $ from "jquery";
 
 export const meta: MetaFunction = () => [
   { name: "title", content: "NDTV Video Listing page" },
@@ -84,7 +85,8 @@ export function Layout({ children }: any) {
         <script src={`/remix-beeps/js/jquery-min.js`}></script>
         <script src={`/remix-beeps/js/custom.js`}></script>
         <script src={`/remix-beeps/js/beep-element.js`}></script>
-        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+        {/* <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> */}
         <script src={`/remix-beeps/js/beep-video.js`}></script>
       </body>
     </html>
@@ -92,6 +94,22 @@ export function Layout({ children }: any) {
 }
 
 export default function App() {
+  useEffect(() => {
+    function updateHeight() {
+      const ht = window.innerHeight;
+      const svVertical2 = document.querySelector(".BepSl_cn");
+      svVertical2.style.height = `${ht - 71}px`;
+
+      if ($(window).width() <= 560) {
+        svVertical2.style.height = `${ht}px`;
+      }
+    }
+
+    if ($(window).width() <= 767) {
+      updateHeight();
+      window.addEventListener("resize", updateHeight, true);
+    }
+  },[]);
   return (
     <>
       <SvgIcons />

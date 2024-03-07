@@ -1,8 +1,10 @@
 import { Link } from "@remix-run/react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import VideoPlayer from "~/hooks/useVideoPlayer";
+import useStore from "~/stores/utilstore";
 
 const VideoSlide = (props: any) => {
+  const silent = useStore((state) => state.silent);
   const videoElement = useRef<HTMLVideoElement>(null);
   const seekBar = useRef(null);
   const progressBar = useRef(null);
@@ -13,6 +15,10 @@ const VideoSlide = (props: any) => {
     handleOnMetaLoaded,
     handleOnTimeUpdate,
     formatTime,
+    playVideo,
+    pauseVideo,
+    muteVideo,
+    unMuteVideo,
     playerState,
   } = VideoPlayer(videoElement, seekBar, progressBar, seekThumb);
 
@@ -28,6 +34,30 @@ const VideoSlide = (props: any) => {
         console.error("Error copying URL to clipboard:", error);
       });
   };
+  const handlePlay = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      const entry = entries[0];
+      if (entry.isIntersecting) {
+        playVideo();
+      } else {
+        pauseVideo();
+      }
+    },
+    [playVideo, pauseVideo]
+  );
+  useEffect(() => {
+    const options = {
+      rootMargin: "0px",
+      threshold: [1],
+    };
+    const currentVideoElement = videoElement.current;
+    const observer = new IntersectionObserver(handlePlay, options);
+    if (currentVideoElement) observer.observe(currentVideoElement);
+    return () => {
+      if (currentVideoElement) observer.unobserve(currentVideoElement);
+      observer.disconnect();
+    };
+  }, [handlePlay, videoElement]);
   return (
     <>
       <div className="swiper-slide BepSl_li">
@@ -163,11 +193,11 @@ const VideoSlide = (props: any) => {
                     handleOnTimeUpdate();
                   }}
                   onLoadedMetadata={handleOnMetaLoaded}
-                  muted
+                  // muted
                   preload="auto"
                   width="100%"
                   height="100%"
-                  playsInline
+                  // playsInline
                   // onEnded={()=>{
                   //   progressBar.current?.style.width = "0";
                   //   seekThumb.current?.style.left = "0px";
@@ -195,16 +225,16 @@ const VideoSlide = (props: any) => {
                             toggleMute();
                           }}
                         >
-                          {playerState.isMuted ? (
-                            <div className="VdEl_icn-mute">
-                              <svg className="vj_icn vj_mute">
-                                <use xlinkHref="#vj_mute"></use>
-                              </svg>
-                            </div>
-                          ) : (
+                          {!silent ? (
                             <div className="VdEl_icn-vol-full">
                               <svg className="vj_icn vj_volume">
                                 <use xlinkHref="#vj_volume"></use>
+                              </svg>
+                            </div>
+                          ) : (
+                            <div className="VdEl_icn-mute">
+                              <svg className="vj_icn vj_mute">
+                                <use xlinkHref="#vj_mute"></use>
                               </svg>
                             </div>
                           )}
@@ -366,15 +396,9 @@ const VideoSlide = (props: any) => {
                       <div className="VdEl_lod-cn">
                         {/* Progress Bar */}
                         <div className="VdEl_lod-wrp">
-                          <div
-                            className="VdEl_lod"
-                            ref={seekBar}
-                          >
+                          <div className="VdEl_lod" ref={seekBar}>
                             <div className="VdEl_lod-br" ref={progressBar}>
-                              <div
-                                className="VdEl_dot"
-                                ref={seekThumb}
-                              ></div>
+                              <div className="VdEl_dot" ref={seekThumb}></div>
                             </div>
                           </div>
                           {/* Time */}

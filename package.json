@@ -30,6 +30,7 @@
     "env-cmd": "^10.1.0",
     "hls.js": "^1.2.9",
     "isbot": "^4.1.0",
+    "jquery": "^3.7.1",
     "npm-run-all": "^4.1.5",
     "react": "^18.2.0",
     "react-device-detect": "^2.2.2",
@@ -37,6 +38,7 @@
     "react-gtm-module": "^2.0.11",
     "react-infinite-scroll-hook": "^4.1.1",
     "react-use": "^17.4.0",
+    "swiper": "^11.0.7",
     "zustand": "^4.1.2"
   },
   "devDependencies": {
@@ -46,6 +48,7 @@
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
     "@types/google-publisher-tag": "^1.20220926.0",
+    "@types/jquery": "^3.5.29",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "@types/react-gtm-module": "^2.0.1",

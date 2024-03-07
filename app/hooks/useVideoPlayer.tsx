@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
-
+import useStore from "~/stores/utilstore";
 const useVideoPlayer = (
   videoElemRef:any,
   seekBarRef:any,
   progressBarRef:any,
   seekThumbRef:any,
 ) => {
+  const silent = useStore((state) => state.silent);
+  const setSilent = useStore((state) => state.setSilent);
   const [playerState, setPlayerState] = useState({
     isPlaying: false,
     progress: 0,
@@ -35,12 +37,26 @@ const useVideoPlayer = (
   }, [videoElemRef]);
 
   const muteVideo = useCallback(() => {
+    setPlayerState((previousplayerState) => {
+      previousplayerState.isMuted = true;
+      return { ...previousplayerState };
+    });
     videoElemRef.current.muted = true;
-  }, [videoElemRef]);
+    if (silent !== true) {
+      setSilent(true);
+    }
+  }, [silent]);
 
   const unMuteVideo = useCallback(() => {
+    setPlayerState((previousplayerState) => {
+      previousplayerState.isMuted = false;
+      return { ...previousplayerState };
+    });
     videoElemRef.current.muted = false;
-  }, [videoElemRef]);
+    if (silent !== false) {
+      setSilent(false);
+    }
+  }, [silent]);
 
   const togglePlay = useCallback(() => {
     setPlayerState((prevState) => ({
@@ -92,6 +108,10 @@ const useVideoPlayer = (
     handleOnTimeUpdate,
     formatTime,
     playerState,
+    playVideo,
+    pauseVideo,
+    muteVideo,
+    unMuteVideo,
   };
 };
 
