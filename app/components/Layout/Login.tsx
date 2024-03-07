@@ -18,7 +18,7 @@ const Login = () => {
           {/* Tabbing */}
           <div className="LogSd_tb-wr">
             <ul className="LogSd_tb">
-              <li className="LogSd_tb-lnk LogSd_tb-lnk-act" data-tab={1}>Login</li>
+              <li className="LogSd_tb-lnk LogSd_tb-lnk-act" data-tab={1}>Login.</li>
               <li className="LogSd_tb-lnk" data-tab={2}>Notifications <span className="WthTp_inf">6</span>
               </li>
               <li className="LogSd_tb-lnk" data-tab={3}>Comments</li>
