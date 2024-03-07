@@ -58,6 +58,11 @@ const VideoSlide = (props: any) => {
       observer.disconnect();
     };
   }, [handlePlay, videoElement]);
+  useEffect(() => {
+    $(".VdElMr_wr").click(function (e) {
+      e.stopPropagation();
+    });
+  }, []);
   return (
     <>
       <div className="swiper-slide BepSl_li">

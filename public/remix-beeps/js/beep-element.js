@@ -20,9 +20,9 @@ $(document).ready(function () {
 
     // Update visibility based on active slide
     // if ($(window).width() <= 767) {
-    $('.VdElMr_wr').click(function (e) {
-        e.stopPropagation();
-    });
+    // $('.VdElMr_wr').click(function (e) {
+    //     e.stopPropagation();
+    // });
 
     $(document).on('click', function (event) {
         event.stopPropagation();
