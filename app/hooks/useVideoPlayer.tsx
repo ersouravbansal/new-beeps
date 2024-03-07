@@ -17,15 +17,21 @@ const useVideoPlayer = (
   });
   const [isDragging, setIsDragging] = useState(false);
 
-  const formatTime = (value) => {
-    if (value > 0 && value !== "Infinity") {
-      const hours = Math.floor(((value / 86400) % 1) * 24);
-      const minutes = Math.floor(((value / 3600) % 1) * 60);
-      const seconds = Math.floor(((value / 60) % 1) * 60);
-      return `${hours < 10 ? "0" + hours : hours}:${minutes < 10 ? "0" + minutes : minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
+  const formatTime = (value: any) => {
+    var time = "";
+    if (value > 0 && value != "Infinity") {
+      var hours = Math.floor(((value / 86400) % 1) * 24);
+      var minutes = Math.floor(((value / 3600) % 1) * 60);
+      var seconds = Math.floor(((value / 60) % 1) * 60);
+      if (hours > 0) {
+        time += (hours < 10 ? "0" + hours : hours) + ":";
+      }
+      time += (minutes < 10 ? "0" + minutes : minutes) + ":";
+      time += seconds < 10 ? "0" + seconds : seconds;
     } else {
-      return "00:00";
+      time = "00:00";
     }
+    return time;
   };
 
   const playVideo = useCallback(() => {
