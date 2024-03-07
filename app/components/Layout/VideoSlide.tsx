@@ -226,7 +226,7 @@ const VideoSlide = (props: any) => {
                         <div
                           className="VdEl_icn1 VdEl_icn-vol"
                           onClick={(e) => {
-                            e.preventDefault();
+                            e.stopPropagation()
                             toggleMute();
                           }}
                         >
@@ -260,7 +260,8 @@ const VideoSlide = (props: any) => {
                       <div
                         className="VdEl_sk_pp-btn"
                         onClick={(e) => {
-                          e.preventDefault();
+                          e.stopPropagation();
+                          console.log("toggle play exec------->")
                           togglePlay();
                         }}
                       >
