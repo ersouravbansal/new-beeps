@@ -95,6 +95,7 @@ export function Layout({ children }: any) {
 
 export default function App() {
   useEffect(() => {
+    $(document).ready(function () {
     function updateHeight() {
       const ht = window.innerHeight;
       const svVertical2 = document.querySelector(".BepSl_cn");
@@ -109,6 +110,7 @@ export default function App() {
       updateHeight();
       window.addEventListener("resize", updateHeight, true);
     }
+  });
   },[]);
   return (
     <>
