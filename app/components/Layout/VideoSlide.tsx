@@ -1,7 +1,21 @@
 import { Link } from "@remix-run/react";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import VideoPlayer from "~/hooks/useVideoPlayer";
 
 const VideoSlide = (props: any) => {
+  const videoElement = useRef<HTMLVideoElement>(null);
+  const seekBar = useRef(null);
+  const progressBar = useRef(null);
+  const seekThumb = useRef(null);
+  const {
+    toggleMute,
+    togglePlay,
+    handleOnMetaLoaded,
+    handleOnTimeUpdate,
+    formatTime,
+    playerState,
+  } = VideoPlayer(videoElement, seekBar, progressBar, seekThumb);
+
   const CopyLink = () => {
     const currentURL = window.location.href;
 
@@ -144,11 +158,20 @@ const VideoSlide = (props: any) => {
                 <video
                   className="BepSl_vdo"
                   src={props.vidsrc}
+                  ref={videoElement}
+                  onTimeUpdate={() => {
+                    handleOnTimeUpdate();
+                  }}
+                  onLoadedMetadata={handleOnMetaLoaded}
                   muted
                   preload="auto"
                   width="100%"
                   height="100%"
                   playsInline
+                  // onEnded={()=>{
+                  //   progressBar.current?.style.width = "0";
+                  //   seekThumb.current?.style.left = "0px";
+                  // }}
                 />
                 {/*====== Seek bar ( Play / Pause, Time, Next Prev, Progress Bar, Related Button ) ======*/}
                 <div className="VdEl_cn">
@@ -165,17 +188,26 @@ const VideoSlide = (props: any) => {
                     </div>
                     <div className="VdEl_top-vol">
                       <div className="VdEl_icn-lk">
-                        <div className="VdEl_icn1 VdEl_icn-vol">
-                          <div className="VdEl_icn-vol-full">
-                            <svg className="vj_icn vj_volume">
-                              <use xlinkHref="#vj_volume"></use>
-                            </svg>
-                          </div>
-                          <div className="VdEl_icn-mute">
-                            <svg className="vj_icn vj_mute">
-                              <use xlinkHref="#vj_mute"></use>
-                            </svg>
-                          </div>
+                        <div
+                          className="VdEl_icn1 VdEl_icn-vol"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            toggleMute();
+                          }}
+                        >
+                          {playerState.isMuted ? (
+                            <div className="VdEl_icn-mute">
+                              <svg className="vj_icn vj_mute">
+                                <use xlinkHref="#vj_mute"></use>
+                              </svg>
+                            </div>
+                          ) : (
+                            <div className="VdEl_icn-vol-full">
+                              <svg className="vj_icn vj_volume">
+                                <use xlinkHref="#vj_volume"></use>
+                              </svg>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -190,14 +222,23 @@ const VideoSlide = (props: any) => {
                         </svg>
                       </div>
                       {/* Play / Pause */}
-                      <div className="VdEl_sk_pp-btn">
+                      <div
+                        className="VdEl_sk_pp-btn"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          togglePlay();
+                        }}
+                      >
                         <div className="VdEl_sk_pp VdEl_ripl-lgt">
-                          <svg className="VdEl_sk_pp-ic1 vj_icn vj_play">
-                            <use xlinkHref="#vj_play1" />
-                          </svg>
-                          <svg className="VdEl_sk_pp-ic2 vj_icn vj_pause">
-                            <use xlinkHref="#vj_pause1" />
-                          </svg>
+                          {playerState.isPlaying ? (
+                            <svg className="VdEl_sk_pp-ic1 vj_icn vj_play">
+                              <use xlinkHref="#vj_play1" />
+                            </svg>
+                          ) : (
+                            <svg className="VdEl_sk_pp-ic2 vj_icn vj_pause">
+                              <use xlinkHref="#vj_pause1" />
+                            </svg>
+                          )}
                         </div>
                       </div>
                       {/* Prev */}
@@ -325,27 +366,22 @@ const VideoSlide = (props: any) => {
                       <div className="VdEl_lod-cn">
                         {/* Progress Bar */}
                         <div className="VdEl_lod-wrp">
-                          {/* Progress Bar */}
-                          <div className="VdEl_lod">
-                            <div className="VdEl_lod-br">
-                              <div className="VdEl_dot">
-                                {/* Seek thumbnails pointer events */}
-                                <div
-                                  className="VdEl_tmb-cn"
-                                  style={{ display: "none" }}
-                                >
-                                  <span className="VdEl_tmb-wr">
-                                    <span className="VdEl_tmb-in">
-                                      <span className="VdEl_tmb-im" />
-                                    </span>
-                                  </span>
-                                  <span className="VdEl_tmb-tm">01:11</span>
-                                </div>
-                              </div>
+                          <div
+                            className="VdEl_lod"
+                            ref={seekBar}
+                          >
+                            <div className="VdEl_lod-br" ref={progressBar}>
+                              <div
+                                className="VdEl_dot"
+                                ref={seekThumb}
+                              ></div>
                             </div>
                           </div>
                           {/* Time */}
-                          <div className="VdEl_sk-tm">02:35/05:00</div>
+                          <div className="VdEl_sk-tm">
+                            {formatTime(videoElement.current?.currentTime)} /
+                            {formatTime(videoElement.current?.duration)}
+                          </div>
                         </div>
                         {/* ! Play / Pause */}
                         {/* <div class="VdEl_ic-exp-cn">

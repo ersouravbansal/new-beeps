@@ -68,16 +68,16 @@ $(document).ready(function () {
     });
 
     // Volume functionality
-    $(".VdEl_icn-vol").click(function (e) {
+    // $(".VdEl_icn-vol").click(function (e) {
 
-        e.stopPropagation(); // Prevent the event from bubbling up
-        $(".VdEl_icn-vol-full").css("display", function (index, value) {
-            return value === "none" ? "flex" : "none";
-        });
-        $(".VdEl_icn-mute").css("display", function (index, value) {
-            return value === "none" ? "flex" : "none";
-        });
-    });
+    //     e.stopPropagation(); // Prevent the event from bubbling up
+    //     $(".VdEl_icn-vol-full").css("display", function (index, value) {
+    //         return value === "none" ? "flex" : "none";
+    //     });
+    //     $(".VdEl_icn-mute").css("display", function (index, value) {
+    //         return value === "none" ? "flex" : "none";
+    //     });
+    // });
 
     // Toggle expand functionality
     $('.VdEl_ic-exp').click(function () {
@@ -92,8 +92,8 @@ $(document).ready(function () {
     });
 
     // Play pause functionality
-    $('.VdEl_sk_pp').click(function (event) {
-        event.stopPropagation();
-        $(this).closest('.VdEl_sk_pp-btn').toggleClass('js_VdEl_sk_pp-act');
-    });
+    // $('.VdEl_sk_pp').click(function (event) {
+    //     event.stopPropagation();
+    //     $(this).closest('.VdEl_sk_pp-btn').toggleClass('js_VdEl_sk_pp-act');
+    // });
 });
