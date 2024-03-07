@@ -58,11 +58,6 @@ const VideoSlide = (props: any) => {
       observer.disconnect();
     };
   }, [handlePlay, videoElement]);
-  useEffect(() => {
-    $(".VdElMr_wr").click(function (e) {
-      e.stopPropagation();
-    });
-  }, []);
   return (
     <>
       <div className="swiper-slide BepSl_li">
@@ -165,7 +160,12 @@ const VideoSlide = (props: any) => {
                     <use xlinkHref="#vj_more" />
                   </svg>
                 </div>
-                <div className="VdElMr_wr VdElMr_wr1">
+                <div
+                  className="VdElMr_wr VdElMr_wr1"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
                   <ul className="VdElMr_ul">
                     <li className="VdElMr_li-lk">
                       <a href="#" className="VdElMr_li">
@@ -226,7 +226,7 @@ const VideoSlide = (props: any) => {
                         <div
                           className="VdEl_icn1 VdEl_icn-vol"
                           onClick={(e) => {
-                            e.stopPropagation()
+                            e.stopPropagation();
                             toggleMute();
                           }}
                         >
@@ -261,7 +261,7 @@ const VideoSlide = (props: any) => {
                         className="VdEl_sk_pp-btn"
                         onClick={(e) => {
                           e.stopPropagation();
-                          console.log("toggle play exec------->")
+                          console.log("toggle play exec------->");
                           togglePlay();
                         }}
                       >
@@ -432,7 +432,12 @@ const VideoSlide = (props: any) => {
                     </div>
                   </div>
                   {/* VOD More Overlay and  */}
-                  <div className="VdElMr_wr">
+                  <div
+                    className="VdElMr_wr"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
                     <ul className="VdElMr_ul">
                       <li className="VdElMr_li-lk">
                         <a href="#" className="VdElMr_li">
