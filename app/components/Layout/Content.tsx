@@ -13,11 +13,19 @@ const Content = (props: {
   catId?: number;
   catName?: string;
 }) => {
+  const isVideoAvailable = (props.videoData?.results?.length || 0) > 0;
   let mySwiper: any;
   let timeoutIDs: any = [];
-  let clicked:any;
-  const isVideoAvailable = (props.videoData?.results?.length || 0) > 0;
-  function playActiveSlideVideo(swiper) {
+  let direction: any;
+  let loop,
+    centeredSlides,
+    cssMode,
+    slidesPerView,
+    mousewheel,
+    keyboard: any;
+  const [clicked, setClicked] = useState(false);
+
+  function playActiveSlideVideo(swiper: any) {
     var activeSlide = swiper.slides[swiper.activeIndex];
     if (activeSlide) {
       var activeSlideVideo = activeSlide.querySelector("video");
@@ -27,7 +35,7 @@ const Content = (props: {
     }
   }
 
-  function handleTimeout(index) {
+  function handleTimeout(index: any) {
     var activeSlide = $(".swiper-slide").eq(index);
     $(".swiper-slide").removeClass("js_icon-more");
 
@@ -57,73 +65,98 @@ const Content = (props: {
       }
     }
   }
-  useEffect(() => {
-    $(function () {
-      timeoutIDs = [];
-       clicked = false;
-      const swiperOptions = {
-        direction: 'vertical',
-        loop: false,
+  const swiperOptions = {
+    direction: "vertical",
+    loop: false,
+    centeredSlides: true,
+    cssMode: true,
+    slidesPerView: "auto",
+    mousewheel: true,
+    keyboard: true,
+    navigation: {
+      nextEl: ".BepNv_nxt",
+      prevEl: ".BepNv_prv",
+    },
+    breakpoints: {
+      768: {
         centeredSlides: true,
         cssMode: true,
-        slidesPerView: 'auto',
+        direction: "horizontal",
+        loop: false,
+        slidesPerView: 1.35,
+        speed: 400,
         mousewheel: true,
         keyboard: true,
-        navigation: {
-          nextEl: '.BepNv_nxt',
-          prevEl: '.BepNv_prv',
-        },
-        breakpoints: {
-          768: {
-            centeredSlides: true,
-            cssMode: true,
-            direction: "horizontal",
-            loop: false,
-            slidesPerView: 1.35,
-            speed: 400,
-            mousewheel: true,
-            keyboard: true,
-          },
-          1024: {
-            centeredSlides: true,
-            cssMode: true,
-            direction: "horizontal",
-            loop: false,
-            slidesPerView: 1.6,
-            speed: 400,
-            mousewheel: true,
-            keyboard: true,
-          },
-          1200: {
-            centeredSlides: true,
-            cssMode: true,
-            direction: "horizontal",
-            loop: false,
-            slidesPerView: 2,
-            speed: 400,
-            mousewheel: true,
-            keyboard: true,
-          },
-        },
-        on: {
-          init: function () {
-            $(".swiper-slide").each(function (index) {
-              timeoutIDs[index] = setTimeout(function () {
-                handleTimeout(index);
-              }, 0);
-            });
-            playActiveSlideVideo(this);
-          },
-          slideChange: function () {
-            clearTimeout(timeoutIDs[this.realIndex]);
-            timeoutIDs[this.realIndex] = setTimeout(function () {
-              handleTimeout(mySwiper.realIndex);
-            }, 0);
-            playActiveSlideVideo(this);
-          },
-        },
-      };
-    
+      },
+      1024: {
+        centeredSlides: true,
+        cssMode: true,
+        direction: "horizontal",
+        loop: false,
+        slidesPerView: 1.6,
+        speed: 400,
+        mousewheel: true,
+        keyboard: true,
+      },
+      1200: {
+        centeredSlides: true,
+        cssMode: true,
+        direction: "horizontal",
+        loop: false,
+        slidesPerView: 2,
+        speed: 400,
+        mousewheel: true,
+        keyboard: true,
+      },
+    },
+    on: {
+      init: function () {
+        $(".swiper-slide").each(function (index) {
+          timeoutIDs[index] = setTimeout(function () {
+            handleTimeout(index);
+          }, 0);
+        });
+        playActiveSlideVideo(this);
+      },
+      slideChange: function () {
+        clearTimeout(timeoutIDs[this.realIndex]);
+        timeoutIDs[this.realIndex] = setTimeout(function () {
+          handleTimeout(mySwiper.realIndex);
+        }, 0);
+        playActiveSlideVideo(this);
+      },
+    },
+  };
+  function handleCardClick(event: React.MouseEvent<HTMLDivElement>) {
+    setClicked(true);
+    event.stopPropagation();
+
+    const clickedCard = event.currentTarget;
+    const activeSlide = clickedCard.closest(".swiper-slide-active");
+
+    if (activeSlide) {
+      activeSlide.classList.toggle("js_seek-vis-sec");
+
+      const parentLi = clickedCard.closest(".BepSl_li");
+      if (parentLi && parentLi.classList.contains("js_seek-vis-sec")) {
+        parentLi.classList.add("js_swp-vis");
+        parentLi.classList.remove("js_seek-vis-sec");
+      } else {
+        activeSlide.classList.remove("js_swp-vis");
+      }
+
+      if (parentLi && parentLi.classList.contains("js_swp-vis")) {
+        parentLi.classList.toggle("js_seek-vis");
+      } else {
+        // parentLi?.classList.remove('js_seek-vis');
+      }
+    }
+  }
+  useEffect(() => {
+    $(function () {
+      if (mySwiper) {
+        mySwiper.destroy();
+      }
       mySwiper = new Swiper(".BepSl_rw", swiperOptions);
       // if ($(window).width() >= 560) {
       // $('.VdEl_ovl').click(function (event) {
@@ -136,33 +169,17 @@ const Content = (props: {
       //     }
       // });
       // }
-      if ($(window).width() <= 560) {
-        $(".BepSl_crd").click(function (event) {
-          clicked = true;
-          event.stopPropagation();
-
-          clearTimeout(timeoutIDs[mySwiper.realIndex]);
-
-          $(this)
-            .parents(".swiper-slide-active")
-            .toggleClass("js_seek-vis-sec");
-          if ($(this).parents(".BepSl_li").hasClass("js_seek-vis-sec")) {
-            $(this)
-              .parents(".BepSl_li")
-              .addClass("js_swp-vis")
-              .removeClass("js_seek-vis-sec");
-          } else {
-            $(this).parents(".swiper-slide-active").removeClass("js_swp-vis");
-          }
-
-          if ($(this).parents(".BepSl_li").hasClass("js_swp-vis")) {
-            $(this).parents(".BepSl_li").toggleClass("js_seek-vis");
-          } else {
-            //   $(this).parents('.swiper-slide-active').removeClass('js_seek-vis');
-          }
+      if (window.innerWidth <= 560) {
+        document.querySelectorAll(".BepSl_crd").forEach((card) => {
+          card.addEventListener("click", handleCardClick);
         });
       }
     });
+    return () => {
+      if (mySwiper) {
+        mySwiper.destroy();
+      }
+    };
   }, [props.videoData]);
   return (
     <>
@@ -215,9 +232,9 @@ const Content = (props: {
                 </div>
                 <div
                   className="swiper-button-prev BepNv_prv"
-                  // onClick={()=>{
-                  //   mySwiper.slidePrev();
-                  // }}
+                  onClick={()=>{
+                    mySwiper.slidePrev();
+                  }}
                 >
                   {/* <svg class="vj_icn vj_arrow-up">
                   <use xlink:href="#vj_arrow-up"></use>
@@ -225,8 +242,8 @@ const Content = (props: {
                 </div>
                 <div
                   className="swiper-button-next BepNv_nxt"
-                  // onClick={()=>{
-                  //   mySwiper.slideNext();}}
+                  onClick={()=>{
+                    mySwiper.slideNext();}}
                 >
                   {/* <svg class="vj_icn vj_arrow-down">
                   <use xlink:href="#vj_arrow-down"></use>

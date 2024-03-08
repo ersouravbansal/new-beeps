@@ -13,7 +13,7 @@ import useInfiniteScroll from "~/hooks/useInfiniteScrollCustom";
 //     { name: "description", content: "Welcome to Remix!" },
 //   ];
 // };
-const pageSize = 5;
+const pageSize = 15;
 
 async function fetchVideos(pageNumber = 1) {
   const api_url =
