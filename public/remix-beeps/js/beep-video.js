@@ -99,6 +99,8 @@
 //         });
 
 //     }
+
+    
 //     function handleTimeout(index) {
 //         var activeSlide = $('.swiper-slide').eq(index);
 //         $('.swiper-slide').removeClass('js_icon-more');

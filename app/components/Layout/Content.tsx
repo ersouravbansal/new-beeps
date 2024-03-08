@@ -6,7 +6,8 @@ import VideoSlide from "~/components/Layout/VideoSlide";
 import $ from "jquery";
 import Swiper from "swiper";
 import useStore from "~/stores/utilstore";
-
+let mySwiper: any;
+let timeoutIDs: any = [];
 const Content = (props: {
   videoData: any;
   ref1?: any;
@@ -15,18 +16,11 @@ const Content = (props: {
   catName?: string;
 }) => {
   const isVideoAvailable = (props.videoData?.results?.length || 0) > 0;
-  let mySwiper: any;
-  let timeoutIDs: any = [];
   let direction: any;
-  let loop,
-    centeredSlides,
-    cssMode,
-    slidesPerView,
-    mousewheel,
-    keyboard: any;
+  let loop, centeredSlides, cssMode, slidesPerView, mousewheel, keyboard: any;
 
-    const clicked = useStore((state) => state.clicked);
-    const setClicked=useStore((state) => state.setClicked);
+  const clicked = useStore((state) => state.clicked);
+  const setClicked = useStore((state) => state.setClicked);
 
   function playActiveSlideVideo(swiper: any) {
     var activeSlide = swiper.slides[swiper.activeIndex];
@@ -38,7 +32,7 @@ const Content = (props: {
     }
   }
 
-  function handleTimeout(index: any) {
+  const handleTimeout = (index: any) => {
     var activeSlide = $(".swiper-slide").eq(index);
     $(".swiper-slide").removeClass("js_icon-more");
 
@@ -67,7 +61,7 @@ const Content = (props: {
         }, 6000);
       }
     }
-  }
+  };
   const swiperOptions = {
     direction: "vertical",
     loop: false,
@@ -132,7 +126,9 @@ const Content = (props: {
   };
   useEffect(() => {
     $(function () {
+      console.log("swipper found", mySwiper);
       if (mySwiper) {
+        console.log("destroying swipper", mySwiper);
         mySwiper.destroy();
       }
       mySwiper = new Swiper(".BepSl_rw", swiperOptions);
@@ -146,14 +142,6 @@ const Content = (props: {
       //         $(this).parents('.BepSl_li').toggleClass('js_swp-vis');
       //     }
       // });
-      // }
-
-
-      //below commented by me
-      // if (window.innerWidth <= 560) {
-      //   document.querySelectorAll(".BepSl_crd").forEach((card) => {
-      //     card.addEventListener("click", handleCardClick);
-      //   });
       // }
     });
     return () => {
@@ -213,7 +201,7 @@ const Content = (props: {
                 </div>
                 <div
                   className="swiper-button-prev BepNv_prv"
-                  onClick={()=>{
+                  onClick={() => {
                     mySwiper.slidePrev();
                   }}
                 >
@@ -223,8 +211,9 @@ const Content = (props: {
                 </div>
                 <div
                   className="swiper-button-next BepNv_nxt"
-                  onClick={()=>{
-                    mySwiper.slideNext();}}
+                  onClick={() => {
+                    mySwiper.slideNext();
+                  }}
                 >
                   {/* <svg class="vj_icn vj_arrow-down">
                   <use xlink:href="#vj_arrow-down"></use>

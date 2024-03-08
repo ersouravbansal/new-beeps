@@ -24,32 +24,63 @@ const VideoSlide = (props: any) => {
     playerState,
   } = VideoPlayer(videoElement, seekBar, progressBar, seekThumb);
 
-  const handleCardClick= (event: any)=> {
-    console.log("hey sourav handlecardclick running");
-    setClicked(true);
-    event.stopPropagation();
+  const handleCardClick = (event) => {
+    if ($(window).width() <= 560) {
+      setClicked(true);
+      event.stopPropagation();
 
-    const clickedCard = event.currentTarget;
-    const activeSlide = clickedCard.closest(".swiper-slide-active");
+      // clearTimeout(timeoutIDs[mySwiper.realIndex]);
 
-    if (activeSlide) {
-      activeSlide.classList.toggle("js_seek-vis-sec");
-
-      const parentLi = clickedCard.closest(".BepSl_li");
-      if (parentLi && parentLi.classList.contains("js_seek-vis-sec")) {
-        parentLi.classList.add("js_swp-vis");
-        parentLi.classList.remove("js_seek-vis-sec");
+      $(this).parents(".swiper-slide-active").toggleClass("js_seek-vis-sec");
+      if ($(this).parents(".BepSl_li").hasClass("js_seek-vis-sec")) {
+        $(this)
+          .parents(".BepSl_li")
+          .addClass("js_swp-vis")
+          .removeClass("js_seek-vis-sec");
       } else {
-        activeSlide.classList.remove("js_swp-vis");
+        $(this).parents(".swiper-slide-active").removeClass("js_swp-vis");
       }
 
-      if (parentLi && parentLi.classList.contains("js_swp-vis")) {
-        parentLi.classList.toggle("js_seek-vis");
+      if ($(this).parents(".BepSl_li").hasClass("js_swp-vis")) {
+        $(this).parents(".BepSl_li").toggleClass("js_seek-vis");
       } else {
-        // parentLi?.classList.remove('js_seek-vis');
+        //   $(this).parents('.swiper-slide-active').removeClass('js_seek-vis');
       }
     }
-  }
+  };
+
+  // const handleCardClick = (event: any) => {
+  //   console.log("hey sourav handlecardclick running");
+  //   setClicked(true);
+  //   event.stopPropagation();
+
+  //   const clickedCard = event.currentTarget;
+  //   const activeSlide = clickedCard.closest(".swiper-slide-active");
+  //   console.log("active slide sourav", activeSlide);
+
+  //   if (activeSlide) {
+  //     activeSlide.classList.toggle("js_seek-vis-sec");
+
+  //     const parentLi = clickedCard.closest(".BepSl_li");
+  //     if (
+  //       (parentLi && parentLi.classList.contains("js_seek-vis-sec")) ||
+  //       (parentLi && parentLi.classList.contains("js_seek-vis"))
+  //     ) {
+  //       parentLi.classList.add("js_swp-vis");
+  //       //  parentLi.classList.remove("js_seek-vis-sec");
+  //         parentLi.classList.remove("js_seek-vis");
+  //     } else {
+  //       activeSlide.classList.remove("js_swp-vis");
+  //       activeSlide.classList.add("js_seek-vis");
+  //     }
+
+  //     if (parentLi && parentLi.classList.contains("js_swp-vis")) {
+  //       parentLi.classList.toggle("js_seek-vis");
+  //     } else {
+  //       // parentLi?.classList.remove('js_seek-vis');
+  //     }
+  //   }
+  // };
 
   const CopyLink = () => {
     const currentURL = window.location.href;
