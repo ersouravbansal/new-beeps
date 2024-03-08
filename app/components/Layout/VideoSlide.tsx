@@ -34,30 +34,30 @@ const VideoSlide = (props: any) => {
         console.error("Error copying URL to clipboard:", error);
       });
   };
-  const handlePlay = useCallback(
-    (entries: IntersectionObserverEntry[]) => {
-      const entry = entries[0];
-      if (entry.isIntersecting) {
-        playVideo();
-      } else {
-        pauseVideo();
-      }
-    },
-    [playVideo, pauseVideo]
-  );
-  useEffect(() => {
-    const options = {
-      rootMargin: "0px",
-      threshold: [1],
-    };
-    const currentVideoElement = videoElement.current;
-    const observer = new IntersectionObserver(handlePlay, options);
-    if (currentVideoElement) observer.observe(currentVideoElement);
-    return () => {
-      if (currentVideoElement) observer.unobserve(currentVideoElement);
-      observer.disconnect();
-    };
-  }, [handlePlay, videoElement]);
+  // const handlePlay = useCallback(
+  //   (entries: IntersectionObserverEntry[]) => {
+  //     const entry = entries[0];
+  //     if (entry.isIntersecting) {
+  //       playVideo();
+  //     } else {
+  //       pauseVideo();
+  //     }
+  //   },
+  //   [playVideo, pauseVideo]
+  // );
+  // useEffect(() => {
+  //   const options = {
+  //     rootMargin: "0px",
+  //     threshold: [1],
+  //   };
+  //   const currentVideoElement = videoElement.current;
+  //   const observer = new IntersectionObserver(handlePlay, options);
+  //   if (currentVideoElement) observer.observe(currentVideoElement);
+  //   return () => {
+  //     if (currentVideoElement) observer.unobserve(currentVideoElement);
+  //     observer.disconnect();
+  //   };
+  // }, [handlePlay, videoElement]);
   return (
     <>
       <div className="swiper-slide BepSl_li">
@@ -198,15 +198,11 @@ const VideoSlide = (props: any) => {
                     handleOnTimeUpdate();
                   }}
                   onLoadedMetadata={handleOnMetaLoaded}
-                  // muted
+                  muted
                   preload="auto"
                   width="100%"
                   height="100%"
-                  // playsInline
-                  // onEnded={()=>{
-                  //   progressBar.current?.style.width = "0";
-                  //   seekThumb.current?.style.left = "0px";
-                  // }}
+                  playsInline
                 />
                 {/*====== Seek bar ( Play / Pause, Time, Next Prev, Progress Bar, Related Button ) ======*/}
                 <div className="VdEl_cn">

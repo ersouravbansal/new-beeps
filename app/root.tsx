@@ -94,26 +94,26 @@ export function Layout({ children }: any) {
 }
 
 export default function App() {
-  useEffect(() => {
-    $(document).ready(function () {
-      function updateHeight() {
-        const ht = window.innerHeight;
-        const svVertical2 = document.querySelector(".BepSl_cn");
-        if (svVertical2) {
-        svVertical2.style.height = `${ht - 71}px`;
+  // useEffect(() => {
+  //   $(document).ready(function () {
+  //     function updateHeight() {
+  //       const ht = window.innerHeight;
+  //       const svVertical2 = document.querySelector(".BepSl_cn");
+  //       if (svVertical2) {
+  //       svVertical2.style.height = `${ht - 71}px`;
 
-        if ($(window).width() <= 560) {
-          svVertical2.style.height = `${ht}px`;
-        }
-      }
-    }
+  //       if ($(window).width() <= 560) {
+  //         svVertical2.style.height = `${ht}px`;
+  //       }
+  //     }
+  //   }
 
-      if ($(window).width() <= 767) {
-        updateHeight();
-        window.addEventListener("resize", updateHeight, true);
-      }
-    });
-  }, []);
+  //     if ($(window).width() <= 767) {
+  //       updateHeight();
+  //       window.addEventListener("resize", updateHeight, true);
+  //     }
+  //   });
+  // }, []);
   return (
     <>
       <SvgIcons />

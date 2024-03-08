@@ -13,7 +13,7 @@ const Content = (props: {
   catId?: number;
   catName?: string;
 }) => {
-  // let mySwiper:any;
+   let mySwiper:any;
   const isVideoAvailable = (props.videoData?.results?.length || 0) > 0;
   useEffect(()=>{
     $(function () {
