@@ -14,7 +14,49 @@ const Content = (props: {
   catName?: string;
 }) => {
   let mySwiper: any;
+  let timeoutIDs: any = [];
+  let clicked:any;
   const isVideoAvailable = (props.videoData?.results?.length || 0) > 0;
+  function playActiveSlideVideo(swiper) {
+    var activeSlide = swiper.slides[swiper.activeIndex];
+    if (activeSlide) {
+      var activeSlideVideo = activeSlide.querySelector("video");
+      if (activeSlideVideo) {
+        activeSlideVideo.play();
+      }
+    }
+  }
+
+  function handleTimeout(index) {
+    var activeSlide = $(".swiper-slide").eq(index);
+    $(".swiper-slide").removeClass("js_icon-more");
+
+    activeSlide.addClass("js_seek-vis-sec");
+    activeSlide.removeClass("js_swp-vis");
+    if ($(window).width() <= 560) {
+      if (!clicked) {
+        activeSlide.addClass("js_seek-vis-sec");
+        activeSlide.addClass("js_swp-vis");
+
+        setTimeout(function () {
+          activeSlide.removeClass("js_seek-vis-sec");
+          activeSlide.removeClass("js_icon-more");
+          $("body").removeClass("VdElCht_on");
+        }, 6000);
+      }
+    }
+    if ($(window).width() >= 560) {
+      if (!clicked) {
+        activeSlide.addClass("js_seek-vis-sec");
+        //  activeSlide.addClass('js_swp-vis');
+
+        setTimeout(function () {
+          activeSlide.removeClass("js_seek-vis-sec");
+          activeSlide.removeClass("js_icon-more");
+        }, 6000);
+      }
+    }
+  }
   useEffect(() => {
     $(document).ready(function () {
       function updateHeight() {
@@ -38,20 +80,19 @@ const Content = (props: {
 
   useEffect(() => {
     $(function () {
-      var timeoutIDs = [];
-      var clicked = false;
-
-      mySwiper = new Swiper(".BepSl_rw", {
-        direction: "vertical",
+      timeoutIDs = [];
+       clicked = false;
+      const swiperOptions = {
+        direction: 'vertical',
         loop: false,
         centeredSlides: true,
         cssMode: true,
-        slidesPerView: "auto",
+        slidesPerView: 'auto',
         mousewheel: true,
         keyboard: true,
         navigation: {
-          nextEl: ".BepNv_nxt",
-          prevEl: ".BepNv_prv",
+          nextEl: '.BepNv_nxt',
+          prevEl: '.BepNv_prv',
         },
         breakpoints: {
           768: {
@@ -102,7 +143,9 @@ const Content = (props: {
             playActiveSlideVideo(this);
           },
         },
-      });
+      };
+    
+      mySwiper = new Swiper(".BepSl_rw", swiperOptions);
       // if ($(window).width() >= 560) {
       // $('.VdEl_ovl').click(function (event) {
       //     event.stopPropagation();
@@ -140,48 +183,8 @@ const Content = (props: {
           }
         });
       }
-      function handleTimeout(index) {
-        var activeSlide = $(".swiper-slide").eq(index);
-        $(".swiper-slide").removeClass("js_icon-more");
-
-        activeSlide.addClass("js_seek-vis-sec");
-        activeSlide.removeClass("js_swp-vis");
-        if ($(window).width() <= 560) {
-          if (!clicked) {
-            activeSlide.addClass("js_seek-vis-sec");
-            activeSlide.addClass("js_swp-vis");
-
-            setTimeout(function () {
-              activeSlide.removeClass("js_seek-vis-sec");
-              activeSlide.removeClass("js_icon-more");
-              $("body").removeClass("VdElCht_on");
-            }, 6000);
-          }
-        }
-        if ($(window).width() >= 560) {
-          if (!clicked) {
-            activeSlide.addClass("js_seek-vis-sec");
-            //  activeSlide.addClass('js_swp-vis');
-
-            setTimeout(function () {
-              activeSlide.removeClass("js_seek-vis-sec");
-              activeSlide.removeClass("js_icon-more");
-            }, 6000);
-          }
-        }
-      }
-
-      function playActiveSlideVideo(swiper) {
-        var activeSlide = swiper.slides[swiper.activeIndex];
-        if (activeSlide) {
-          var activeSlideVideo = activeSlide.querySelector("video");
-          if (activeSlideVideo) {
-            activeSlideVideo.play();
-          }
-        }
-      }
     });
-  }, []);
+  }, [props.videoData]);
   return (
     <>
       {/*============== Middle with two column option ==============*/}
