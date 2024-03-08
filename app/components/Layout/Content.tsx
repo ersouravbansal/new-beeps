@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import VideoSlide from "~/components/Layout/VideoSlide";
 import $ from "jquery";
 import Swiper from "swiper";
+import useStore from "~/stores/utilstore";
 
 const Content = (props: {
   videoData: any;
@@ -23,7 +24,9 @@ const Content = (props: {
     slidesPerView,
     mousewheel,
     keyboard: any;
-  const [clicked, setClicked] = useState(false);
+
+    const clicked = useStore((state) => state.clicked);
+    const setClicked=useStore((state) => state.setClicked);
 
   function playActiveSlideVideo(swiper: any) {
     var activeSlide = swiper.slides[swiper.activeIndex];
@@ -127,31 +130,6 @@ const Content = (props: {
       },
     },
   };
-  function handleCardClick(event: React.MouseEvent<HTMLDivElement>) {
-    setClicked(true);
-    event.stopPropagation();
-
-    const clickedCard = event.currentTarget;
-    const activeSlide = clickedCard.closest(".swiper-slide-active");
-
-    if (activeSlide) {
-      activeSlide.classList.toggle("js_seek-vis-sec");
-
-      const parentLi = clickedCard.closest(".BepSl_li");
-      if (parentLi && parentLi.classList.contains("js_seek-vis-sec")) {
-        parentLi.classList.add("js_swp-vis");
-        parentLi.classList.remove("js_seek-vis-sec");
-      } else {
-        activeSlide.classList.remove("js_swp-vis");
-      }
-
-      if (parentLi && parentLi.classList.contains("js_swp-vis")) {
-        parentLi.classList.toggle("js_seek-vis");
-      } else {
-        // parentLi?.classList.remove('js_seek-vis');
-      }
-    }
-  }
   useEffect(() => {
     $(function () {
       if (mySwiper) {
@@ -169,11 +147,14 @@ const Content = (props: {
       //     }
       // });
       // }
-      if (window.innerWidth <= 560) {
-        document.querySelectorAll(".BepSl_crd").forEach((card) => {
-          card.addEventListener("click", handleCardClick);
-        });
-      }
+
+
+      //below commented by me
+      // if (window.innerWidth <= 560) {
+      //   document.querySelectorAll(".BepSl_crd").forEach((card) => {
+      //     card.addEventListener("click", handleCardClick);
+      //   });
+      // }
     });
     return () => {
       if (mySwiper) {

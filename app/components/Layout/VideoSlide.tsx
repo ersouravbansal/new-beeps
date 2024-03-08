@@ -5,6 +5,8 @@ import useStore from "~/stores/utilstore";
 
 const VideoSlide = (props: any) => {
   const silent = useStore((state) => state.silent);
+  const clicked = useStore((state) => state.clicked);
+  const setClicked = useStore((state) => state.setClicked);
   const videoElement = useRef<HTMLVideoElement>(null);
   const seekBar = useRef(null);
   const progressBar = useRef(null);
@@ -21,6 +23,33 @@ const VideoSlide = (props: any) => {
     unMuteVideo,
     playerState,
   } = VideoPlayer(videoElement, seekBar, progressBar, seekThumb);
+
+  const handleCardClick= (event: any)=> {
+    console.log("hey sourav handlecardclick running");
+    setClicked(true);
+    event.stopPropagation();
+
+    const clickedCard = event.currentTarget;
+    const activeSlide = clickedCard.closest(".swiper-slide-active");
+
+    if (activeSlide) {
+      activeSlide.classList.toggle("js_seek-vis-sec");
+
+      const parentLi = clickedCard.closest(".BepSl_li");
+      if (parentLi && parentLi.classList.contains("js_seek-vis-sec")) {
+        parentLi.classList.add("js_swp-vis");
+        parentLi.classList.remove("js_seek-vis-sec");
+      } else {
+        activeSlide.classList.remove("js_swp-vis");
+      }
+
+      if (parentLi && parentLi.classList.contains("js_swp-vis")) {
+        parentLi.classList.toggle("js_seek-vis");
+      } else {
+        // parentLi?.classList.remove('js_seek-vis');
+      }
+    }
+  }
 
   const CopyLink = () => {
     const currentURL = window.location.href;
@@ -62,7 +91,7 @@ const VideoSlide = (props: any) => {
     <>
       <div className="swiper-slide BepSl_li">
         <div className="BepSl_crd-wr">
-          <div className="BepSl_crd">
+          <div className="BepSl_crd" onClick={handleCardClick}>
             <div className="VdEl_icn-wr1">
               {/* chat */}
               <div className="VdEl_icn-lk">
