@@ -193,58 +193,42 @@ const Content = (props: {
             <div className="BepSl_wr" ref={props.ref2}>
               <div className="swiper-container BepSl_rw">
                 <div className="swiper-wrapper BepSl_ul">
-                  {isVideoAvailable ? (
-                    props.videoData?.results?.map(
-                      (d: any, index: any, data) => {
-                        // console.log("data(general):", d);
+                  {isVideoAvailable
+                    ? props.videoData?.results?.map(
+                        (d: any, index: any, data) => {
+                          // console.log("data(general):", d);
 
-                        return (
-                          <React.Fragment key={index}>
-                            <VideoSlide
-                              vidsrc={
-                                d["media:filepath"]
-                                  ? d["media:filepath"]
-                                  : "Video Not Available"
-                              }
-                              hlssrc={d["media:allfileformats"]?.ios}
-                              imgsrc={
-                                d["media:fullimage"]
-                                  ? d["media:fullimage"]
-                                  : d["media:thumbnail"]
-                              }
-                              category={d["media:category"]}
-                              show={d["media:show"]}
-                              title={decodeURIComponent(escape(d.title))}
-                              videoID={d.id}
-                              link={d.link}
-                              urltitle={d.urltitle}
-                              channel_id={d["media:source_id"]}
-                              index={index}
-                              catName={props?.catName}
-                              catId={props?.catId}
-                              pubDate={d.pubDate}
-                            ></VideoSlide>
-                          </React.Fragment>
-                        );
-                      }
-                    )
-                  ) : (
-                    <>
-                      ({null}
-                      {/* <div className="PgNtFund_wr">
-                        <div className="PgNtFund_ttl">No Videos Found!</div>
-                        <p className="PgNtFund_tx">
-                          {" "}
-                          Stay Tuned for Further updates...
-                        </p>
-                        <Link to="/" className="PgNtFund_lk">
-                          {" "}
-                          Back To Home{" "}
-                        </Link>
-                      </div> */}
+                          return (
+                            <React.Fragment key={index}>
+                              <VideoSlide
+                                vidsrc={
+                                  d["media:filepath"]
+                                    ? d["media:filepath"]
+                                    : "Video Not Available"
+                                }
+                                hlssrc={d["media:allfileformats"]?.ios}
+                                imgsrc={
+                                  d["media:fullimage"]
+                                    ? d["media:fullimage"]
+                                    : d["media:thumbnail"]
+                                }
+                                category={d["media:category"]}
+                                show={d["media:show"]}
+                                title={decodeURIComponent(escape(d.title))}
+                                videoID={d.id}
+                                link={d.link}
+                                urltitle={d.urltitle}
+                                channel_id={d["media:source_id"]}
+                                index={index}
+                                catName={props?.catName}
+                                catId={props?.catId}
+                                pubDate={d.pubDate}
+                              ></VideoSlide>
+                            </React.Fragment>
+                          );
+                        }
                       )
-                    </>
-                  )}
+                    : null}
                   <div ref={props.ref1}></div>
                 </div>
                 <div
