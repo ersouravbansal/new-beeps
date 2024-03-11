@@ -1,7 +1,20 @@
-import { Outlet } from "@remix-run/react";
-import React from "react";
+import { Link, Outlet, useLocation } from "@remix-run/react";
+import React, { useState } from "react";
+import { CATEGORY_LIST, CATEGORY_NAME } from "./CategoryName";
 
 const Header = () => {
+  const location = useLocation();
+  const [query, setQuery] = useState("");
+  const [errors, setErrors] = useState("");
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    if (!query.trim()) {
+      setErrors(" Please enter some text to search!");
+      return;
+    }
+    setErrors("");
+    window.location.href = `/search/?q=` + query;
+  };
   return (
     <>
       {/*====== Content ( LHS, Main Content and RHS ) ======*/}
@@ -64,15 +77,23 @@ const Header = () => {
                   </a>
                   <div className="VdPg-LfNav_wr">
                     <ul className="VdPg-LfNav_ul">
-                      <li className="VdPg-LfNav_li">
+                      {/* <li className="VdPg-LfNav_li">
                         <a href="video-list.html" className="VdPg-LfNav_lnk">
                           <svg className="vj_icn vj_star">
                             <use xlinkHref="#vj_star" />
                           </svg>{" "}
                           Latest videos
                         </a>
-                      </li>
-                      <li className="VdPg-LfNav_li">
+                      </li> */}
+                      {CATEGORY_LIST().map((category) => (
+                        <li key={category.title} className="VdPg-LfNav_li">
+                          <Link to={category.link} className={`VdPg-LfNav_lnk`}>
+                            {/* Add any additional icons or styles as needed */}
+                            {category.title}
+                          </Link>
+                        </li>
+                      ))}
+                      {/* <li className="VdPg-LfNav_li">
                         <a href="video-list.html" className="VdPg-LfNav_lnk">
                           <svg className="vj_icn vj_zap">
                             <use xlinkHref="#vj_zap" />
@@ -128,7 +149,7 @@ const Header = () => {
                           </svg>{" "}
                           Shot on Samsung
                         </a>
-                      </li>
+                      </li> */}
                     </ul>
                   </div>
                 </div>
@@ -247,7 +268,11 @@ const Header = () => {
                     </div>
                     {/* Top Search */}
                     <div className="TpNvSrc">
-                      <form className="TpNvSrc_frm" name="search">
+                      <form
+                        className="TpNvSrc_frm"
+                        name="search"
+                        onSubmit={handleSearch}
+                      >
                         {" "}
                         <span className="TpNvSrc_icn">
                           <svg className="vj_icn vj_search">
@@ -259,6 +284,7 @@ const Header = () => {
                           type="text"
                           placeholder="Videos, Latest..."
                           autoComplete="off"
+                          onChange={(e) => setQuery(e.target.value)}
                         />
                         <button
                           type="submit"
@@ -275,6 +301,14 @@ const Header = () => {
                           </svg>
                         </div>
                       </form>
+                      {errors && (
+                        <p
+                          className="errors form_errs"
+                          style={{ color: "red", fontSize: "14px" }}
+                        >
+                          * {errors}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>

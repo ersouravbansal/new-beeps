@@ -26,9 +26,9 @@ const Content = (props: {
     var activeSlide = swiper.slides[swiper.activeIndex];
     if (activeSlide) {
       var activeSlideVideo = activeSlide.querySelector("video");
-      if (activeSlideVideo) {
-        activeSlideVideo.play();
-      }
+      // if (activeSlideVideo) {
+      //   activeSlideVideo.play();
+      // }
     }
   }
 
@@ -126,11 +126,6 @@ const Content = (props: {
   };
   useEffect(() => {
     $(function () {
-      console.log("swipper found", mySwiper);
-      if (mySwiper) {
-        console.log("destroying swipper", mySwiper);
-        mySwiper.destroy();
-      }
       mySwiper = new Swiper(".BepSl_rw", swiperOptions);
       // if ($(window).width() >= 560) {
       // $('.VdEl_ovl').click(function (event) {
@@ -143,7 +138,9 @@ const Content = (props: {
       //     }
       // });
       // }
+      mySwiper.init()
     });
+
     return () => {
       if (mySwiper) {
         mySwiper.destroy();

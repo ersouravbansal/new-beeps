@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
 import useStore from "~/stores/utilstore";
 const useVideoPlayer = (
-  videoElemRef:any,
-  seekBarRef:any,
-  progressBarRef:any,
-  seekThumbRef:any,
+  videoElemRef: any,
+  seekBarRef: any,
+  progressBarRef: any,
+  seekThumbRef: any
 ) => {
   const silent = useStore((state) => state.silent);
   const setSilent = useStore((state) => state.setSilent);
@@ -14,9 +15,8 @@ const useVideoPlayer = (
     speed: 1,
     isMuted: false,
     isMetaLoaded: false,
+    hoverTime: 0,
   });
-  const [isDragging, setIsDragging] = useState(false);
-
   const formatTime = (value: any) => {
     var time = "";
     if (value > 0 && value != "Infinity") {
@@ -69,10 +69,10 @@ const useVideoPlayer = (
       ...prevState,
       isPlaying: !prevState.isPlaying,
     }));
-    if(playerState.isPlaying=== true){
-        playVideo();
-    }else{
-        pauseVideo()
+    if (playerState.isPlaying === true) {
+      playVideo();
+    } else {
+      pauseVideo();
     }
   }, [playerState.isPlaying]);
 
@@ -81,10 +81,10 @@ const useVideoPlayer = (
       ...prevState,
       isMuted: !prevState.isMuted,
     }));
-    if(playerState.isMuted===true){
-        unMuteVideo()
-    }else{
-        muteVideo()
+    if (playerState.isMuted === true) {
+      unMuteVideo();
+    } else {
+      muteVideo();
     }
   }, [playerState.isMuted]);
 
@@ -95,8 +95,65 @@ const useVideoPlayer = (
     }));
   }, [playerState.isMetaLoaded]);
 
+  const handleVideoProgress = useCallback((event: any) => {
+    const clickX =
+      event.clientX - seekBarRef.current.getBoundingClientRect().left;
+    const seekBarWidth = seekBarRef.current.offsetWidth;
+
+    const progress = (clickX / seekBarWidth) * 100; // Calculate progress in percentage
+    setPlayerState((prevState) => ({
+      ...prevState,
+      progress,
+    }));
+
+    if (progressBarRef.current) {
+      progressBarRef.current.style.width = `${progress}%`;
+    }
+
+    // Calculate the new time based on the click position
+    const newTime = (clickX / seekBarWidth) * videoElemRef.current.duration;
+    videoElemRef.current.currentTime = newTime;
+  }, []);
+  const onSliderMove = (e: any) => {
+    const seekBarRect = seekBarRef.current.getBoundingClientRect();
+    const clickX = isMobile ? e.touches[0].clientX : e.clientX;
+    const relativeX = clickX - seekBarRect.left;
+    const seekBarWidth = seekBarRect.width;
+  
+    const videoDuration = videoElemRef.current?.duration || 0;
+    let newHoverTime = (relativeX / seekBarWidth) * videoDuration;
+  
+    if (newHoverTime < 0) {
+      newHoverTime = 0;
+    } else if (newHoverTime > videoDuration) {
+      newHoverTime = videoDuration;
+    }
+  
+    setPlayerState((previousplayerState) => ({
+      ...previousplayerState,
+      hoverTime: newHoverTime,
+    }));
+  };
+  
+  // const onSliderMove = (e: any) => {
+  //   let hoverTime =
+  //     (e.clientX - seekBarRef.current.getBoundingClientRect().left) /
+  //     e.currentTarget.clientWidth *
+  //     videoElemRef.current?.duration;
+
+  //   if (hoverTime < 0) {
+  //     hoverTime = 0;
+  //   }
+
+  //   setPlayerState((previousplayerState) => ({
+  //     ...previousplayerState,
+  //     hoverTime,
+  //   }));
+  // };
+
   const handleOnTimeUpdate = useCallback(() => {
-    const progress = (videoElemRef.current.currentTime / videoElemRef.current.duration) * 100;
+    const progress =
+      (videoElemRef.current.currentTime / videoElemRef.current.duration) * 100;
     setPlayerState((prevState) => ({
       ...prevState,
       progress,
@@ -112,12 +169,14 @@ const useVideoPlayer = (
     toggleMute,
     handleOnMetaLoaded,
     handleOnTimeUpdate,
+    handleVideoProgress,
     formatTime,
     playerState,
     playVideo,
     pauseVideo,
     muteVideo,
     unMuteVideo,
+    onSliderMove,
   };
 };
 

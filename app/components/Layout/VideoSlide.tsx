@@ -2,10 +2,13 @@ import { Link } from "@remix-run/react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import VideoPlayer from "~/hooks/useVideoPlayer";
 import useStore from "~/stores/utilstore";
+import { isMobile } from "react-device-detect";
 
 const VideoSlide = (props: any) => {
+  const [getUrl, setGetUrl] = useState("None");
   const silent = useStore((state) => state.silent);
   const clicked = useStore((state) => state.clicked);
+  const urlupdate = useStore((state) => state.urlupdate);
   const setClicked = useStore((state) => state.setClicked);
   const videoElement = useRef<HTMLVideoElement>(null);
   const seekBar = useRef(null);
@@ -22,9 +25,17 @@ const VideoSlide = (props: any) => {
     muteVideo,
     unMuteVideo,
     playerState,
+    handleVideoProgress,
+    onSliderMove,
   } = VideoPlayer(videoElement, seekBar, progressBar, seekThumb);
 
-  const handleCardClick = (event) => {
+  const cleanUp = (st: any) => {
+    return st
+      .replace(/[^a-z0-9]+/gi, "-")
+      .replace(/^-+/, "")
+      .replace(/-+$/, "");
+  };
+  const handleCardClick = (event: any) => {
     if ($(window).width() <= 560) {
       setClicked(true);
       event.stopPropagation();
@@ -49,39 +60,6 @@ const VideoSlide = (props: any) => {
     }
   };
 
-  // const handleCardClick = (event: any) => {
-  //   console.log("hey sourav handlecardclick running");
-  //   setClicked(true);
-  //   event.stopPropagation();
-
-  //   const clickedCard = event.currentTarget;
-  //   const activeSlide = clickedCard.closest(".swiper-slide-active");
-  //   console.log("active slide sourav", activeSlide);
-
-  //   if (activeSlide) {
-  //     activeSlide.classList.toggle("js_seek-vis-sec");
-
-  //     const parentLi = clickedCard.closest(".BepSl_li");
-  //     if (
-  //       (parentLi && parentLi.classList.contains("js_seek-vis-sec")) ||
-  //       (parentLi && parentLi.classList.contains("js_seek-vis"))
-  //     ) {
-  //       parentLi.classList.add("js_swp-vis");
-  //       //  parentLi.classList.remove("js_seek-vis-sec");
-  //         parentLi.classList.remove("js_seek-vis");
-  //     } else {
-  //       activeSlide.classList.remove("js_swp-vis");
-  //       activeSlide.classList.add("js_seek-vis");
-  //     }
-
-  //     if (parentLi && parentLi.classList.contains("js_swp-vis")) {
-  //       parentLi.classList.toggle("js_seek-vis");
-  //     } else {
-  //       // parentLi?.classList.remove('js_seek-vis');
-  //     }
-  //   }
-  // };
-
   const CopyLink = () => {
     const currentURL = window.location.href;
 
@@ -94,16 +72,54 @@ const VideoSlide = (props: any) => {
         console.error("Error copying URL to clipboard:", error);
       });
   };
+  const onEmailShare = () => {
+    const emailSubject = encodeURIComponent(props.title);
+    const emailBody = getUrl;
+
+    window.location.href = `mailto:?subject=${emailSubject}&body=${emailBody}`;
+  };
+  useEffect(() => {
+    const originUrl = window.location.origin;
+    const currentUrl = `${originUrl}/videos/${cleanUp(
+      props.urltitle
+    ).toLowerCase()}-${props.videoID}`;
+    const updatedUrl = encodeURIComponent(currentUrl);
+    setGetUrl(updatedUrl);
+
+    return;
+  }, [props.urltitle, props.videoID]);
   const handlePlay = useCallback(
     (entries: IntersectionObserverEntry[]) => {
       const entry = entries[0];
       if (entry.isIntersecting) {
-        playVideo();
+        if (urlupdate) {
+          let newUrl: string;
+          playVideo();
+          document.title = props.title;
+          const urltitle = cleanUp(props.urltitle).toLowerCase();
+          const videoID = props.videoID;
+          const catName = props?.catName;
+          if (catName) {
+            newUrl = `/videos/${catName}/${urltitle}-${videoID}`;
+            window.history.pushState({}, "", newUrl);
+          } else {
+            newUrl = `/videos/${urltitle}-${videoID}`;
+            window.history.pushState({}, "", newUrl);
+          }
+        }
       } else {
         pauseVideo();
       }
     },
-    [playVideo, pauseVideo]
+    [
+      playVideo,
+      pauseVideo,
+      props.videoID,
+      urlupdate,
+      props.title,
+      props.catName,
+      props.urltitle,
+    ]
   );
   useEffect(() => {
     const options = {
@@ -148,7 +164,10 @@ const VideoSlide = (props: any) => {
                         <li className="SSR_drp-nav-li">
                           <a
                             className="SSR_drp-nav-lnk"
-                            href="javascript:void(0)"
+                            href={`https://www.facebook.com/sharer.php?u=${getUrl}&amp;&text=${props.title}`}
+                            target="_blank"
+                            rel="noopener noreferrer nofollow"
+                            data-platform="facebook"
                           >
                             <svg className="vj_icn vj_facebook-fill vj_ss-icn">
                               <use xlinkHref="#vj_facebook-fill"></use>
@@ -159,7 +178,10 @@ const VideoSlide = (props: any) => {
                         <li className="SSR_drp-nav-li">
                           <a
                             className="SSR_drp-nav-lnk"
-                            href="javascript:void(0)"
+                            href={`https://twitter.com/intent/tweet?url=${getUrl}&amp;&text=${props.title}`}
+                            target="_blank"
+                            rel="noopener noreferrer nofollow"
+                            data-platform="twitter"
                           >
                             <svg className="vj_icn vj_twitter-fill vj_ss-icn">
                               <use xlinkHref="#vj_twitter-fill"></use>
@@ -170,7 +192,10 @@ const VideoSlide = (props: any) => {
                         <li className="SSR_drp-nav-li">
                           <a
                             className="SSR_drp-nav-lnk"
-                            href="javascript:void(0)"
+                            href={`https://api.whatsapp.com/send?text=${props.title} - ${getUrl}?via=whatsapp`}
+                            target="_blank"
+                            rel="noopener noreferrer nofollow"
+                            data-platform="whatsapp"
                           >
                             <svg className="vj_icn vj_whatsapp-fill vj_ss-icn">
                               <use xlinkHref="#vj_whatsapp-fill"></use>
@@ -181,7 +206,7 @@ const VideoSlide = (props: any) => {
                         <li className="SSR_drp-nav-li">
                           <a
                             className="SSR_drp-nav-lnk"
-                            href="javascript:void(0)"
+                            href={`https://www.reddit.com/r/technology/submit?url=${getUrl}&title=${props.title}`}
                           >
                             <svg className="vj_icn vj_reddit-fill vj_ss-icn">
                               <use xlinkHref="#vj_reddit-fill"></use>
@@ -190,15 +215,15 @@ const VideoSlide = (props: any) => {
                           </a>
                         </li>
                         <li className="SSR_drp-nav-li">
-                          <a
+                          <div
                             className="SSR_drp-nav-lnk"
-                            href="javascript:void(0)"
+                            onClick={onEmailShare}
                           >
                             <svg className="vj_icn vj_email-fill vj_ss-icn">
                               <use xlinkHref="#vj_email-fill"></use>
                             </svg>
                             Email
-                          </a>
+                          </div>
                         </li>
                         <li className="SSR_drp-nav-li">
                           <div className="SSR_drp-nav-lnk" onClick={CopyLink}>
@@ -375,7 +400,10 @@ const VideoSlide = (props: any) => {
                                   <li className="SSR_drp-nav-li">
                                     <a
                                       className="SSR_drp-nav-lnk"
-                                      href="javascript:void(0)"
+                                      href={`https://www.facebook.com/sharer.php?u=${getUrl}&amp;&text=${props.title}`}
+                                      target="_blank"
+                                      rel="noopener noreferrer nofollow"
+                                      data-platform="facebook"
                                     >
                                       <svg className="vj_icn vj_facebook-fill vj_ss-icn">
                                         <use xlinkHref="#vj_facebook-fill"></use>
@@ -386,7 +414,10 @@ const VideoSlide = (props: any) => {
                                   <li className="SSR_drp-nav-li">
                                     <a
                                       className="SSR_drp-nav-lnk"
-                                      href="javascript:void(0)"
+                                      href={`https://twitter.com/intent/tweet?url=${getUrl}&amp;&text=${props.title}`}
+                                      target="_blank"
+                                      rel="noopener noreferrer nofollow"
+                                      data-platform="twitter"
                                     >
                                       <svg className="vj_icn vj_twitter-fill vj_ss-icn">
                                         <use xlinkHref="#vj_twitter-fill"></use>
@@ -397,7 +428,10 @@ const VideoSlide = (props: any) => {
                                   <li className="SSR_drp-nav-li">
                                     <a
                                       className="SSR_drp-nav-lnk"
-                                      href="javascript:void(0)"
+                                      href={`https://api.whatsapp.com/send?text=${props.title} - ${getUrl}?via=whatsapp`}
+                                      target="_blank"
+                                      rel="noopener noreferrer nofollow"
+                                      data-platform="whatsapp"
                                     >
                                       <svg className="vj_icn vj_whatsapp-fill vj_ss-icn">
                                         <use xlinkHref="#vj_whatsapp-fill"></use>
@@ -408,7 +442,7 @@ const VideoSlide = (props: any) => {
                                   <li className="SSR_drp-nav-li">
                                     <a
                                       className="SSR_drp-nav-lnk"
-                                      href="javascript:void(0)"
+                                      href={`https://www.reddit.com/r/technology/submit?url=${getUrl}&title=${props.title}`}
                                     >
                                       <svg className="vj_icn vj_reddit-fill vj_ss-icn">
                                         <use xlinkHref="#vj_reddit-fill"></use>
@@ -417,26 +451,26 @@ const VideoSlide = (props: any) => {
                                     </a>
                                   </li>
                                   <li className="SSR_drp-nav-li">
-                                    <a
+                                    <div
                                       className="SSR_drp-nav-lnk"
-                                      href="javascript:void(0)"
+                                      onClick={onEmailShare}
                                     >
                                       <svg className="vj_icn vj_email-fill vj_ss-icn">
                                         <use xlinkHref="#vj_email-fill"></use>
                                       </svg>
                                       Email
-                                    </a>
+                                    </div>
                                   </li>
                                   <li className="SSR_drp-nav-li">
-                                    <a
+                                    <div
                                       className="SSR_drp-nav-lnk"
-                                      href="javascript:void(0)"
+                                      onClick={CopyLink}
                                     >
                                       <svg className="vj_icn vj_copy-link vj_ss-icn">
                                         <use xlinkHref="#vj_copy-link"></use>
                                       </svg>
                                       Copy Link
-                                    </a>
+                                    </div>
                                   </li>
                                 </ul>
                               </div>
@@ -458,7 +492,27 @@ const VideoSlide = (props: any) => {
                       <div className="VdEl_lod-cn">
                         {/* Progress Bar */}
                         <div className="VdEl_lod-wrp">
-                          <div className="VdEl_lod" ref={seekBar}>
+                          <div
+                            className="VdEl_lod crsr_ptr"
+                            ref={seekBar}
+                            onClick={(e) => {
+                              handleVideoProgress(e);
+                              handleOnTimeUpdate();
+                            }}
+                            {...(isMobile
+                              ? {
+                                  onTouchStart: (e) => {},
+                                  onTouchMove: (e) => {},
+                                  onTouchEnd: (e) => {},
+                                }
+                              : {
+                                  onMouseMove: (e) => {
+                                    // onSliderMove(e);
+                                    // handleVideoProgress(e);
+                                  },
+                                  onMouseOut: (e) => {},
+                                })}
+                          >
                             <div className="VdEl_lod-br" ref={progressBar}>
                               <div className="VdEl_dot" ref={seekThumb}></div>
                             </div>

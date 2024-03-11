@@ -18,7 +18,40 @@ import Login from "./components/Layout/Login";
 import LanguageSwitch from "./components/Layout/LanguageSwitch";
 import MoreSwipe from "./components/Layout/MoreSwipe";
 import $ from "jquery";
+import { LinksFunction } from "@remix-run/node";
+import atf from "./styles/atf.css";
+import atfVod from "./styles/atfVod.css";
+import beepVideo from "./styles/beepVideo.css";
+import beepVideoElements from "./styles/beepVideoElements.css";
+import beepComments from "./styles/beepComments.css";
+import videoShareDropDown from "./styles/videoShareDropDown.css";
 
+export const links: LinksFunction = () => [
+  {
+    rel: "preconnect",
+    href: "https://fonts.googleapis.com",
+    crossOrigin: "anonymous",
+  },
+  {
+    rel: "preconnect",
+    href: "https://fonts.gstatic.com",
+    crossOrigin: "anonymous",
+  },
+  {
+    rel: "stylesheet",
+    href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@300;400;500;600;700&display=swap",
+  },
+  { rel: "stylesheet", href: atf },
+  { rel: "stylesheet", href: atfVod },
+  {
+    rel: "stylesheet",
+    href: "https://unpkg.com/swiper@11.0.7/swiper-bundle.min.css",
+  },
+  { rel: "stylesheet", href: beepVideo },
+  { rel: "stylesheet", href: beepVideoElements },
+  { rel: "stylesheet", href: beepComments },
+  { rel: "stylesheet", href: videoShareDropDown },
+];
 export const meta: MetaFunction = () => [
   { name: "title", content: "NDTV Video Listing page" },
   {
@@ -54,28 +87,11 @@ export function Layout({ children }: any) {
         <meta charSet="utf-8" />
         <Meta />
         <Links />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-        <link rel="stylesheet" href="https://use.typekit.net/jkd2jqy.css" />
-        <link rel="stylesheet" href={`/remix-beeps/styles/atf.css`} />
-        <link
+        {/* <link
           rel="stylesheet"
           href={`/remix-beeps/styles/atfBeepsDetail.css`}
-        />
+        /> */}
+        {/* <link rel="stylesheet" href="https://use.typekit.net/jkd2jqy.css" /> */}
       </head>
       <body className="nav-trigger Vd-list Vd-Lst-pg">
         {children}
@@ -94,26 +110,6 @@ export function Layout({ children }: any) {
 }
 
 export default function App() {
-  // useEffect(() => {
-  //   $(document).ready(function () {
-  //     function updateHeight() {
-  //       const ht = window.innerHeight;
-  //       const svVertical2 = document.querySelector(".BepSl_cn");
-  //       if (svVertical2) {
-  //       svVertical2.style.height = `${ht - 71}px`;
-
-  //       if ($(window).width() <= 560) {
-  //         svVertical2.style.height = `${ht}px`;
-  //       }
-  //     }
-  //   }
-
-  //     if ($(window).width() <= 767) {
-  //       updateHeight();
-  //       window.addEventListener("resize", updateHeight, true);
-  //     }
-  //   });
-  // }, []);
   return (
     <>
       <SvgIcons />
