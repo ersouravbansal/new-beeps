@@ -52,6 +52,7 @@ const SideNavigation = () => {
                           to={khabarlink}
                           onClick={() => {
                             setIsEng(false);
+                            document.body.classList.remove('js_sid-nav');
                           }}
                         >
                           हिंदी | Hindi
@@ -64,6 +65,7 @@ const SideNavigation = () => {
                           to={khabarlinkEnglish}
                           onClick={() => {
                             setIsEng(true);
+                            document.body.classList.remove('js_sid-nav');
                           }}
                         >
                           English

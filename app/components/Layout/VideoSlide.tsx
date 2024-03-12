@@ -3,10 +3,12 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import VideoPlayer from "~/hooks/useVideoPlayer";
 import useStore from "~/stores/utilstore";
 import { isMobile } from "react-device-detect";
+import { Autoplay } from "swiper/modules";
 
 const VideoSlide = (props: any) => {
   const [getUrl, setGetUrl] = useState("None");
   const silent = useStore((state) => state.silent);
+  const setSilent = useStore((state) => state.setSilent);
   const clicked = useStore((state) => state.clicked);
   const urlupdate = useStore((state) => state.urlupdate);
   const setClicked = useStore((state) => state.setClicked);
@@ -14,6 +16,7 @@ const VideoSlide = (props: any) => {
   const seekBar = useRef(null);
   const progressBar = useRef(null);
   const seekThumb = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
   const {
     toggleMute,
     togglePlay,
@@ -29,45 +32,102 @@ const VideoSlide = (props: any) => {
     onSliderMove,
   } = VideoPlayer(videoElement, seekBar, progressBar, seekThumb);
 
+  const autoPlayVideo = useCallback(() => {
+    if (videoElement.current && silent) {
+      videoElement.current.muted = true;
+    }
+    let playPromise = videoElement.current?.play();
+    if (playPromise != null) {
+      playPromise
+        .then(() => {
+          // console.log("muted:", videoElement.current?.muted);
+          if (videoElement.current?.muted === false) {
+            // setSilent(false);
+            unMuteVideo();
+          } else if (videoElement.current?.muted === true) {
+            muteVideo();
+          }
+          playVideo();
+        })
+        .catch(() => {
+          muteVideo();
+          let playPromise = videoElement.current?.play();
+          if (playPromise != null) {
+            playPromise
+              .then(() => {
+                playVideo();
+              })
+              .catch(() => {
+                if (videoElement.current) {
+                  videoElement.current.poster = props.imgsrc;
+                }
+              });
+          }
+        });
+    }
+  }, [muteVideo, unMuteVideo, playVideo, silent]);
+
   const cleanUp = (st: any) => {
     return st
       .replace(/[^a-z0-9]+/gi, "-")
       .replace(/^-+/, "")
       .replace(/-+$/, "");
   };
-  const handleCardClick = (event: any) => {
-    if ($(window).width() <= 560) {
+
+  const handleCardClick = (event) => {
+    if (window.innerWidth <= 560) {
       setClicked(true);
       event.stopPropagation();
-
-      // clearTimeout(timeoutIDs[mySwiper.realIndex]);
-
-      $(this).parents(".swiper-slide-active").toggleClass("js_seek-vis-sec");
-      if ($(this).parents(".BepSl_li").hasClass("js_seek-vis-sec")) {
-        $(this)
-          .parents(".BepSl_li")
-          .addClass("js_swp-vis")
-          .removeClass("js_seek-vis-sec");
-      } else {
-        $(this).parents(".swiper-slide-active").removeClass("js_swp-vis");
-      }
-
-      if ($(this).parents(".BepSl_li").hasClass("js_swp-vis")) {
-        $(this).parents(".BepSl_li").toggleClass("js_seek-vis");
-      } else {
-        //   $(this).parents('.swiper-slide-active').removeClass('js_seek-vis');
+  
+      const swiperSlideActive = event.target.closest(".swiper-slide-active");
+      if (swiperSlideActive) {
+        swiperSlideActive.classList.toggle("js_seek-vis-sec");
+        const bepSlLi = swiperSlideActive.querySelector(".BepSl_li");
+        if (bepSlLi && bepSlLi.classList.contains("js_seek-vis-sec")) {
+          bepSlLi.classList.add("js_swp-vis");
+          bepSlLi.classList.remove("js_seek-vis-sec");
+        } else {
+          swiperSlideActive.classList.remove("js_swp-vis");
+        }
+  
+        if (bepSlLi && bepSlLi.classList.contains("js_swp-vis")) {
+          bepSlLi.classList.toggle("js_seek-vis");
+        } else {
+          //   swiperSlideActive.classList.remove('js_seek-vis');
+        }
       }
     }
   };
+  
+  // const handleCardClick = (event: any) => {
+  //   if ($(window).width() <= 560) {
+  //     setClicked(true);
+  //     event.stopPropagation();
+
+  //     $(this).parents(".swiper-slide-active").toggleClass("js_seek-vis-sec");
+  //     if ($(this).parents(".BepSl_li").hasClass("js_seek-vis-sec")) {
+  //       $(this)
+  //         .parents(".BepSl_li")
+  //         .addClass("js_swp-vis")
+  //         .removeClass("js_seek-vis-sec");
+  //     } else {
+  //       $(this).parents(".swiper-slide-active").removeClass("js_swp-vis");
+  //     }
+
+  //     if ($(this).parents(".BepSl_li").hasClass("js_swp-vis")) {
+  //       $(this).parents(".BepSl_li").toggleClass("js_seek-vis");
+  //     } else {
+  //       //   $(this).parents('.swiper-slide-active').removeClass('js_seek-vis');
+  //     }
+  //   }
+  // };
 
   const CopyLink = () => {
     const currentURL = window.location.href;
 
     navigator.clipboard
       .writeText(currentURL)
-      .then(() => {
-        console.log("URL copied to clipboard:", currentURL);
-      })
+      .then(() => {})
       .catch((error) => {
         console.error("Error copying URL to clipboard:", error);
       });
@@ -94,7 +154,7 @@ const VideoSlide = (props: any) => {
       if (entry.isIntersecting) {
         if (urlupdate) {
           let newUrl: string;
-          playVideo();
+          autoPlayVideo();
           document.title = props.title;
           const urltitle = cleanUp(props.urltitle).toLowerCase();
           const videoID = props.videoID;
@@ -119,6 +179,7 @@ const VideoSlide = (props: any) => {
       props.title,
       props.catName,
       props.urltitle,
+      autoPlayVideo,
     ]
   );
   useEffect(() => {
@@ -133,10 +194,13 @@ const VideoSlide = (props: any) => {
       if (currentVideoElement) observer.unobserve(currentVideoElement);
       observer.disconnect();
     };
-  }, [handlePlay, videoElement]);
+  }, [handlePlay]);
   return (
     <>
-      <div className="swiper-slide BepSl_li">
+      <div
+        className="swiper-slide BepSl_li"
+        ref={props.index === props.data.length - 5 ? props.ref1 : null}
+      >
         <div className="BepSl_crd-wr">
           <div className="BepSl_crd" onClick={handleCardClick}>
             <div className="VdEl_icn-wr1">
@@ -311,7 +375,7 @@ const VideoSlide = (props: any) => {
                             toggleMute();
                           }}
                         >
-                          {!silent ? (
+                          {!silent && !playerState.isMuted ? (
                             <div className="VdEl_icn-vol-full">
                               <svg className="vj_icn vj_volume">
                                 <use xlinkHref="#vj_volume"></use>
@@ -342,12 +406,12 @@ const VideoSlide = (props: any) => {
                         className="VdEl_sk_pp-btn"
                         onClick={(e) => {
                           e.stopPropagation();
-                          console.log("toggle play exec------->");
+                          // console.log("toggle play exec------->");
                           togglePlay();
                         }}
                       >
                         <div className="VdEl_sk_pp VdEl_ripl-lgt">
-                          {playerState.isPlaying ? (
+                          {!playerState.isPlaying ? (
                             <svg className="VdEl_sk_pp-ic1 vj_icn vj_play">
                               <use xlinkHref="#vj_play1" />
                             </svg>
@@ -493,28 +557,67 @@ const VideoSlide = (props: any) => {
                         {/* Progress Bar */}
                         <div className="VdEl_lod-wrp">
                           <div
-                            className="VdEl_lod crsr_ptr"
-                            ref={seekBar}
+                            style={{ padding: "4px 0", cursor: "pointer" }}
                             onClick={(e) => {
+                              e.stopPropagation()
                               handleVideoProgress(e);
                               handleOnTimeUpdate();
                             }}
                             {...(isMobile
                               ? {
-                                  onTouchStart: (e) => {},
-                                  onTouchMove: (e) => {},
-                                  onTouchEnd: (e) => {},
+                                  onTouchStart: (e) => {
+                                    // e.stopPropagation();
+                                    console.log("touch started");
+                                    setIsDragging(true);
+                                  },
+                                  onTouchMove: (e) => {
+                                    // e.stopPropagation();
+                                    if (isDragging == true) {
+                                      console.log("touch moving");
+                                      onSliderMove(e);
+                                      handleVideoProgress(e);
+                                    }
+                                  },
+                                  onTouchEnd: (e) => {
+                                    // e.stopPropagation();
+                                    console.log("touch ended");
+                                    setIsDragging(false);
+                                  },
                                 }
                               : {
-                                  onMouseMove: (e) => {
-                                    // onSliderMove(e);
-                                    // handleVideoProgress(e);
+                                  onMouseDown: (e) => {
+                                    // e.stopPropagation();
+                                    console.log("mouse down");
+                                    setIsDragging(true);
                                   },
-                                  onMouseOut: (e) => {},
+
+                                  onMouseMove: (e) => {
+                                    // e.stopPropagation();
+                                    if (isDragging == true) {
+                                      onSliderMove(e);
+                                      handleVideoProgress(e);
+                                    }
+                                  },
+                                  onMouseUp: (e) => {
+                                    // e.stopPropagation();
+                                    setIsDragging(false);
+                                    console.log("mouse up");
+                                  },
                                 })}
                           >
-                            <div className="VdEl_lod-br" ref={progressBar}>
-                              <div className="VdEl_dot" ref={seekThumb}></div>
+                            <div className="VdEl_lod crsr_ptr" ref={seekBar}>
+                              <div
+                                className="VdEl_lod-br"
+                                ref={progressBar}
+                                onMouseDown={() => {
+                                  console.log("progressbar mousedown");
+                                }}
+                                onMouseUp={() => {
+                                  console.log("progressbar mouse up");
+                                }}
+                              >
+                                <div className="VdEl_dot" ref={seekThumb}></div>
+                              </div>
                             </div>
                           </div>
                           {/* Time */}

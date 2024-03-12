@@ -35,12 +35,21 @@ const useVideoPlayer = (
   };
 
   const playVideo = useCallback(() => {
+    setPlayerState((previousplayerState) => {
+      previousplayerState.isPlaying = true;
+      return { ...previousplayerState };
+    });
     videoElemRef.current.play();
-  }, [videoElemRef]);
+  }, []);
 
   const pauseVideo = useCallback(() => {
+    setPlayerState((previousplayerState) => {
+      previousplayerState.isPlaying = false;
+      return { ...previousplayerState };
+    });
+
     videoElemRef.current.pause();
-  }, [videoElemRef]);
+  }, []);
 
   const muteVideo = useCallback(() => {
     setPlayerState((previousplayerState) => {
@@ -48,10 +57,9 @@ const useVideoPlayer = (
       return { ...previousplayerState };
     });
     videoElemRef.current.muted = true;
-    if (silent !== true) {
-      setSilent(true);
-    }
-  }, [silent]);
+    // silent : true silent: false
+      setSilent(true); 
+  }, []);
 
   const unMuteVideo = useCallback(() => {
     setPlayerState((previousplayerState) => {
@@ -59,17 +67,15 @@ const useVideoPlayer = (
       return { ...previousplayerState };
     });
     videoElemRef.current.muted = false;
-    if (silent !== false) {
       setSilent(false);
-    }
-  }, [silent]);
+  }, []);
 
   const togglePlay = useCallback(() => {
     setPlayerState((prevState) => ({
       ...prevState,
       isPlaying: !prevState.isPlaying,
     }));
-    if (playerState.isPlaying === true) {
+    if (playerState.isPlaying === false) {
       playVideo();
     } else {
       pauseVideo();
@@ -81,9 +87,12 @@ const useVideoPlayer = (
       ...prevState,
       isMuted: !prevState.isMuted,
     }));
+    // console.log("hello sourav volume is muted:",playerState.isMuted)
     if (playerState.isMuted === true) {
+      // console.log("hello sourav volume is muted if:",playerState.isMuted)
       unMuteVideo();
     } else {
+      // console.log("hello sourav volume is muted else:",playerState.isMuted)
       muteVideo();
     }
   }, [playerState.isMuted]);
@@ -95,12 +104,21 @@ const useVideoPlayer = (
     }));
   }, [playerState.isMetaLoaded]);
 
+  const isTouchEvent = event => event.type.startsWith('touch');
+
+const getEventX = event => {
+  if (isTouchEvent(event)) {
+    return event.touches[0].pageX;
+  } else {
+    return event.clientX;
+  }
+};
+  
   const handleVideoProgress = useCallback((event: any) => {
-    const clickX =
-      event.clientX - seekBarRef.current.getBoundingClientRect().left;
+    const clickX = getEventX(event) - seekBarRef.current.getBoundingClientRect().left;
     const seekBarWidth = seekBarRef.current.offsetWidth;
 
-    const progress = (clickX / seekBarWidth) * 100; // Calculate progress in percentage
+    const progress = (clickX / seekBarWidth) * 100;
     setPlayerState((prevState) => ({
       ...prevState,
       progress,
@@ -109,8 +127,6 @@ const useVideoPlayer = (
     if (progressBarRef.current) {
       progressBarRef.current.style.width = `${progress}%`;
     }
-
-    // Calculate the new time based on the click position
     const newTime = (clickX / seekBarWidth) * videoElemRef.current.duration;
     videoElemRef.current.currentTime = newTime;
   }, []);

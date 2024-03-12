@@ -55,6 +55,7 @@ export default function Index() {
   async function loadMore() {
     setLoading(true);
     try {
+      console.log("calling load more")
       const response = await fetchVideos(page);
       if (!response.results) {
         throw new Response("Not Found", { status: 404 });
@@ -82,7 +83,7 @@ export default function Index() {
     hasNextPage,
     onLoadMore: loadMore,
     disabled: !!error,
-    rootMargin: '0px 400px 0px 0px',
+    rootMargin: '0px 400px 0px 400px',
   });
 
   return (

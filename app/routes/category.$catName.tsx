@@ -82,7 +82,7 @@ const CategoryIdComponent = () => {
     hasNextPage,
     onLoadMore: loadMore,
     disabled: !!error,
-    rootMargin: '0px 400px 0px 0px',
+    rootMargin: '0px 400px 0px 400px',
   });
 //   const [infiniteRef] = useInfiniteScroll({
 //     loading,

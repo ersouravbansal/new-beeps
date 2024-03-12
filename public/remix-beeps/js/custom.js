@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  console.log("Hello Krishana")
+  // console.log("Hello Krishana")
   "use strict";
   //------ 1. Left Side Navigation Trigger START	
   $('.side-nav-trigger, .search-trigger, .drp-trigger, .match-trigger, .lst-trg').on('click', function () {
@@ -766,7 +766,7 @@ $(".back-to-top, .fltr_nav-src").click(function () {
 
   window.updateDivSticky = function (base, addRemClass) {
     var contPanel = base; // ;
-    var totalTop = contPanel.offset().top - pageYOffset;
+    var totalTop = contPanel.offset()?.top - pageYOffset;
     //    updateLog("=====top pos: " + " ;  totalTop: " + totalTop + " ;  height:  " + contPanel.height());
     if (totalTop < 0) {
       var maxReach = Math.abs(totalTop);
