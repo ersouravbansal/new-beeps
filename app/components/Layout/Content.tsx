@@ -252,7 +252,7 @@ const Content = (props: {
                   handleTimeout(index);
                 }, 0);
               });
-              playActiveSlideVideo(this);
+              // playActiveSlideVideo(this);
             },
             slideChange: function () {
               if (timeoutIDs[this.realIndex]) {
@@ -261,7 +261,7 @@ const Content = (props: {
               timeoutIDs[this.realIndex] = setTimeout(function () {
                 handleTimeout(mySwiper.realIndex);
               }, 0);
-              playActiveSlideVideo(this);
+              // playActiveSlideVideo(this);
             },
           },
         });
