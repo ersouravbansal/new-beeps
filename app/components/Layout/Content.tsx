@@ -22,8 +22,7 @@ const Content = (props: {
 
   function playActiveSlideVideo(swiper) {
     var activeSlide = swiper.slides[swiper.activeIndex];
-    var activeSlideVideo = activeSlide ? activeSlide.querySelector("video") : null;
-
+    var activeSlideVideo = activeSlide.querySelector("video");
     // if (activeSlideVideo) {
     //     activeSlideVideo.play();
     // }
@@ -252,7 +251,7 @@ const Content = (props: {
                   handleTimeout(index);
                 }, 0);
               });
-              // playActiveSlideVideo(this);
+              playActiveSlideVideo(this);
             },
             slideChange: function () {
               if (timeoutIDs[this.realIndex]) {
@@ -261,7 +260,7 @@ const Content = (props: {
               timeoutIDs[this.realIndex] = setTimeout(function () {
                 handleTimeout(mySwiper.realIndex);
               }, 0);
-              // playActiveSlideVideo(this);
+              playActiveSlideVideo(this);
             },
           },
         });
