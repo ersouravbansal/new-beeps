@@ -192,6 +192,7 @@ const Content = (props: {
   //   },
   // };
   useEffect(() => {
+    if (document.readyState === "complete") {
     $(function () {
       // mySwiper = new Swiper(".BepSl_rw", swiperOptions);
       if (mySwiper) {
@@ -278,7 +279,7 @@ const Content = (props: {
         mySwiper.init();
       }
     });
-
+  }
     return () => {
     };
   }, [props.videoData,clicked]);
