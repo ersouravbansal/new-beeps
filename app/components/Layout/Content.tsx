@@ -22,7 +22,7 @@ const Content = (props: {
 
   function playActiveSlideVideo(swiper) {
     var activeSlide = swiper.slides[swiper.activeIndex];
-    var activeSlideVideo = activeSlide.querySelector("video");
+    // var activeSlideVideo = activeSlide.querySelector("video");
     // if (activeSlideVideo) {
     //     activeSlideVideo.play();
     // }
