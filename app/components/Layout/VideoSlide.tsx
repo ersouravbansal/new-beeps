@@ -351,6 +351,7 @@ const VideoSlide = (props: any) => {
                   preload="auto"
                   width="100%"
                   height="100%"
+                  loop
                   // playsInline
                 />
                 {/*====== Seek bar ( Play / Pause, Time, Next Prev, Progress Bar, Related Button ) ======*/}
