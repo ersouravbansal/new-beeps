@@ -29,8 +29,9 @@ const Content = (props: {
   }
   function handleTimeout(index:any) {
     var activeSlide = document.querySelectorAll('.swiper-slide')[index];
+    console.log("active slide:",activeSlide)
     var allSlides = document.querySelectorAll('.swiper-slide');
-  
+    console.log("all slides:",allSlides)
     allSlides.forEach((slide) => {
       slide.classList.remove('js_icon-more');
     });
