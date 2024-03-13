@@ -4,7 +4,7 @@ import type { LoaderFunction } from "@remix-run/server-runtime";
 import axios from "axios";
 
 import { CATEGORY_NAME } from "~/components/Layout/CategoryName";
-const pageSize = 15;
+const pageSize = 10;
 let search_api_url = "";
 if (typeof process !== "undefined") {
   search_api_url = process.env.REMIX_APP_BEEPS_SEARCH_API_BASE_URL || "";

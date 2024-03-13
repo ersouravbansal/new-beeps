@@ -8,7 +8,7 @@ import useInfiniteScroll from "~/hooks/useInfiniteScrollCustom";
 import Content from "~/components/Layout/Content";
 import useStore from "~/stores/utilstore";
 
-const pageSize = 15;
+const pageSize = 10;
 const cleanUp = (st: string | undefined) => {
   if (st) {
     return st

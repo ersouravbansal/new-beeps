@@ -199,7 +199,7 @@ const VideoSlide = (props: any) => {
     <>
       <div
         className="swiper-slide BepSl_li"
-        ref={props.index === props.data.length - 5 ? props.ref1 : null}
+        ref={props.index === props.data.length - 4 ? props.ref1 : null}
       >
         <div className="BepSl_crd-wr">
           <div className="BepSl_crd" onClick={handleCardClick}>

@@ -1,11 +1,12 @@
 // Content.tsx
 
 import { Link } from "@remix-run/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import VideoSlide from "~/components/Layout/VideoSlide";
 import $ from "jquery";
 import Swiper from "swiper";
 import useStore from "~/stores/utilstore";
+import { useLocation } from "@remix-run/react";
 import { cli } from "@remix-run/dev";
 let mySwiper: any;
 let timeoutIDs: any = [];
@@ -16,6 +17,10 @@ const Content = (props: {
   catId?: number;
   catName?: string;
 }) => {
+  const location = useLocation();
+  const prevPath = useRef("");
+  const isPathChange= location.pathname !== prevPath.current
+  // console.log("location is", location.pathname, prevPath.current, isPathChange);
   const isVideoAvailable = (props.videoData?.results?.length || 0) > 0;
   const clicked = useStore((state) => state.clicked);
   const setClicked = useStore((state) => state.setClicked);
@@ -27,80 +32,77 @@ const Content = (props: {
     //     activeSlideVideo.play();
     // }
   }
-  function handleTimeout(index:any) {
-    var activeSlide = document.querySelectorAll('.swiper-slide')[index];
-    // console.log("active slide:",activeSlide)
-    var allSlides = document.querySelectorAll('.swiper-slide');
-    // console.log("all slides:",allSlides)
+  function handleTimeout(index: any) {
+    var activeSlide = document.querySelectorAll(".swiper-slide")[index];
+    var allSlides = document.querySelectorAll(".swiper-slide");
+
     allSlides.forEach((slide) => {
-      slide.classList.remove('js_icon-more');
+      slide.classList.remove("js_icon-more");
     });
-  
-    activeSlide.classList.add('js_seek-vis-sec');
-    activeSlide.classList.remove('js_swp-vis');
-  
+
+    activeSlide.classList.add("js_seek-vis-sec");
+    activeSlide.classList.remove("js_swp-vis");
+
     if (window.innerWidth <= 560) {
       if (!clicked) {
-        activeSlide.classList.add('js_seek-vis-sec');
-        if(index===0){
-        activeSlide.classList.add('js_swp-vis');
-      }
+        activeSlide.classList.add("js_seek-vis-sec");
+        if (index === 0) {
+          activeSlide.classList.add("js_swp-vis");
+        }
         setTimeout(function () {
-          activeSlide.classList.remove('js_seek-vis-sec');
-          activeSlide.classList.remove('js_icon-more');
-          document.body.classList.remove('VdElCht_on');
+          activeSlide.classList.remove("js_seek-vis-sec");
+          activeSlide.classList.remove("js_icon-more");
+          document.body.classList.remove("VdElCht_on");
         }, 6000);
       }
     }
-  
+
     if (window.innerWidth >= 560) {
       if (!clicked) {
-        activeSlide.classList.add('js_seek-vis-sec');
-  
+        activeSlide.classList.add("js_seek-vis-sec");
+
         setTimeout(function () {
-          activeSlide.classList.remove('js_seek-vis-sec');
-          activeSlide.classList.remove('js_icon-more');
+          activeSlide.classList.remove("js_seek-vis-sec");
+          activeSlide.classList.remove("js_icon-more");
         }, 6000);
       }
     }
   }
-  
-//   function handleTimeout(index:any) {
-//     var activeSlide = $('.swiper-slide').eq(index);
-//     $('.swiper-slide').removeClass('js_icon-more');
 
-//     activeSlide.addClass('js_seek-vis-sec');
-//     activeSlide.removeClass('js_swp-vis');
-//     if ($(window).width() <= 560) {
+  //   function handleTimeout(index:any) {
+  //     var activeSlide = $('.swiper-slide').eq(index);
+  //     $('.swiper-slide').removeClass('js_icon-more');
 
-//         if (!clicked) {
-//             activeSlide.addClass('js_seek-vis-sec');
-//             activeSlide.addClass('js_swp-vis');
+  //     activeSlide.addClass('js_seek-vis-sec');
+  //     activeSlide.removeClass('js_swp-vis');
+  //     if ($(window).width() <= 560) {
 
+  //         if (!clicked) {
+  //             activeSlide.addClass('js_seek-vis-sec');
+  //             activeSlide.addClass('js_swp-vis');
 
-//            setTimeout(function () {
-//                 activeSlide.removeClass('js_seek-vis-sec');
-//                 activeSlide.removeClass('js_icon-more');
-//                 $("body").removeClass('VdElCht_on');
+  //            setTimeout(function () {
+  //                 activeSlide.removeClass('js_seek-vis-sec');
+  //                 activeSlide.removeClass('js_icon-more');
+  //                 $("body").removeClass('VdElCht_on');
 
-//             }, 6000);
-//         }
-//     }
-//     if ($(window).width() >= 560) {
+  //             }, 6000);
+  //         }
+  //     }
+  //     if ($(window).width() >= 560) {
 
-//         if (!clicked) {
-//             activeSlide.addClass('js_seek-vis-sec');
-//             //  activeSlide.addClass('js_swp-vis');
+  //         if (!clicked) {
+  //             activeSlide.addClass('js_seek-vis-sec');
+  //             //  activeSlide.addClass('js_swp-vis');
 
+  //             setTimeout(function () {
+  //                 activeSlide.removeClass('js_seek-vis-sec');
+  //                 activeSlide.removeClass('js_icon-more');
 
-//             setTimeout(function () {
-//                 activeSlide.removeClass('js_seek-vis-sec');
-//                 activeSlide.removeClass('js_icon-more');
-
-//             }, 6000);
-//         }
-//     }
-// }
+  //             }, 6000);
+  //         }
+  //     }
+  // }
 
   //   var activeSlide = $(".swiper-slide").eq(index);
   //   $(".swiper-slide").removeClass("js_icon-more");
@@ -195,7 +197,12 @@ const Content = (props: {
   useEffect(() => {
     $(function () {
       // mySwiper = new Swiper(".BepSl_rw", swiperOptions);
+      if(isPathChange && mySwiper){
+        mySwiper.destroy();
+        mySwiper=null
+      }
       if (mySwiper) {
+        // console.log("old swiper found", mySwiper);
         mySwiper.update();
       } else {
         mySwiper = new Swiper(".BepSl_rw", {
@@ -277,11 +284,12 @@ const Content = (props: {
         // });
         // }
         mySwiper.init();
+        // console.log("new swiper initiated", mySwiper);
       }
     });
-    return () => {
-    };
-  }, [props.videoData,clicked]);
+
+    return () => {};
+  }, [props.videoData, clicked, props.catName, isPathChange]);
   useEffect(() => {
     if (clicked === true) {
       if (mySwiper.realIndex && timeoutIDs[mySwiper.realIndex]) {
@@ -289,6 +297,9 @@ const Content = (props: {
       }
     }
   }, [clicked]);
+  useEffect(() => {
+    prevPath.current = location.pathname;
+  }, [location.pathname,]);
   return (
     <>
       {/*============== Middle with two column option ==============*/}
@@ -369,3 +380,4 @@ const Content = (props: {
 };
 
 export default Content;
+

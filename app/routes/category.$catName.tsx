@@ -10,7 +10,7 @@ import Content from "~/components/Layout/Content";
 // import LoadingVideos from "~/components/LoadingVideos";
 import useStore from "~/stores/utilstore";
 
-const pageSize = 15;
+const pageSize = 10;
 
 async function fetchVideos({ pageNumber = 1, catName } = {}) {
   const api_url = typeof process !== "undefined" ? process.env.REMIX_API_URL || "" : "";

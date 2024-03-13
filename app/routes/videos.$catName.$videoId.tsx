@@ -7,7 +7,7 @@ import useInfiniteScroll from "~/hooks/useInfiniteScrollCustom";
 import Content from "~/components/Layout/Content";
 import useStore from "~/stores/utilstore";
 
-const pageSize = 5;
+const pageSize = 10;
 const cleanUp = (st:String) => {
   return st
     .replace(/[^a-z0-9]+/gi, "-")

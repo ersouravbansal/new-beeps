@@ -1,7 +1,7 @@
 import { json } from "@remix-run/node";
 import type { LoaderFunction } from "@remix-run/server-runtime";
 import axios from "axios";
-    const pageSize = 15;
+    const pageSize = 10;
     let single_vid_search_api_url = process.env.REMIX_APP_SINGLE_VID_SEARCH_API_BASE_URL || "";
     let single_vid_search_api_key = process.env.REMIX_APP_SINGLE_VID_SEARCH_API_KEY || "";
 
