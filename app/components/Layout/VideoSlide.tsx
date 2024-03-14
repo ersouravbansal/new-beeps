@@ -73,12 +73,23 @@ const VideoSlide = (props: any) => {
       .replace(/^-+/, "")
       .replace(/-+$/, "");
   };
-
+  const handleShareClick = (title, url) => {
+    console.log("title", title);
+    console.log("url", url);
+    if (navigator.share !== undefined) {
+      navigator
+        .share({
+          title: title,
+          url: url,
+        })
+        .catch((error) => console.error("Error sharing:", error));
+    }
+  };
   const handleCardClick = (event) => {
     if (window.innerWidth <= 560) {
       setClicked(true);
       event.stopPropagation();
-  
+
       const swiperSlideActive = event.target.closest(".swiper-slide-active");
       if (swiperSlideActive) {
         swiperSlideActive.classList.toggle("js_seek-vis-sec");
@@ -89,7 +100,7 @@ const VideoSlide = (props: any) => {
         } else {
           swiperSlideActive.classList.remove("js_swp-vis");
         }
-  
+
         if (bepSlLi && bepSlLi.classList.contains("js_swp-vis")) {
           bepSlLi.classList.toggle("js_seek-vis");
         } else {
@@ -98,7 +109,7 @@ const VideoSlide = (props: any) => {
       }
     }
   };
-  
+
   // const handleCardClick = (event: any) => {
   //   if ($(window).width() <= 560) {
   //     setClicked(true);
@@ -216,7 +227,15 @@ const VideoSlide = (props: any) => {
               <div className="VdEl_icn-lk">
                 <div className="VdEl_icn">
                   {/* Share */}
-                  <div className="SSR_drp SSR_btn-sm  SSR_drp-nav-tp VdEl_shr-pp">
+                  <div
+                    className="SSR_drp SSR_btn-sm  SSR_drp-nav-tp VdEl_shr-pp crsr_ptr"
+                    onClick={(e) => {
+                      if (isMobile) {
+                        e.stopPropagation();
+                        handleShareClick(props.title, getUrl);
+                      }
+                    }}
+                  >
                     <a className="SSR_btn-lnk" href="javascript:void(0)">
                       <svg className="SSR_icn vj_icn vj_share2">
                         <use xlinkHref="#vj_share2"></use>
@@ -271,6 +290,7 @@ const VideoSlide = (props: any) => {
                           <a
                             className="SSR_drp-nav-lnk"
                             href={`https://www.reddit.com/r/technology/submit?url=${getUrl}&title=${props.title}`}
+                            target="_blank"
                           >
                             <svg className="vj_icn vj_reddit-fill vj_ss-icn">
                               <use xlinkHref="#vj_reddit-fill"></use>
@@ -450,7 +470,15 @@ const VideoSlide = (props: any) => {
                         <div className="VdEl_icn-lk">
                           <div className="VdEl_icn">
                             {/* Share */}
-                            <div className="SSR_drp SSR_btn-sm  SSR_drp-nav-tp VdEl_shr-pp">
+                            <div
+                              className="SSR_drp SSR_btn-sm  SSR_drp-nav-tp VdEl_shr-pp crsr_ptr"
+                              onClick={(e) => {
+                                if (isMobile) {
+                                  e.stopPropagation();
+                                  handleShareClick(props.title, getUrl);
+                                }
+                              }}
+                            >
                               <a
                                 className="SSR_btn-lnk"
                                 href="javascript:void(0)"
@@ -560,7 +588,7 @@ const VideoSlide = (props: any) => {
                           <div
                             style={{ padding: "4px 0", cursor: "pointer" }}
                             onClick={(e) => {
-                              e.stopPropagation()
+                              e.stopPropagation();
                               handleVideoProgress(e);
                               handleOnTimeUpdate();
                             }}
