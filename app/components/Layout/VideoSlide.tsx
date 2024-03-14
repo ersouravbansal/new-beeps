@@ -85,6 +85,9 @@ const VideoSlide = (props: any) => {
         .catch((error) => console.error("Error sharing:", error));
     }
   };
+  const removeTags = (title: any) => {
+    return title.replace(/<[^>]*>?/gm, "");
+  };
   const handleCardClick = (event) => {
     if (window.innerWidth <= 560) {
       setClicked(true);
@@ -454,7 +457,9 @@ const VideoSlide = (props: any) => {
                   <div className="VdEl_lod-rw">
                     <div className="VdEl_lod-cl">
                       <div className="VdEl_inf-wr">
-                        <div className="VdEl_inf">{props.title}</div>
+                        <div className="VdEl_inf">
+                          {removeTags(props.title)}
+                        </div>
                         {/* <div class="VdEl_inf-mr">more</div> */}
                       </div>
                       <div className="VdEl_icn-wr">

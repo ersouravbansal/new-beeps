@@ -15,7 +15,7 @@ import Header from "./components/Layout/Header";
 import SideNavigation from "./components/Layout/SideNavigation";
 import SvgIcons from "./components/Layout/SvgIcons";
 import Login from "./components/Layout/Login";
-import LanguageSwitch from "./components/Layout/LanguageSwitch";
+// import LanguageSwitch from "./components/Layout/LanguageSwitch";
 import MoreSwipe from "./components/Layout/MoreSwipe";
 import $ from "jquery";
 import { LinksFunction } from "@remix-run/node";
@@ -104,6 +104,10 @@ export function Layout({ children }: any) {
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
         {/* <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> */}
         <script src={`/remix-beeps/js/beep-video.js`}></script>
+        <script
+          async
+          src="https://www.googletagservices.com/tag/js/gpt.js"
+        ></script>
       </body>
     </html>
   );
@@ -116,7 +120,7 @@ export default function App() {
       <Header />
       <SideNavigation />
       <Login />
-      <LanguageSwitch />
+      {/* <LanguageSwitch /> */}
       <MoreSwipe />
       <div>
         {/*======[ Side nav Overlay ]======*/}

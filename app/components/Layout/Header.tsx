@@ -1,11 +1,13 @@
 import { Link, Outlet, useLocation } from "@remix-run/react";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CATEGORY_LIST, CATEGORY_NAME } from "./CategoryName";
+import useGptSlot from "~/hooks/useGptSlot"
 
 const Header = () => {
   const location = useLocation();
   const [query, setQuery] = useState("");
   const [errors, setErrors] = useState("");
+  const gptRef=useRef()
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!query.trim()) {
@@ -15,6 +17,12 @@ const Header = () => {
     setErrors("");
     window.location.href = `/search/?q=` + query;
   };
+
+    useGptSlot({
+      path: '/6355419/Travel/Europe/France/Paris',
+      size: [300,"fluid"],
+      id: 'gpt-ad',
+     });
   return (
     <>
       {/*====== Content ( LHS, Main Content and RHS ) ======*/}
@@ -53,7 +61,7 @@ const Header = () => {
                         />
                       </a>
                       {/*== Language dropdown icon==*/}
-                      <div
+                      {/* <div
                         className="tp_lng side-nav-trigger"
                         data-trigger=".nav-trigger"
                         data-class="js_SchLng"
@@ -63,7 +71,7 @@ const Header = () => {
                             <use xlinkHref="#vj_lang-toggle" />
                           </svg>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -158,13 +166,14 @@ const Header = () => {
               {/*=== Advertisement ===*/}
               <a className="ads-wrp" href="#">
                 <span className="ads-wrp_txt">Advertisement</span>
-                <img
+                <div id="gpt-ad"></div>
+                {/* <img
                   src="https://s0.2mdn.net/simgad/1116328456205855164"
                   border={0}
                   width={300}
                   alt=""
                   className="img_ad"
-                />
+                /> */}
               </a>
             </div>
           </div>
@@ -205,7 +214,7 @@ const Header = () => {
                           />
                         </a>
                         {/*== Language dropdown icon==*/}
-                        <div
+                        {/* <div
                           className="tp_lng side-nav-trigger"
                           data-trigger=".nav-trigger"
                           data-class="js_SchLng"
@@ -215,7 +224,7 @@ const Header = () => {
                               <use xlinkHref="#vj_lang-toggle" />
                             </svg>
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                     </nav>
                     {/* Right Icons, Notification and Search */}
