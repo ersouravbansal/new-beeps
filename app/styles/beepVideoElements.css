@@ -212,7 +212,7 @@
 }
 
 .VdEl_icn-mute {
-    display: inline-block;
+    display: flex;
 }
 
 .js_icon-more .VdElMr_ovrly {

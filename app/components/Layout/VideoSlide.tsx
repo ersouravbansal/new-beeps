@@ -33,6 +33,7 @@ const VideoSlide = (props: any) => {
   } = VideoPlayer(videoElement, seekBar, progressBar, seekThumb);
 
   const autoPlayVideo = useCallback(() => {
+    console.log("autoPlayVideo called");
     if (videoElement.current && silent) {
       videoElement.current.muted = true;
     }
@@ -44,10 +45,14 @@ const VideoSlide = (props: any) => {
           if (videoElement.current?.muted === false) {
             // setSilent(false);
             unMuteVideo();
+            console.log("unmuted video if try");
           } else if (videoElement.current?.muted === true) {
             muteVideo();
+            console.log("muted video else if try");
           }
+          console.log("playing video try");
           playVideo();
+          console.log("played video try");
         })
         .catch(() => {
           muteVideo();
@@ -55,10 +60,13 @@ const VideoSlide = (props: any) => {
           if (playPromise != null) {
             playPromise
               .then(() => {
+                console.log("playing video muted catch")
                 playVideo();
+                console.log("played video muted catch")
               })
               .catch(() => {
                 if (videoElement.current) {
+                  console.log("cant play video catch")
                   videoElement.current.poster = props.imgsrc;
                 }
               });
@@ -113,28 +121,6 @@ const VideoSlide = (props: any) => {
     }
   };
 
-  // const handleCardClick = (event: any) => {
-  //   if ($(window).width() <= 560) {
-  //     setClicked(true);
-  //     event.stopPropagation();
-
-  //     $(this).parents(".swiper-slide-active").toggleClass("js_seek-vis-sec");
-  //     if ($(this).parents(".BepSl_li").hasClass("js_seek-vis-sec")) {
-  //       $(this)
-  //         .parents(".BepSl_li")
-  //         .addClass("js_swp-vis")
-  //         .removeClass("js_seek-vis-sec");
-  //     } else {
-  //       $(this).parents(".swiper-slide-active").removeClass("js_swp-vis");
-  //     }
-
-  //     if ($(this).parents(".BepSl_li").hasClass("js_swp-vis")) {
-  //       $(this).parents(".BepSl_li").toggleClass("js_seek-vis");
-  //     } else {
-  //       //   $(this).parents('.swiper-slide-active').removeClass('js_seek-vis');
-  //     }
-  //   }
-  // };
 
   const CopyLink = () => {
     const currentURL = window.location.href;
@@ -153,12 +139,14 @@ const VideoSlide = (props: any) => {
     window.location.href = `mailto:?subject=${emailSubject}&body=${emailBody}`;
   };
   useEffect(() => {
+    console.log("hello sourav from observer");
     const originUrl = window.location.origin;
     const currentUrl = `${originUrl}/videos/${cleanUp(
       props.urltitle
     ).toLowerCase()}-${props.videoID}`;
     const updatedUrl = encodeURIComponent(currentUrl);
     setGetUrl(updatedUrl);
+    console.log("get url is",getUrl)
 
     return;
   }, [props.urltitle, props.videoID]);
@@ -199,7 +187,7 @@ const VideoSlide = (props: any) => {
   useEffect(() => {
     const options = {
       rootMargin: "0px",
-      threshold: [1],
+      threshold: [0.8],
     };
     const currentVideoElement = videoElement.current;
     const observer = new IntersectionObserver(handlePlay, options);
@@ -370,7 +358,7 @@ const VideoSlide = (props: any) => {
                     handleOnTimeUpdate();
                   }}
                   onLoadedMetadata={handleOnMetaLoaded}
-                  muted
+                  // muted
                   preload="auto"
                   width="100%"
                   height="100%"

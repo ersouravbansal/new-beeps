@@ -13,7 +13,7 @@ const useVideoPlayer = (
     isPlaying: false,
     progress: 0,
     speed: 1,
-    isMuted: false,
+    isMuted: true,
     isMetaLoaded: false,
     hoverTime: 0,
   });
@@ -150,23 +150,6 @@ const getEventX = event => {
       hoverTime: newHoverTime,
     }));
   };
-  
-  // const onSliderMove = (e: any) => {
-  //   let hoverTime =
-  //     (e.clientX - seekBarRef.current.getBoundingClientRect().left) /
-  //     e.currentTarget.clientWidth *
-  //     videoElemRef.current?.duration;
-
-  //   if (hoverTime < 0) {
-  //     hoverTime = 0;
-  //   }
-
-  //   setPlayerState((previousplayerState) => ({
-  //     ...previousplayerState,
-  //     hoverTime,
-  //   }));
-  // };
-
   const handleOnTimeUpdate = useCallback(() => {
     const progress =
       (videoElemRef.current.currentTime / videoElemRef.current.duration) * 100;
