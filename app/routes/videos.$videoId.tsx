@@ -72,7 +72,8 @@ export const meta: MetaFunction = ({ data, params }) => {
         { httpEquiv: "X-UA-Compatible", content: "IE=edge" },
 
         { "og:title": cleanUp(currentVideo.urltitle).toLowerCase() },
-        { "og:image": currentVideo["media:thumbnail"] },
+        { "og:image": currentVideo["media:fullimage"] },
+        // { "og:image": currentVideo["media:thumbnail"] },
       ];
     }
   }
