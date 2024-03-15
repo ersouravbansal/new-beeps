@@ -47,7 +47,6 @@ const useVideoPlayer = (
       previousplayerState.isPlaying = false;
       return { ...previousplayerState };
     });
-
     videoElemRef.current.pause();
   }, []);
 
@@ -57,8 +56,7 @@ const useVideoPlayer = (
       return { ...previousplayerState };
     });
     videoElemRef.current.muted = true;
-    // silent : true silent: false
-      setSilent(true); 
+    setSilent(true);
   }, []);
 
   const unMuteVideo = useCallback(() => {
@@ -67,7 +65,7 @@ const useVideoPlayer = (
       return { ...previousplayerState };
     });
     videoElemRef.current.muted = false;
-      setSilent(false);
+    setSilent(false);
   }, []);
 
   const togglePlay = useCallback(() => {
@@ -87,12 +85,9 @@ const useVideoPlayer = (
       ...prevState,
       isMuted: !prevState.isMuted,
     }));
-    // console.log("hello sourav volume is muted:",playerState.isMuted)
     if (playerState.isMuted === true) {
-      // console.log("hello sourav volume is muted if:",playerState.isMuted)
       unMuteVideo();
     } else {
-      // console.log("hello sourav volume is muted else:",playerState.isMuted)
       muteVideo();
     }
   }, [playerState.isMuted]);
@@ -104,18 +99,19 @@ const useVideoPlayer = (
     }));
   }, [playerState.isMetaLoaded]);
 
-  const isTouchEvent = event => event.type.startsWith('touch');
+  const isTouchEvent = (event) => event.type.startsWith("touch");
 
-const getEventX = event => {
-  if (isTouchEvent(event)) {
-    return event.touches[0].pageX;
-  } else {
-    return event.clientX;
-  }
-};
-  
+  const getEventX = (event) => {
+    if (isTouchEvent(event)) {
+      return event.touches[0].pageX;
+    } else {
+      return event.clientX;
+    }
+  };
+
   const handleVideoProgress = useCallback((event: any) => {
-    const clickX = getEventX(event) - seekBarRef.current.getBoundingClientRect().left;
+    const clickX =
+      getEventX(event) - seekBarRef.current.getBoundingClientRect().left;
     const seekBarWidth = seekBarRef.current.offsetWidth;
 
     const progress = (clickX / seekBarWidth) * 100;
@@ -135,16 +131,16 @@ const getEventX = event => {
     const clickX = isMobile ? e.touches[0].clientX : e.clientX;
     const relativeX = clickX - seekBarRect.left;
     const seekBarWidth = seekBarRect.width;
-  
+
     const videoDuration = videoElemRef.current?.duration || 0;
     let newHoverTime = (relativeX / seekBarWidth) * videoDuration;
-  
+
     if (newHoverTime < 0) {
       newHoverTime = 0;
     } else if (newHoverTime > videoDuration) {
       newHoverTime = videoDuration;
     }
-  
+
     setPlayerState((previousplayerState) => ({
       ...previousplayerState,
       hoverTime: newHoverTime,

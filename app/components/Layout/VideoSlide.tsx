@@ -4,6 +4,7 @@ import VideoPlayer from "~/hooks/useVideoPlayer";
 import useStore from "~/stores/utilstore";
 import { isMobile } from "react-device-detect";
 import { Autoplay } from "swiper/modules";
+import Hls from 'hls.js';
 
 const VideoSlide = (props: any) => {
   const [getUrl, setGetUrl] = useState("None");
@@ -16,6 +17,7 @@ const VideoSlide = (props: any) => {
   const seekBar = useRef(null);
   const progressBar = useRef(null);
   const seekThumb = useRef(null);
+  const mySwiper = props.mySwiper;
   const [isDragging, setIsDragging] = useState(false);
   const {
     toggleMute,
@@ -33,7 +35,6 @@ const VideoSlide = (props: any) => {
   } = VideoPlayer(videoElement, seekBar, progressBar, seekThumb);
 
   const autoPlayVideo = useCallback(() => {
-    console.log("autoPlayVideo called");
     if (videoElement.current && silent) {
       videoElement.current.muted = true;
     }
@@ -41,35 +42,16 @@ const VideoSlide = (props: any) => {
     if (playPromise != null) {
       playPromise
         .then(() => {
-          // console.log("muted:", videoElement.current?.muted);
           if (videoElement.current?.muted === false) {
-            // setSilent(false);
             unMuteVideo();
-            console.log("unmuted video if try");
           } else if (videoElement.current?.muted === true) {
             muteVideo();
-            console.log("muted video else if try");
           }
-          console.log("playing video try");
           playVideo();
-          console.log("played video try");
         })
         .catch(() => {
-          muteVideo();
-          let playPromise = videoElement.current?.play();
-          if (playPromise != null) {
-            playPromise
-              .then(() => {
-                console.log("playing video muted catch")
-                playVideo();
-                console.log("played video muted catch")
-              })
-              .catch(() => {
-                if (videoElement.current) {
-                  console.log("cant play video catch")
-                  videoElement.current.poster = props.imgsrc;
-                }
-              });
+          if (videoElement.current) {
+            videoElement.current.poster = props.imgsrc;
           }
         });
     }
@@ -82,8 +64,6 @@ const VideoSlide = (props: any) => {
       .replace(/-+$/, "");
   };
   const handleShareClick = (title, url) => {
-    console.log("title", title);
-    console.log("url", url);
     if (navigator.share !== undefined) {
       navigator
         .share({
@@ -93,8 +73,37 @@ const VideoSlide = (props: any) => {
         .catch((error) => console.error("Error sharing:", error));
     }
   };
-  const removeTags = (title: any) => {
-    return title.replace(/<[^>]*>?/gm, "");
+  const parseHTML = (htmlString: any) => {
+    const tagMap = {
+      i: "italic",
+      b: "bold",
+      u: "underline",
+      strong: "bold",
+      em: "italic",
+    };
+    const regex = /<([^>\s]+)[^>]*>(.*?)<\/\1>/g;
+    const elements = [];
+    let lastIndex = 0;
+    htmlString.replace(
+      regex,
+      (match: any, tag: any, content: any, offset: any) => {
+        elements.push(htmlString.substring(lastIndex, offset));
+
+        if (tagMap[tag]) {
+          elements.push(
+            <span style={{ fontStyle: tagMap[tag] }}>{content}</span>
+          );
+        } else {
+          elements.push(content);
+        }
+        lastIndex = offset + match.length;
+        return match;
+      }
+    );
+    if (lastIndex < htmlString.length) {
+      elements.push(htmlString.substring(lastIndex));
+    }
+    return elements;
   };
   const handleCardClick = (event) => {
     if (window.innerWidth <= 560) {
@@ -121,7 +130,6 @@ const VideoSlide = (props: any) => {
     }
   };
 
-
   const CopyLink = () => {
     const currentURL = window.location.href;
 
@@ -140,37 +148,44 @@ const VideoSlide = (props: any) => {
   };
 
   useEffect(() => {
-    console.log("hello sourav from observer");
-    const originUrl = window.location.origin;
-    const dynamicPart = `${cleanUp(props.urltitle).toLowerCase()}-${props.videoID}`;
-    const updatedUrl= encodeURIComponent(dynamicPart)
-    const currentUrl = `${originUrl}/videos/${(dynamicPart)}`;
-    setGetUrl(currentUrl);
-    // console.log("get url is", getUrl);
-  }, [props.urltitle, props.videoID]);
-  // useEffect(() => {
-  //   console.log("hello sourav from observer");
-  //   const originUrl = window.location.origin;
-  //   const currentUrl = `${originUrl}/videos/${cleanUp(
-  //     props.urltitle
-  //   ).toLowerCase()}-${props.videoID}`;
-  //   const updatedUrl = encodeURIComponent(currentUrl);
-  //   setGetUrl(updatedUrl);
-  //   console.log("get url is",getUrl)
+    let hls = null as any;
+    // console.log("HLS Sourav",Hls)
+     console.log("video url is",props.vidsrc)
+    if (Hls.isSupported()) {
+      hls = new Hls();
+      hls.loadSource(props.hlssrc);
+      hls.attachMedia(videoElement.current);
+    } else if (videoElement.current?.canPlayType('video/mp4')) {
+      videoElement.current.src = props.vidsrc;
+    }
 
-  //   return;
-  // }, [props.urltitle, props.videoID]);
-  const handlePlay = useCallback(
-    (entries: IntersectionObserverEntry[]) => {
-      const entry = entries[0];
-      if (entry.isIntersecting) {
+    return () => {
+      if (hls) {
+        hls.destroy();
+      }
+    };
+  }, [props.hlssrc,props.vidsrc]);
+
+  useEffect(() => {
+    const originUrl = window.location.origin;
+    const dynamicPart = `${cleanUp(props.urltitle).toLowerCase()}-${
+      props.videoID
+    }`;
+    const updatedUrl = encodeURIComponent(dynamicPart);
+    const currentUrl = `${originUrl}/videos/${dynamicPart}`;
+    setGetUrl(currentUrl);
+  }, [props.urltitle, props.videoID]);
+
+  useEffect(() => {
+    if (mySwiper) {
+      if (mySwiper.realIndex === 0 && mySwiper.realIndex === props.index) {
         if (urlupdate) {
           let newUrl: string;
-          autoPlayVideo();
           document.title = props.title;
           const urltitle = cleanUp(props.urltitle).toLowerCase();
           const videoID = props.videoID;
           const catName = props?.catName;
+          autoPlayVideo();
           if (catName) {
             newUrl = `/videos/${catName}/${urltitle}-${videoID}`;
             window.history.pushState({}, "", newUrl);
@@ -179,34 +194,62 @@ const VideoSlide = (props: any) => {
             window.history.pushState({}, "", newUrl);
           }
         }
-      } else {
-        pauseVideo();
       }
-    },
-    [
-      playVideo,
-      pauseVideo,
-      props.videoID,
-      urlupdate,
-      props.title,
-      props.catName,
-      props.urltitle,
-      autoPlayVideo,
-    ]
-  );
+    }
+  }, [
+    mySwiper,
+    props.index,
+    urlupdate,
+    autoPlayVideo,
+    props.urltitle,
+    props.videoID,
+    props.catName,
+    props.title,
+  ]);
+  const handleSlide = useCallback(() => {
+    if (urlupdate) {
+      let newUrl: string;
+      if (silent) {
+        muteVideo();
+        playVideo();
+      } else {
+        unMuteVideo();
+        playVideo();
+      }
+      document.title = props.title;
+      const urltitle = cleanUp(props.urltitle).toLowerCase();
+      const videoID = props.videoID;
+      const catName = props?.catName;
+      if (catName) {
+        newUrl = `/videos/${catName}/${urltitle}-${videoID}`;
+        window.history.pushState({}, "", newUrl);
+      } else {
+        newUrl = `/videos/${urltitle}-${videoID}`;
+        window.history.pushState({}, "", newUrl);
+      }
+    }
+  }, [
+    playVideo,
+    props.videoID,
+    urlupdate,
+    props.title,
+    props.catName,
+    props.urltitle,
+    silent,
+    muteVideo,
+    unMuteVideo,
+  ]);
   useEffect(() => {
-    const options = {
-      rootMargin: "0px",
-      threshold: [0.8],
-    };
-    const currentVideoElement = videoElement.current;
-    const observer = new IntersectionObserver(handlePlay, options);
-    if (currentVideoElement) observer.observe(currentVideoElement);
-    return () => {
-      if (currentVideoElement) observer.unobserve(currentVideoElement);
-      observer.disconnect();
-    };
-  }, [handlePlay]);
+    if (mySwiper) {
+      mySwiper.on("slideChange", () => {
+        if (mySwiper.realIndex === props.index) {
+          handleSlide();
+        } else {
+          pauseVideo();
+        }
+      });
+    }
+  }, [mySwiper, props.index, handleSlide, pauseVideo]);
   return (
     <>
       <div
@@ -456,7 +499,8 @@ const VideoSlide = (props: any) => {
                     <div className="VdEl_lod-cl">
                       <div className="VdEl_inf-wr">
                         <div className="VdEl_inf">
-                          {removeTags(props.title)}
+                          {/* {props.title} */}
+                          {parseHTML(props.title)}
                         </div>
                         {/* <div class="VdEl_inf-mr">more</div> */}
                       </div>
@@ -599,27 +643,27 @@ const VideoSlide = (props: any) => {
                               ? {
                                   onTouchStart: (e) => {
                                     // e.stopPropagation();
-                                    console.log("touch started");
+                                    // console.log("touch started");
                                     setIsDragging(true);
                                   },
                                   onTouchMove: (e) => {
                                     // e.stopPropagation();
                                     if (isDragging == true) {
-                                      console.log("touch moving");
+                                      // console.log("touch moving");
                                       onSliderMove(e);
                                       handleVideoProgress(e);
                                     }
                                   },
                                   onTouchEnd: (e) => {
                                     // e.stopPropagation();
-                                    console.log("touch ended");
+                                    // console.log("touch ended");
                                     setIsDragging(false);
                                   },
                                 }
                               : {
                                   onMouseDown: (e) => {
                                     // e.stopPropagation();
-                                    console.log("mouse down");
+                                    // console.log("mouse down");
                                     setIsDragging(true);
                                   },
 
@@ -633,7 +677,7 @@ const VideoSlide = (props: any) => {
                                   onMouseUp: (e) => {
                                     // e.stopPropagation();
                                     setIsDragging(false);
-                                    console.log("mouse up");
+                                    // console.log("mouse up");
                                   },
                                 })}
                           >
@@ -642,10 +686,10 @@ const VideoSlide = (props: any) => {
                                 className="VdEl_lod-br"
                                 ref={progressBar}
                                 onMouseDown={() => {
-                                  console.log("progressbar mousedown");
+                                  // console.log("progressbar mousedown");
                                 }}
                                 onMouseUp={() => {
-                                  console.log("progressbar mouse up");
+                                  // console.log("progressbar mouse up");
                                 }}
                               >
                                 <div className="VdEl_dot" ref={seekThumb}></div>

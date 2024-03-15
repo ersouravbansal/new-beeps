@@ -343,6 +343,7 @@ const Content = (props: {
                                 pubDate={d.pubDate}
                                 ref1={props.ref1}
                                 data={data}
+                                mySwiper={mySwiper}
                               ></VideoSlide>
                             </React.Fragment>
                           );
