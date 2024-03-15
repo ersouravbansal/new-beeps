@@ -168,13 +168,12 @@ const VideoSlide = (props: any) => {
 
   useEffect(() => {
     const originUrl = window.location.origin;
-    const dynamicPart = `${cleanUp(props.urltitle).toLowerCase()}-${
-      props.videoID
-    }`;
-    const updatedUrl = encodeURIComponent(dynamicPart);
-    const currentUrl = `${originUrl}/videos/${dynamicPart}`;
+    const dynamicPart = `${cleanUp(props.urltitle).toLowerCase()}-${props.videoID}`;
+    const encodedDynamicPart = encodeURIComponent(dynamicPart);
+    const currentUrl = `${originUrl}/videos/${encodedDynamicPart}`;
     setGetUrl(currentUrl);
   }, [props.urltitle, props.videoID]);
+  
 
   useEffect(() => {
     if (mySwiper) {
