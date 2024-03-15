@@ -3,8 +3,8 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import VideoPlayer from "~/hooks/useVideoPlayer";
 import useStore from "~/stores/utilstore";
 import { isMobile } from "react-device-detect";
-import { Autoplay } from "swiper/modules";
-import Hls from 'hls.js';
+// import { Autoplay } from "swiper/modules";
+// import Hls from 'hls.js';
 
 const VideoSlide = (props: any) => {
   const [getUrl, setGetUrl] = useState("None");
@@ -147,24 +147,24 @@ const VideoSlide = (props: any) => {
     window.location.href = `mailto:?subject=${emailSubject}&body=${emailBody}`;
   };
 
-  useEffect(() => {
-    let hls = null as any;
-    // console.log("HLS Sourav",Hls)
-     console.log("video url is",props.vidsrc)
-    if (Hls.isSupported()) {
-      hls = new Hls();
-      hls.loadSource(props.hlssrc);
-      hls.attachMedia(videoElement.current);
-    } else if (videoElement.current?.canPlayType('video/mp4')) {
-      videoElement.current.src = props.vidsrc;
-    }
+  // useEffect(() => {
+  //   let hls = null as any;
+  //   // console.log("HLS Sourav",Hls)
+  //    console.log("video url is",props.vidsrc)
+  //   if (Hls.isSupported()) {
+  //     hls = new Hls();
+  //     hls.loadSource(props.hlssrc);
+  //     hls.attachMedia(videoElement.current);
+  //   } else if (videoElement.current?.canPlayType('video/mp4')) {
+  //     videoElement.current.src = props.vidsrc;
+  //   }
 
-    return () => {
-      if (hls) {
-        hls.destroy();
-      }
-    };
-  }, [props.hlssrc,props.vidsrc]);
+  //   return () => {
+  //     if (hls) {
+  //       hls.destroy();
+  //     }
+  //   };
+  // }, [props.hlssrc,props.vidsrc]);
 
   useEffect(() => {
     const originUrl = window.location.origin;
