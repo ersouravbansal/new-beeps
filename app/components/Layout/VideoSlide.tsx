@@ -143,9 +143,10 @@ const VideoSlide = (props: any) => {
     console.log("hello sourav from observer");
     const originUrl = window.location.origin;
     const dynamicPart = `${cleanUp(props.urltitle).toLowerCase()}-${props.videoID}`;
-    const currentUrl = `${originUrl}/videos/${encodeURIComponent(dynamicPart)}`;
+    const updatedUrl= encodeURIComponent(dynamicPart)
+    const currentUrl = `${originUrl}/videos/${(dynamicPart)}`;
     setGetUrl(currentUrl);
-    console.log("get url is", getUrl);
+    // console.log("get url is", getUrl);
   }, [props.urltitle, props.videoID]);
   // useEffect(() => {
   //   console.log("hello sourav from observer");
