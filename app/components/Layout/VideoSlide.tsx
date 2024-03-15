@@ -169,9 +169,11 @@ const VideoSlide = (props: any) => {
   useEffect(() => {
     const originUrl = window.location.origin;
     const dynamicPart = `${cleanUp(props.urltitle).toLowerCase()}-${props.videoID}`;
-    const encodedDynamicPart = encodeURIComponent(dynamicPart);
-    const currentUrl = `${originUrl}/videos/${encodedDynamicPart}`;
-    setGetUrl(currentUrl);
+    // const encodedDynamicPart = encodeURIComponent(dynamicPart);
+    const currentUrl = `${originUrl}/videos/${dynamicPart}`;
+    const enCodedCurrentUrl=  encodeURIComponent(currentUrl)
+    console.log("encoded current url :",enCodedCurrentUrl)
+    setGetUrl(enCodedCurrentUrl);
   }, [props.urltitle, props.videoID]);
   
 
