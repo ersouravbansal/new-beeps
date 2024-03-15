@@ -138,18 +138,27 @@ const VideoSlide = (props: any) => {
 
     window.location.href = `mailto:?subject=${emailSubject}&body=${emailBody}`;
   };
+
   useEffect(() => {
     console.log("hello sourav from observer");
     const originUrl = window.location.origin;
-    const currentUrl = `${originUrl}/videos/${cleanUp(
-      props.urltitle
-    ).toLowerCase()}-${props.videoID}`;
-    const updatedUrl = encodeURIComponent(currentUrl);
-    setGetUrl(updatedUrl);
-    console.log("get url is",getUrl)
-
-    return;
+    const dynamicPart = `${cleanUp(props.urltitle).toLowerCase()}-${props.videoID}`;
+    const currentUrl = `${originUrl}/videos/${encodeURIComponent(dynamicPart)}`;
+    setGetUrl(currentUrl);
+    console.log("get url is", getUrl);
   }, [props.urltitle, props.videoID]);
+  // useEffect(() => {
+  //   console.log("hello sourav from observer");
+  //   const originUrl = window.location.origin;
+  //   const currentUrl = `${originUrl}/videos/${cleanUp(
+  //     props.urltitle
+  //   ).toLowerCase()}-${props.videoID}`;
+  //   const updatedUrl = encodeURIComponent(currentUrl);
+  //   setGetUrl(updatedUrl);
+  //   console.log("get url is",getUrl)
+
+  //   return;
+  // }, [props.urltitle, props.videoID]);
   const handlePlay = useCallback(
     (entries: IntersectionObserverEntry[]) => {
       const entry = entries[0];
