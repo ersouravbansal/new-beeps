@@ -3,9 +3,6 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import VideoPlayer from "~/hooks/useVideoPlayer";
 import useStore from "~/stores/utilstore";
 import { isMobile } from "react-device-detect";
-// import { Autoplay } from "swiper/modules";
-// import Hls from 'hls.js';
-
 const VideoSlide = (props: any) => {
   const [getUrl, setGetUrl] = useState("None");
   const silent = useStore((state) => state.silent);
@@ -147,34 +144,15 @@ const VideoSlide = (props: any) => {
     window.location.href = `mailto:?subject=${emailSubject}&body=${emailBody}`;
   };
 
-  // useEffect(() => {
-  //   let hls = null as any;
-  //   // console.log("HLS Sourav",Hls)
-  //    console.log("video url is",props.vidsrc)
-  //   if (Hls.isSupported()) {
-  //     hls = new Hls();
-  //     hls.loadSource(props.hlssrc);
-  //     hls.attachMedia(videoElement.current);
-  //   } else if (videoElement.current?.canPlayType('video/mp4')) {
-  //     videoElement.current.src = props.vidsrc;
-  //   }
-
-  //   return () => {
-  //     if (hls) {
-  //       hls.destroy();
-  //     }
-  //   };
-  // }, [props.hlssrc,props.vidsrc]);
-
   useEffect(() => {
-    const originUrl = window.location.origin
-    const dynamicPart = `${cleanUp(props.urltitle).toLowerCase()}-${props.videoID}`;
+    const originUrl = window.location.origin;
+    const dynamicPart = `${cleanUp(props.urltitle).toLowerCase()}-${
+      props.videoID
+    }`;
     const encodedDynamicPart = encodeURIComponent(dynamicPart);
     const currentUrl = `${originUrl}/videos/${encodedDynamicPart}`;
     setGetUrl(currentUrl);
   }, [props.urltitle, props.videoID]);
-  
-  
 
   useEffect(() => {
     if (mySwiper) {
@@ -411,7 +389,7 @@ const VideoSlide = (props: any) => {
                     handleOnTimeUpdate();
                   }}
                   onLoadedMetadata={handleOnMetaLoaded}
-                  // muted
+                  muted={silent}
                   preload="auto"
                   width="100%"
                   height="100%"
@@ -642,42 +620,31 @@ const VideoSlide = (props: any) => {
                             {...(isMobile
                               ? {
                                   onTouchStart: (e) => {
-                                    // e.stopPropagation();
-                                    // console.log("touch started");
                                     setIsDragging(true);
                                   },
                                   onTouchMove: (e) => {
-                                    // e.stopPropagation();
                                     if (isDragging == true) {
-                                      // console.log("touch moving");
                                       onSliderMove(e);
                                       handleVideoProgress(e);
                                     }
                                   },
                                   onTouchEnd: (e) => {
-                                    // e.stopPropagation();
-                                    // console.log("touch ended");
                                     setIsDragging(false);
                                   },
                                 }
                               : {
                                   onMouseDown: (e) => {
-                                    // e.stopPropagation();
-                                    // console.log("mouse down");
                                     setIsDragging(true);
                                   },
 
                                   onMouseMove: (e) => {
-                                    // e.stopPropagation();
                                     if (isDragging == true) {
                                       onSliderMove(e);
                                       handleVideoProgress(e);
                                     }
                                   },
                                   onMouseUp: (e) => {
-                                    // e.stopPropagation();
                                     setIsDragging(false);
-                                    // console.log("mouse up");
                                   },
                                 })}
                           >
@@ -685,12 +652,8 @@ const VideoSlide = (props: any) => {
                               <div
                                 className="VdEl_lod-br"
                                 ref={progressBar}
-                                onMouseDown={() => {
-                                  // console.log("progressbar mousedown");
-                                }}
-                                onMouseUp={() => {
-                                  // console.log("progressbar mouse up");
-                                }}
+                                onMouseDown={() => {}}
+                                onMouseUp={() => {}}
                               >
                                 <div className="VdEl_dot" ref={seekThumb}></div>
                               </div>
