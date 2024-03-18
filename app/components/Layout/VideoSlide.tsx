@@ -10,6 +10,7 @@ const VideoSlide = (props: any) => {
   const clicked = useStore((state) => state.clicked);
   const urlupdate = useStore((state) => state.urlupdate);
   const setClicked = useStore((state) => state.setClicked);
+  const isVideoPlaying = useStore((state) => state.isVideoPlaying);
   const videoElement = useRef<HTMLVideoElement>(null);
   const seekBar = useRef(null);
   const progressBar = useRef(null);
@@ -32,9 +33,12 @@ const VideoSlide = (props: any) => {
   } = VideoPlayer(videoElement, seekBar, progressBar, seekThumb);
 
   const autoPlayVideo = useCallback(() => {
-    console.log("autoplay calls")
     if (videoElement.current && silent) {
       videoElement.current.muted = true;
+    }
+    if (!isVideoPlaying) {
+      pauseVideo();
+      return;
     }
     let playPromise = videoElement.current?.play();
     if (playPromise != null) {
@@ -53,7 +57,7 @@ const VideoSlide = (props: any) => {
           }
         });
     }
-  }, [muteVideo, unMuteVideo, playVideo, silent]);
+  }, [muteVideo, unMuteVideo, playVideo, silent, isVideoPlaying, pauseVideo]);
 
   const cleanUp = (st: any) => {
     return st
@@ -144,9 +148,9 @@ const VideoSlide = (props: any) => {
 
     window.location.href = `mailto:?subject=${emailSubject}&body=${emailBody}`;
   };
-  const sendToBeeps =()=>{
-    window.location.href="https://www.ndtv.com/video/list/category/beeps"
-  }
+  const sendToBeeps = () => {
+    window.location.href = "https://www.ndtv.com/video/list/category/beeps";
+  };
   useEffect(() => {
     const originUrl = window.location.origin;
     const dynamicPart = `${cleanUp(props.urltitle).toLowerCase()}-${

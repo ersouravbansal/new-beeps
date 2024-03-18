@@ -13,7 +13,9 @@ const useStore = create((set, get) => ({
   clicked:false,
   newTitle:
     "Food News, Health News, Indian Recipes, Healthy Recipes, Vegetarian Recipes, Indian Food recipes – NDTV Food",
+    isVideoPlaying: true,
   setSidenavtoggle: (newValue: boolean) => set({ sidenavtoggle: newValue }),
+  setIsVideoPlaying: (newValue: boolean) => set({ isVideoPlaying: newValue }),
   setClicked: (newValue: boolean) => set({ clicked: newValue }),
   setSilent: (newValue: boolean) => set({ silent: newValue }),
   setMuteAdButton: (newValue: boolean) => set({ muteAdButton: newValue }),

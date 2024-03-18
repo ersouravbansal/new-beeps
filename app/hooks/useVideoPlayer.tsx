@@ -9,6 +9,7 @@ const useVideoPlayer = (
 ) => {
   const silent = useStore((state) => state.silent);
   const setSilent = useStore((state) => state.setSilent);
+  const setIsVideoPlaying = useStore((state) => state.setIsVideoPlaying);
   const [playerState, setPlayerState] = useState({
     isPlaying: false,
     progress: 0,
@@ -40,9 +41,12 @@ const useVideoPlayer = (
       return { ...previousplayerState };
     });
     videoElemRef.current.play();
+    setIsVideoPlaying(true)
   }, []);
 
   const pauseVideo = useCallback(() => {
+    console.log("pause video........")
+    setIsVideoPlaying(false)
     setPlayerState((previousplayerState) => {
       previousplayerState.isPlaying = false;
       return { ...previousplayerState };
