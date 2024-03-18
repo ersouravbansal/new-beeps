@@ -32,6 +32,7 @@ const VideoSlide = (props: any) => {
   } = VideoPlayer(videoElement, seekBar, progressBar, seekThumb);
 
   const autoPlayVideo = useCallback(() => {
+    console.log("autoplay calls")
     if (videoElement.current && silent) {
       videoElement.current.muted = true;
     }
@@ -143,7 +144,9 @@ const VideoSlide = (props: any) => {
 
     window.location.href = `mailto:?subject=${emailSubject}&body=${emailBody}`;
   };
-
+  const redirectToBeeps =()=>{
+    window.location.href="https://www.ndtv.com/video/list/category/beeps"
+  }
   useEffect(() => {
     const originUrl = window.location.origin;
     const dynamicPart = `${cleanUp(props.urltitle).toLowerCase()}-${
@@ -400,7 +403,7 @@ const VideoSlide = (props: any) => {
                 <div className="VdEl_cn">
                   {/* back and volume */}
                   <div className="VdEl_top-wr">
-                    <div className="VdEl_top-bck">
+                    <div className="VdEl_top-bck" onClick={redirectToBeeps}>
                       <div className="VdEl_icn-lk">
                         <div className="VdEl_icn1">
                           <svg className="vj_icn vj_back2">
