@@ -1,29 +1,29 @@
 /** @type {import('@remix-run/dev').AppConfig} */
-const { mountRoutes } = require('remix-mount-routes')
-
-const basePath = process.env.REMIX_BASEPATH ?? ''
-// console.log("BasePath is:", basePath);
-
+const { flatRoutes } = require("remix-flat-routes");
 
 module.exports = {
-  ignoredRouteFiles: ["**/.*","**/*.css"],
-  publicPath: `${basePath}/build/`,
-  assetsBuildDirectory: `public${basePath}/build`,
-  // appDirectory: "app",
-  // assetsBuildDirectory: "public/build",
-  // serverBuildPath: "build/index.js",
-  routes: defineRoutes => {
-    const baseRoutes = mountRoutes(basePath, 'routes')
-    //const testRoutes = mountRoutes('/test', 'addins/test')
-    //const customRoutes = defineRoutes(route => {
-    //  route('/some/path/*', 'addins/catchall.tsx')
-    //})
-    const routes = {
-      ...baseRoutes,
-      //...testRoutes,
-      //...customRoutes,
-    }
-    //console.log(routes)
-    return routes
+  ignoredRouteFiles: ["**/.*", "**/*.css"],
+  publicPath: `${process.env.REMIX_BASEPATH ?? ""}/build/`,
+  assetsBuildDirectory: `public${process.env.REMIX_BASEPATH ?? ""}/build`,
+  routes: async (defineRoutes) => {
+    return flatRoutes("routes", defineRoutes, {
+      basePath: process.env.REMIX_BASEPATH ?? "",
+      ignoredRouteFiles: ["**/.*", "**/*.css"],
+    });
   },
 };
+
+// /** @type {import('@remix-run/dev').AppConfig} */
+// const { flatRoutes } = require("remix-flat-routes");
+
+// module.exports = {
+//   ignoredRouteFiles: ["**/.*", "**/*.css"],
+//   publicPath: `${process.env.REMIX_BASEPATH ?? ""}/build/`,
+//   assetsBuildDirectory: `public${process.env.REMIX_BASEPATH ?? ""}/build`,
+//   routes: async (defineRoutes) => {
+//     return flatRoutes("routes", defineRoutes, {
+//       basePath: process.env.REMIX_BASEPATH ?? "",
+//       ignoredRouteFiles: ["**/.*", "**/*.css"],
+//     });
+//   },
+// };

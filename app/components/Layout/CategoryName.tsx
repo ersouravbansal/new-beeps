@@ -13,92 +13,91 @@ export const CATEGORY_NAME: { [key: string]: number | string } = {
   world: 50,
   profit: 2,
 };
-// link: `${basepath}/category/entertainment`
+
 export const CATEGORY_LIST_SideNav = () => {
   const basepath = useEnvStore((state) => state.basePath);
   return [
     {
       title: "Entertainment",
-      link: `/category/entertainment`,
+      link: `${basepath}/category/entertainment`,
     },
     {
       title: "Food",
-      link: `/category/food`,
+      link: `${basepath}/category/food`,
     },
     {
       title: "Auto",
-      link: `/category/auto`,
+      link: `${basepath}/category/auto`,
     },
     {
       title: "Health",
-      link: `/category/health`,
+      link: `${basepath}/category/health`,
     },
     {
       title: "Sports",
-      link: `/category/sports`,
+      link: `${basepath}/category/sports`,
     },
     {
       title: "Swirlster",
-      link: `/category/swirlster`,
+      link: `${basepath}/category/swirlster`,
     },
     {
       title: "Gadgets",
-      link: `/category/gadgets`,
+      link: `${basepath}/category/gadgets`,
     },
     {
       title: "World",
-      link: `/category/world`,
+      link: `${basepath}/category/world`,
     },
     {
       title: "Profit",
-      link: `/category/profit`,
+      link: `${basepath}/category/profit`,
     },
   ];
 };
 
 export const CATEGORY_LIST = () => {
   const basepath = useEnvStore((state) => state.basePath);
-
   return [
     {
       title: "All",
-      link: `/`,
+      link: `${basepath}`,
     },
     {
       title: "Entertainment",
-      link: `/category/entertainment`,
+      link: `${basepath}/category/entertainment`,
     },
     {
       title: "Food",
-      link: `/category/food`,
+      link: `${basepath}/category/food`,
     },
     {
       title: "Auto",
-      link: `/category/auto`,
+      link: `${basepath}/category/auto`,
     },
     {
       title: "Health",
-      link: `/category/health`,
+      link: `${basepath}/category/health`,
     },
     {
       title: "Sports",
-      link: `/category/sports`,
+      link: `${basepath}/category/sports`,
     },
     {
       title: "Swirlster",
-      link: `/category/swirlster`,
+      link: `${basepath}/category/swirlster`,
     },
     {
       title: "Gadgets",
-      link: `/category/gadgets`,
+      link: `${basepath}/category/gadgets`,
     },
     {
       title: "World",
-      link: `/category/world`,
+      link: `${basepath}/category/world`,
     },
     {
       title: "Profit",
-      link: `/category/profit`,
+      link: `${basepath}/category/profit`,
     },
   ];
 };
@@ -109,39 +108,39 @@ export const CATEGORY_LIST_RESP = () => {
   return [
     {
       title: "Entertainment",
-      link: `/category/entertainment`,
+      link: `${basepath}/category/entertainment`,
     },
     {
       title: "Food",
-      link: `/category/food`,
+      link: `${basepath}/category/food`,
     },
     {
       title: "Auto",
-      link: `/category/auto`,
+      link: `${basepath}/category/auto`,
     },
     {
       title: "Health",
-      link: `/category/health`,
+      link: `${basepath}/category/health`,
     },
     {
       title: "Sports",
-      link: `/category/sports`,
+      link: `${basepath}/category/sports`,
     },
     {
       title: "Swirlster",
-      link: `/category/swirlster`,
+      link: `${basepath}/category/swirlster`,
     },
     {
       title: "Gadgets",
-      link: `/category/gadgets`,
+      link: `${basepath}/category/gadgets`,
     },
     {
       title: "World",
-      link: `/category/world`,
+      link: `${basepath}/category/world`,
     },
     {
       title: "Profit",
-      link: `/category/profit`,
+      link: `${basepath}/category/profit`,
     },
   ];
 };
@@ -152,23 +151,23 @@ export const Category_List_Left_Main = () => {
   return [
     {
       title: "Entertainment",
-      link: `/category/entertainment`,
+      link: `${basepath}/category/entertainment`,
     },
     {
       title: "Food",
-      link: `/category/food`,
+      link: `${basepath}/category/food`,
     },
     {
       title: "Auto",
-      link: `/category/auto`,
+      link: `${basepath}/category/auto`,
     },
     {
       title: "Profit",
-      link: `/category/profit`,
+      link: `${basepath}/category/profit`,
     },
     {
       title: "World",
-      link: `/category/world`,
+      link: `${basepath}/category/world`,
     },
 
 
@@ -180,19 +179,19 @@ export const Category_List_Right_Main = () => {
   return [
     {
       title: "Health",
-      link: `/category/health`,
+      link: `${basepath}/category/health`,
     },
     {
       title: "Sports",
-      link: `/category/sports`,
+      link: `${basepath}/category/sports`,
     },
     {
       title: "Swirlster",
-      link: `/category/swirlster`,
+      link: `${basepath}/category/swirlster`,
     },
     {
       title: "Gadgets",
-      link: `/category/gadgets`,
+      link: `${basepath}/category/gadgets`,
     },
   ];
 };

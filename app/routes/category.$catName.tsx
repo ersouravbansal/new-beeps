@@ -9,12 +9,13 @@ import { CATEGORY_NAME } from "~/components/Layout/CategoryName";
 import Content from "~/components/Layout/Content";
 // import LoadingVideos from "~/components/LoadingVideos";
 import useStore from "~/stores/utilstore";
+import { BASEPATH } from "~/constants";
 
 const pageSize = 10;
-
 async function fetchVideos({ pageNumber = 1, catName } = {}) {
   const api_url = typeof process !== "undefined" ? process.env.REMIX_API_URL || "" : "";
-  const response = await axios.get(`${api_url}/api/categories/category/?pageNumber=${pageNumber}&catname=${catName}`);
+  const basepath = typeof process !== "undefined" ? process.env.REMIX_BASEPATH || "" : "";
+  const response = await axios.get(`${api_url}${BASEPATH}/api/categories/category/?pageNumber=${pageNumber}&catname=${catName}`);
   return response.data || { total: "0", results: [] };
 }
 

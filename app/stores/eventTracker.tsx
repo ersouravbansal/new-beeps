@@ -1,36 +1,16 @@
 import TagManager from "react-gtm-module";
 
 //dummy event begins!
-export const trackPageView = (url) => {
-  TagManager.dataLayer({
-    dataLayer: {
-      event: "pageview",
-      page: { url },
-    },
-  });
-};
+// export const trackPageView = (url) => {
+//   console.log("track pageview called")
+//   TagManager.dataLayer({
+//     dataLayer: {
+//       event: "pageview",
+//       page: { url },
+//     },
+//   });
+// };
 
-export const trackAdStarted = () => {
-  TagManager.dataLayer({
-    dataLayer: {
-      event: "Ad Started",
-      eventCategory: "PreRoll Start",
-      eventAction: "Ad running",
-      eventLabel: "Ad Start",
-    },
-  });
-};
-
-export const trackAdCompleted = () => {
-  TagManager.dataLayer({
-    dataLayer: {
-      event: "Ad completed",
-      eventCategory: "PreRoll ends",
-      eventAction: "Ad completed play video",
-      eventLabel: "Ads Completed",
-    },
-  });
-};
 //dummy event Ends!------
 
 // Original Events Begins!

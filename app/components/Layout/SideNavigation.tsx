@@ -1,9 +1,13 @@
 import { Link } from "@remix-run/react";
 import React, { useState } from "react";
+import { BASEPATH } from "~/constants";
+import useEnvStore from "~/stores/env_variables";
+
 
 const SideNavigation = () => {
-  const khabarlink = `/category/khabar`;
-  const khabarlinkEnglish = `/category/news`;
+  const basepath = useEnvStore((state) => state.basePath);
+  const khabarlink = `${BASEPATH}/category/khabar`;
+  const khabarlinkEnglish = `${BASEPATH}/category/news`;
   const [isEng, setIsEng] = useState(true);
   const [query, setQuery] = useState("");
   const [errors, setErrors] = useState("");
@@ -14,7 +18,7 @@ const SideNavigation = () => {
       return;
     }
     setErrors("");
-    window.location.href = `/search/?q=` + query;
+    window.location.href = `${basepath}/search/?q=` + query;
   };
 
   return (

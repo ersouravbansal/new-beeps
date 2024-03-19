@@ -6,6 +6,7 @@ import { useLoaderData } from "@remix-run/react";
 import axios from "axios";
 import useStore from "~/stores/utilstore";
 import useInfiniteScroll from "~/hooks/useInfiniteScrollCustom";
+import { BASEPATH } from "~/constants";
 
 // export const meta: MetaFunction = () => {
 //   return [
@@ -14,12 +15,14 @@ import useInfiniteScroll from "~/hooks/useInfiniteScrollCustom";
 //   ];
 // };
 const pageSize = 10;
-
 async function fetchVideos(pageNumber = 1) {
   const api_url =
     typeof process !== "undefined" ? process.env.REMIX_API_URL || "" : "";
+  const basepath =
+    typeof process !== "undefined" ? process.env.REMIX_BASEPATH || "" : "";
+  console.log("fetch video called from index route", basepath);
   const response = await axios.get(
-    `${api_url}/api/index/?pageNumber=${pageNumber}`
+    `${api_url}${BASEPATH}/api/index1?pageNumber=${pageNumber}`
   );
   return response.data || { total: "0", results: [] };
 }
@@ -55,7 +58,7 @@ export default function Index() {
   async function loadMore() {
     setLoading(true);
     try {
-      console.log("calling load more")
+      console.log("calling load more");
       const response = await fetchVideos(page);
       if (!response.results) {
         throw new Response("Not Found", { status: 404 });
@@ -78,17 +81,21 @@ export default function Index() {
   //   rootMargin: "0px 0px 400px 0px",
   // });
   // console.log("Sourav Bansal",useInfiniteScroll)
-  const [infiniteRef, { rootRef }]= useInfiniteScroll({
+  const [infiniteRef, { rootRef }] = useInfiniteScroll({
     loading,
     hasNextPage,
     onLoadMore: loadMore,
     disabled: !!error,
-    rootMargin: '0px 400px 0px 400px',
+    rootMargin: "0px 400px 0px 400px",
   });
 
   return (
     <>
-      <Content videoData={{ results: videos }} ref1={infiniteRef} ref2={rootRef}/>
+      <Content
+        videoData={{ results: videos }}
+        ref1={infiniteRef}
+        ref2={rootRef}
+      />
     </>
   );
 }

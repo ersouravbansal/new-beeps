@@ -8,17 +8,19 @@ import usePrevious from "~/hooks/usePreviousCustom";
 
 import Content from "~/components/Layout/Content";
 import useStore from "~/stores/utilstore";
+import { BASEPATH } from "~/constants";
 const pageSize = 10;
-
 async function fetchVideos({ pageNumber, query }: any = {}) {
   let api_url = "";
   if (typeof process !== "undefined") {
     api_url = process.env.REMIX_API_URL || "";
   }
+  const basepath =
+  typeof process !== "undefined" ? process.env.REMIX_BASEPATH || "" : "";
   const fetchController = new AbortController();
 
   const response = await axios.get(
-    `${api_url}/api/search/?pageNumber=${pageNumber || 1}&q=${query}`,
+    `${api_url}${BASEPATH}/api/search/?pageNumber=${pageNumber || 1}&q=${query}`,
     { signal: fetchController.signal }
   );
   return response;

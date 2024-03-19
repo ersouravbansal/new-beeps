@@ -3,6 +3,8 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import VideoPlayer from "~/hooks/useVideoPlayer";
 import useStore from "~/stores/utilstore";
 import { isMobile } from "react-device-detect";
+import { trackVideoPageView } from "~/stores/eventTracker";
+import { BASEPATH } from "~/constants";
 const VideoSlide = (props: any) => {
   const [getUrl, setGetUrl] = useState("None");
   const silent = useStore((state) => state.silent);
@@ -166,18 +168,21 @@ const VideoSlide = (props: any) => {
       if (mySwiper.realIndex === 0 && mySwiper.realIndex === props.index) {
         if (urlupdate) {
           let newUrl: string;
+          const autoStartEv = "true";
           document.title = props.title;
           const urltitle = cleanUp(props.urltitle).toLowerCase();
           const videoID = props.videoID;
           const catName = props?.catName;
           autoPlayVideo();
           if (catName) {
-            newUrl = `/videos/${catName}/${urltitle}-${videoID}`;
+            newUrl = `${BASEPATH}/videos/${catName}/${urltitle}-${videoID}`;
             window.history.pushState({}, "", newUrl);
           } else {
-            newUrl = `/videos/${urltitle}-${videoID}`;
+            newUrl = `${BASEPATH}/videos/${urltitle}-${videoID}`;
             window.history.pushState({}, "", newUrl);
           }
+          // trackPageView(newUrl)
+          trackVideoPageView(newUrl, autoStartEv, props);
         }
       }
     }
@@ -194,6 +199,7 @@ const VideoSlide = (props: any) => {
   const handleSlide = useCallback(() => {
     if (urlupdate) {
       let newUrl: string;
+      const autoStartEv = "true";
       if (silent) {
         muteVideo();
         playVideo();
@@ -206,12 +212,13 @@ const VideoSlide = (props: any) => {
       const videoID = props.videoID;
       const catName = props?.catName;
       if (catName) {
-        newUrl = `/videos/${catName}/${urltitle}-${videoID}`;
+        newUrl = `${BASEPATH}/videos/${catName}/${urltitle}-${videoID}`;
         window.history.pushState({}, "", newUrl);
       } else {
-        newUrl = `/videos/${urltitle}-${videoID}`;
+        newUrl = `${BASEPATH}/videos/${urltitle}-${videoID}`;
         window.history.pushState({}, "", newUrl);
       }
+      trackVideoPageView(newUrl, autoStartEv, props);
     }
   }, [
     playVideo,

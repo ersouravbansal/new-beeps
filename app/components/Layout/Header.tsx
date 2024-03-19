@@ -15,7 +15,7 @@ const Header = () => {
       return;
     }
     setErrors("");
-    window.location.href = `/search/?q=` + query;
+    window.location.href = `/beeps/search/?q=` + query;
   };
 
     useGptSlot({

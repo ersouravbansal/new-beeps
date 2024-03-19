@@ -8,6 +8,7 @@ import {
   ScrollRestoration,
   isRouteErrorResponse,
   useRouteError,
+  useLoaderData,
 } from "@remix-run/react";
 import { useEffect } from "react";
 import { version } from "package.json";
@@ -18,13 +19,27 @@ import Login from "./components/Layout/Login";
 // import LanguageSwitch from "./components/Layout/LanguageSwitch";
 import MoreSwipe from "./components/Layout/MoreSwipe";
 import $ from "jquery";
-import { LinksFunction } from "@remix-run/node";
+import { LinksFunction, json } from "@remix-run/node";
 import atf from "./styles/atf.css";
 import atfVod from "./styles/atfVod.css";
 import beepVideo from "./styles/beepVideo.css";
 import beepVideoElements from "./styles/beepVideoElements.css";
 import beepComments from "./styles/beepComments.css";
 import videoShareDropDown from "./styles/videoShareDropDown.css";
+import useEnvStore from "./stores/env_variables";
+import TagManager from "react-gtm-module";
+
+export const loader = async () => {
+  const envStore = useEnvStore.getState();
+  await envStore.setBasePath(process.env.REMIX_BASEPATH);
+  await envStore.setClientUrl(process.env.REMIX_API_URL);
+  return json({
+    GTM_ID: process.env.GTM_ID,
+    APP_ENV: process.env.REMIX_APP_ENV,
+    REMIX_BASEPATH: process.env.REMIX_BASEPATH,
+    REMIX_API_URL: process.env.REMIX_API_URL,
+  });
+};
 
 export const links: LinksFunction = () => [
   {
@@ -89,7 +104,7 @@ export function Layout({ children }: any) {
         <Links />
         {/* <link
           rel="stylesheet"
-          href={`/remix-beeps/styles/atfBeepsDetail.css`}
+          href={`/beeps/styles/atfBeepsDetail.css`}
         /> */}
         {/* <link rel="stylesheet" href="https://use.typekit.net/jkd2jqy.css" /> */}
       </head>
@@ -98,12 +113,12 @@ export function Layout({ children }: any) {
         <Scripts />
         <ScrollRestoration />
         <LiveReload />
-        <script src={`/remix-beeps/js/jquery-min.js`}></script>
-        <script src={`/remix-beeps/js/custom.js`}></script>
-        <script src={`/remix-beeps/js/beep-element.js`}></script>
+        <script src={`/beeps/js/jquery-min.js`}></script>
+        <script src={`/beeps/js/custom.js`}></script>
+        <script src={`/beeps/js/beep-element.js`}></script>
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
         {/* <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> */}
-        <script src={`/remix-beeps/js/beep-video.js`}></script>
+        <script src={`/beeps/js/beep-video.js`}></script>
         <script
           async
           src="https://www.googletagservices.com/tag/js/gpt.js"
@@ -114,6 +129,22 @@ export function Layout({ children }: any) {
 }
 
 export default function App() {
+  const { GTM_ID, APP_ENV, REMIX_BASEPATH, REMIX_API_URL, ENV } =
+    useLoaderData<typeof loader>();
+  const envStore = useEnvStore.getState();
+
+  useEffect(() => {
+    console.log("environment:", APP_ENV);
+    envStore.setBasePath(REMIX_BASEPATH);
+    envStore.setClientUrl(REMIX_API_URL);
+  }, [REMIX_BASEPATH, REMIX_API_URL, APP_ENV]);
+
+  useEffect(() => {
+    if (GTM_ID?.length) {
+      const tagManagerArgs = { gtmId: GTM_ID };
+      TagManager.initialize(tagManagerArgs);
+    }
+  }, [GTM_ID]);
   return (
     <>
       <SvgIcons />

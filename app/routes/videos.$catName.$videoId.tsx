@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import useInfiniteScroll from "~/hooks/useInfiniteScrollCustom";
 import Content from "~/components/Layout/Content";
 import useStore from "~/stores/utilstore";
+import { BASEPATH } from "~/constants";
 
 const pageSize = 10;
 const cleanUp = (st:String) => {
@@ -19,7 +20,8 @@ async function fetchVideos({ pageNumber, video_id }: any = {}) {
     pageNumber = pageNumber || 1;
 
     const api_url = process.env.REMIX_API_URL || "";
-    const response = await axios.get(`${api_url}/api/video/?pageNumber=${pageNumber}&video_id=${video_id}`);
+    const basepath = typeof process !== "undefined" ? process.env.REMIX_BASEPATH || "" : "";
+    const response = await axios.get(`${api_url}${BASEPATH}/api/video/?pageNumber=${pageNumber}&video_id=${video_id}`);
     return response.data.results;
   } catch (error) {
     console.error("Error fetching videos:", error);
@@ -30,9 +32,9 @@ async function fetchVideos({ pageNumber, video_id }: any = {}) {
 async function fetchMoreVideos({ pageNumber, catName }: any = {}) {
   const api_url =
     typeof process !== "undefined" ? process.env.REMIX_API_URL || "" : "";
-
+    const basepath = typeof process !== "undefined" ? process.env.REMIX_BASEPATH || "" : "";
   const response = await axios.get(
-    `${api_url}/api/categories/category/?pageNumber=${
+    `${api_url}${basepath}/api/categories/category/?pageNumber=${
       pageNumber || 1
     }&catname=${catName}`
   );
