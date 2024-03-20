@@ -25,7 +25,6 @@ async function fetchVideos({ pageNumber, video_id }: any = {}) {
     pageNumber = pageNumber || 1;
 
     const api_url = process.env.REMIX_API_URL || "";
-    const basepath = typeof process !== "undefined" ? process.env.REMIX_BASEPATH || "" : "";
     const response = await axios.get(`${api_url}${BASEPATH}/api/video/?pageNumber=${pageNumber}&video_id=${video_id}`);
     return response.data.results;
   } catch (error) {
@@ -39,10 +38,9 @@ async function fetchMoreVideos({ pageNumber }: any = {}) {
   if (typeof process !== "undefined") {
     api_url = process.env.REMIX_API_URL || "";
   }
-  const basepath = typeof process !== "undefined" ? process.env.REMIX_BASEPATH || "" : "";
 
   const response1 = await axios.get(
-    `${api_url}${basepath}/api/videos/video/?pageNumber=${pageNumber || 1}`
+    `${api_url}${BASEPATH}/api/videos/video/?pageNumber=${pageNumber || 1}`
   );
 
   return response1.data.results;

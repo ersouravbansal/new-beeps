@@ -45,7 +45,7 @@ const useVideoPlayer = (
   }, []);
 
   const pauseVideo = useCallback(() => {
-    console.log("pause video........")
+    // console.log("pause video........")
     setIsVideoPlaying(false)
     setPlayerState((previousplayerState) => {
       previousplayerState.isPlaying = false;

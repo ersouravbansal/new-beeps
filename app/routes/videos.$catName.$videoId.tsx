@@ -20,7 +20,6 @@ async function fetchVideos({ pageNumber, video_id }: any = {}) {
     pageNumber = pageNumber || 1;
 
     const api_url = process.env.REMIX_API_URL || "";
-    const basepath = typeof process !== "undefined" ? process.env.REMIX_BASEPATH || "" : "";
     const response = await axios.get(`${api_url}${BASEPATH}/api/video/?pageNumber=${pageNumber}&video_id=${video_id}`);
     return response.data.results;
   } catch (error) {
@@ -32,9 +31,9 @@ async function fetchVideos({ pageNumber, video_id }: any = {}) {
 async function fetchMoreVideos({ pageNumber, catName }: any = {}) {
   const api_url =
     typeof process !== "undefined" ? process.env.REMIX_API_URL || "" : "";
-    const basepath = typeof process !== "undefined" ? process.env.REMIX_BASEPATH || "" : "";
+    // console.log("basepath from fetch more videos", BASEPATH)
   const response = await axios.get(
-    `${api_url}${basepath}/api/categories/category/?pageNumber=${
+    `${api_url}${BASEPATH}/api/categories/category/?pageNumber=${
       pageNumber || 1
     }&catname=${catName}`
   );
@@ -147,6 +146,7 @@ const DynamicCategories: React.FC = () => {
   const catName = params.catName?.toLowerCase();
 
   const loadMore = async () => {
+    // console.log("load more from videocatname videoid running")
     setLoading(true);
     try {
       const moreVideos = await fetchMoreVideos({
