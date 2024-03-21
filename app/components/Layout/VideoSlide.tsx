@@ -181,7 +181,6 @@ const VideoSlide = (props: any) => {
             newUrl = `${BASEPATH}/videos/${urltitle}-${videoID}`;
             window.history.pushState({}, "", newUrl);
           }
-          // trackPageView(newUrl)
           trackVideoPageView(newUrl, autoStartEv, props);
         }
       }
