@@ -157,8 +157,8 @@ export default function App() {
     const logTriggerElements = document.querySelectorAll(".__log_trigger");
     logTriggerElements.forEach(function (element) {
       element.addEventListener("click", function () {
-        alert("Hi Adnan")
-        if (!window.parent_c_islogin()) {
+        // alert("Hi Adnan")
+        if (!parent_c_islogin()) {
           let __rurl = window.location.href;
           window.location.href =
             "https://stage-auth.ndtv.com/w/sso.html?siteurl=" +
