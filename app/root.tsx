@@ -120,10 +120,10 @@ export function Layout({ children }: any) {
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
         {/* <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> */}
         <script src={`/beeps/js/beep-video.js`}></script>
-        <script
+        {/* <script
           id="__loginScript"
           src="https://stage-auth.ndtv.com/w/js/config.js?v=2023-10-27-01&site=swirlster&nocss=1"
-        ></script>
+        ></script> */}
         {/* <script src="https://stage82-www.ndtv.com/world-fcm.js?01032014ver-20241803-01.00"></script> */}
         <script src={`/beeps/js/notification.js`}></script>
         <script
@@ -153,34 +153,79 @@ export default function App() {
       TagManager.initialize(tagManagerArgs);
     }
   }, [GTM_ID]);
+
   useEffect(() => {
-    const logTriggerElements = document.querySelectorAll(".__log_trigger");
-    setTimeout(() => {
-      console.log("log set__")
-      logTriggerElements.forEach(function (element) {
-        element.addEventListener("click", function () {
-          if (!parent_c_islogin()) {
-            let __rurl = window.location.href;
-            window.location.href =
-              "https://stage-auth.ndtv.com/w/sso.html?siteurl=" +
-              encodeURIComponent(__rurl);
-          } else {
-            const toggleClass = element.getAttribute("data-class");
-            document.body.classList.toggle(toggleClass);
-          }
-        });
+    const loadScript = () => {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.id = "__loginScript";
+        script.src =
+          "https://stage-auth.ndtv.com/w/js/config.js?v=2023-10-27-01&site=swirlster&nocss=1";
+        script.onload = resolve;
+        script.onerror = reject;
+        document.body.appendChild(script);
       });
+    };
 
-      const overlaySideNav = document.querySelector(".overlay__side-nav");
-      const logSdCls = document.querySelector(".LogSd-cls");
-      overlaySideNav?.addEventListener("click", removeJsSideNavClass);
-      logSdCls?.addEventListener("click", removeJsSideNavClass);
+    loadScript()
+      .then(() => {
+        const logTriggerElements = document.querySelectorAll(".__log_trigger");
+        logTriggerElements.forEach((element) => {
+          element.addEventListener("click", function () {
+            console.log("log set__")
+            if (!parent_c_islogin()) {
+              let __rurl = window.location.href;
+              window.location.href =
+                "https://stage-auth.ndtv.com/w/sso.html?siteurl=" +
+                encodeURIComponent(__rurl);
+            } else {
+              const toggleClass = element.getAttribute("data-class");
+              document.body.classList.toggle(toggleClass);
+            }
+          });
+        });
 
-      function removeJsSideNavClass() {
-        document.body.classList.remove("js_sid-nav-right");
-      }
-    }, 5000);
+        const overlaySideNav = document.querySelector(".overlay__side-nav");
+        const logSdCls = document.querySelector(".LogSd-cls");
+        overlaySideNav?.addEventListener("click", removeJsSideNavClass);
+        logSdCls?.addEventListener("click", removeJsSideNavClass);
+
+        function removeJsSideNavClass() {
+          document.body.classList.remove("js_sid-nav-right");
+        }
+      })
+      .catch((error) => {
+        console.log("Error loading login script:", error);
+      });
   }, []);
+  // useEffect(() => {
+  //   const logTriggerElements = document.querySelectorAll(".__log_trigger");
+  //   setTimeout(() => {
+  //     console.log("log set__")
+  //     logTriggerElements.forEach(function (element) {
+  //       element.addEventListener("click", function () {
+  //         if (!parent_c_islogin()) {
+  //           let __rurl = window.location.href;
+  //           window.location.href =
+  //             "https://stage-auth.ndtv.com/w/sso.html?siteurl=" +
+  //             encodeURIComponent(__rurl);
+  //         } else {
+  //           const toggleClass = element.getAttribute("data-class");
+  //           document.body.classList.toggle(toggleClass);
+  //         }
+  //       });
+  //     });
+
+  //     const overlaySideNav = document.querySelector(".overlay__side-nav");
+  //     const logSdCls = document.querySelector(".LogSd-cls");
+  //     overlaySideNav?.addEventListener("click", removeJsSideNavClass);
+  //     logSdCls?.addEventListener("click", removeJsSideNavClass);
+
+  //     function removeJsSideNavClass() {
+  //       document.body.classList.remove("js_sid-nav-right");
+  //     }
+  //   }, 5000);
+  // }, []);
   return (
     <>
       <SvgIcons />
