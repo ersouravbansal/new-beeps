@@ -156,9 +156,9 @@ export default function App() {
   useEffect(() => {
     const logTriggerElements = document.querySelectorAll(".__log_trigger");
     setTimeout(() => {
+      console.log("log set__")
       logTriggerElements.forEach(function (element) {
         element.addEventListener("click", function () {
-           alert("Hi Adnan")
           if (!parent_c_islogin()) {
             let __rurl = window.location.href;
             window.location.href =
