@@ -124,8 +124,8 @@ export function Layout({ children }: any) {
           id="__loginScript"
           src="https://stage-auth.ndtv.com/w/js/config.js?v=2023-10-27-01&site=swirlster&nocss=1"
         ></script>
-        <script src="https://stage82-www.ndtv.com/world-fcm.js?01032014ver-20241803-01.00"></script>
-        {/* <script src={`/beeps/js/notification.js`}></script> */}
+        {/* <script src="https://stage82-www.ndtv.com/world-fcm.js?01032014ver-20241803-01.00"></script> */}
+        <script src={`/beeps/js/notification.js`}></script>
         <script
           async
           src="https://www.googletagservices.com/tag/js/gpt.js"
