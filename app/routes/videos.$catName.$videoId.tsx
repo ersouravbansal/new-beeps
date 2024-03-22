@@ -28,18 +28,29 @@ async function fetchVideos({ pageNumber, video_id }: any = {}) {
   }
 }
 
-async function fetchMoreVideos({ pageNumber, catName }: any = {}) {
-  const api_url =
-    typeof process !== "undefined" ? process.env.REMIX_API_URL || "" : "";
-    // console.log("basepath from fetch more videos", BASEPATH)
-  const response = await axios.get(
-    `${api_url}${BASEPATH}/api/categories/category/?pageNumber=${
-      pageNumber || 1
-    }&catname=${catName}`
-  );
+async function fetchMoreVideos({ pageNumber, catName, videos }: any = {}) {
+  try {
+    const api_url =
+      typeof process !== "undefined" ? process.env.REMIX_API_URL || "" : "";
 
-  return response.data.results;
+    const response = await axios.get(
+      `${api_url}${BASEPATH}/api/categories/category/?pageNumber=${
+        pageNumber || 1
+      }&catname=${catName}`
+    );
+
+    const moreVideos = response.data.results.filter((video: any) => {
+      return !videos || !videos.some((v: any) => v.id === video.id);
+    });
+
+    return moreVideos;
+  } catch (error) {
+    console.error("Error fetching more videos:", error);
+    throw error;
+  }
 }
+
+
 export const meta: MetaFunction = ({ data, params }) => {
   if (data.results && data.results.length > 0) {
     const videoIndex = params.video_id || 0;
@@ -106,10 +117,12 @@ export const loader: LoaderFunction = async ({ params }) => {
     const video_id = params.videoId?.split("-").pop();
     const catName = params.catName?.toLowerCase();
 
-    const [videos, moreVideos] = await Promise.all([
-      fetchVideos({ video_id }),
-      fetchMoreVideos({ pageNumber: 1, catName }),
-    ]);
+    const videos = await fetchVideos({ video_id });
+    const moreVideos = await fetchMoreVideos({
+      pageNumber: 1,
+      catName,
+      videos: videos || [],
+    });
 
     const mergedVideos = Array.isArray(videos)
       ? [...videos, ...moreVideos]
@@ -123,6 +136,8 @@ export const loader: LoaderFunction = async ({ params }) => {
     });
   }
 };
+
+
 
 const DynamicCategories: React.FC = () => {
   const urlupdate = useStore((state) => state.urlupdate);
@@ -146,7 +161,6 @@ const DynamicCategories: React.FC = () => {
   const catName = params.catName?.toLowerCase();
 
   const loadMore = async () => {
-    // console.log("load more from videocatname videoid running")
     setLoading(true);
     try {
       const moreVideos = await fetchMoreVideos({

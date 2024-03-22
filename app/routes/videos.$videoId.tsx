@@ -33,18 +33,35 @@ async function fetchVideos({ pageNumber, video_id }: any = {}) {
   }
 }
 
-async function fetchMoreVideos({ pageNumber }: any = {}) {
-  let api_url = "";
-  if (typeof process !== "undefined") {
-    api_url = process.env.REMIX_API_URL || "";
+async function fetchMoreVideos({ pageNumber, videos }: any = {}) {
+  try {
+    let api_url = "";
+    if (typeof process !== "undefined") {
+      api_url = process.env.REMIX_API_URL || "";
+    }
+
+    const response1 = await axios.get(
+      `${api_url}${BASEPATH}/api/videos/video/?pageNumber=${pageNumber || 1}`
+    );
+
+    const fetchedVideos = response1.data.results;
+    let moreVideos = fetchedVideos;
+
+    if (videos && Array.isArray(videos) && videos.length > 0) {
+      moreVideos = fetchedVideos.filter((video: any) => {
+        return !videos.some((v: any) => v.id === video.id);
+      });
+    }
+
+    return moreVideos;
+  } catch (error) {
+    console.error("Error fetching more videos:", error);
+    throw error;
   }
-
-  const response1 = await axios.get(
-    `${api_url}${BASEPATH}/api/videos/video/?pageNumber=${pageNumber || 1}`
-  );
-
-  return response1.data.results;
 }
+
+
+
 export const meta: MetaFunction = ({ data, params }) => {
   if (data.results && data.results.length > 0) {
     const videoIndex = params.video_id || 0;
@@ -109,23 +126,27 @@ export const meta: MetaFunction = ({ data, params }) => {
 export const loader: LoaderFunction = async ({ params }) => {
   try {
     const video_id = params.videoId?.split("-").pop();
-    const [videos, moreVideos] = await Promise.all([
-      fetchVideos({ video_id: video_id }),
-      fetchMoreVideos({ pageNumber: 1 }),
-    ]);
+    const videos = await fetchVideos({ video_id: video_id });
+    let moreVideos = [];
+
+    if (videos) {
+      moreVideos = await fetchMoreVideos({ pageNumber: 1, videos: videos });
+    }
 
     const mergedVideos = Array.isArray(videos)
       ? [...videos, ...moreVideos]
       : [videos, ...moreVideos];
     return json({ results: mergedVideos });
-  } catch (err) {
-    console.log("err:", err);
+  } catch (error) {
+    console.error("Error loading videos:", error);
     return json({
       total: "0",
       results: [],
     });
   }
 };
+
+
 
 const SingleVideoComponent = () => {
   const urlupdate = useStore((state) => state.urlupdate);

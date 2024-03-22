@@ -75,13 +75,13 @@ $(document).ready(function () {
     });
 
     // More info functionality
-    $(".js-MorInf").click(function (e) {
-        e.stopPropagation();
-    $(this).parents('.swiper-slide-active').addClass('js_seek-vis');
+    // $(".js-MorInf").click(function (e) {
+    //     e.stopPropagation();
+    // $(this).parents('.swiper-slide-active').addClass('js_seek-vis');
 
-        $("body").toggleClass('VdElCht_on');
-        $('.VdElMr_wr').parents('.BepSl_li').removeClass('js_icon-more');
-    });
+    //     $("body").toggleClass('VdElCht_on');
+    //     $('.VdElMr_wr').parents('.BepSl_li').removeClass('js_icon-more');
+    // });
 
     // Close chat functionality
     $(".VdElCht_btn, .VdElCht_over-bg, .VdElCht_hd-icn, .VdElCht_cls").click(function (e) {

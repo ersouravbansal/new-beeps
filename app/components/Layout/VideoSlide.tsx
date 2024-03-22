@@ -13,6 +13,7 @@ const VideoSlide = (props: any) => {
   const urlupdate = useStore((state) => state.urlupdate);
   const setClicked = useStore((state) => state.setClicked);
   const isVideoPlaying = useStore((state) => state.isVideoPlaying);
+  const setCmntInfo = useStore((state) => state.setCmntInfo);
   const videoElement = useRef<HTMLVideoElement>(null);
   const seekBar = useRef(null);
   const progressBar = useRef(null);
@@ -75,6 +76,22 @@ const VideoSlide = (props: any) => {
           url: url,
         })
         .catch((error) => console.error("Error sharing:", error));
+    }
+  };
+  const handleComments = (e) => {
+    e.stopPropagation();
+    const parents = e.currentTarget.closest(".swiper-slide-active");
+    if (parents) {
+      parents.classList.add("js_seek-vis");
+    }
+
+    document.body.classList.toggle("VdElCht_on");
+
+    const bepSlLiParents = document
+      .querySelector(".VdElMr_wr")
+      .closest(".BepSl_li");
+    if (bepSlLiParents) {
+      bepSlLiParents.classList.remove("js_icon-more");
     }
   };
   const parseHTML = (htmlString: any) => {
@@ -252,7 +269,23 @@ const VideoSlide = (props: any) => {
             <div className="VdEl_icn-wr1">
               {/* chat */}
               <div className="VdEl_icn-lk">
-                <div className="VdEl_icn js-MorInf">
+                <div
+                  className="VdEl_icn js-MorInf"
+                  onClick={(e) => {
+                    // console.log("comment button clicked");
+                    handleComments(e);
+                    const originUrl1 = window.location.href;
+                    const currentUrl1 =
+                      originUrl1 +
+                      `${BASEPATH}/videos/` +
+                      cleanUp(props.urltitle).toLowerCase() +
+                      "-" +
+                      props.videoID;
+                    const updatedUrl1 = encodeURIComponent(currentUrl1);
+
+                    setCmntInfo(props.videoID, props.title, updatedUrl1);
+                  }}
+                >
                   <svg className="vj_icn vj_chat">
                     <use xlinkHref="#vj_chat" />
                   </svg>
@@ -371,7 +404,7 @@ const VideoSlide = (props: any) => {
                   }}
                 >
                   <ul className="VdElMr_ul">
-                    <li className="VdElMr_li-lk">
+                    <li className="VdElMr_li-lk __log_trigger">
                       <a href="#" className="VdElMr_li">
                         Login
                       </a>
@@ -498,7 +531,28 @@ const VideoSlide = (props: any) => {
                       <div className="VdEl_icn-wr">
                         {/* chat */}
                         <div className="VdEl_icn-lk">
-                          <div className="VdEl_icn js-MorInf">
+                          <div
+                            className="VdEl_icn js-MorInf"
+                            onClick={(e) => {
+                              console.log("comment button clicked");
+                              handleComments(e);
+                              const originUrl1 = window.location.href;
+                              const currentUrl1 =
+                                originUrl1 +
+                                `${BASEPATH}/videos/` +
+                                cleanUp(props.urltitle).toLowerCase() +
+                                "-" +
+                                props.videoID;
+                              const updatedUrl1 =
+                                encodeURIComponent(currentUrl1);
+
+                              setCmntInfo(
+                                props.videoID,
+                                props.title,
+                                updatedUrl1
+                              );
+                            }}
+                          >
                             <svg className="vj_icn vj_chat">
                               <use xlinkHref="#vj_chat"></use>
                             </svg>
@@ -704,7 +758,7 @@ const VideoSlide = (props: any) => {
                     }}
                   >
                     <ul className="VdElMr_ul">
-                      <li className="VdElMr_li-lk">
+                      <li className="VdElMr_li-lk __log_trigger">
                         <a href="#" className="VdElMr_li">
                           Login
                         </a>

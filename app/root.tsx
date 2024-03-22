@@ -116,13 +116,21 @@ export function Layout({ children }: any) {
         <script src={`/beeps/js/jquery-min.js`}></script>
         <script src={`/beeps/js/custom.js`}></script>
         <script src={`/beeps/js/beep-element.js`}></script>
+        {/* <script src={`/beeps/js/notification.js`}></script> */}
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
         {/* <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> */}
         <script src={`/beeps/js/beep-video.js`}></script>
         <script
+          id="__loginScript"
+          src="https://stage-auth.ndtv.com/w/js/config.js?v=2023-10-27-01&site=swirlster&nocss=1"
+        ></script>
+        <script src="https://stage82-www.ndtv.com/world-fcm.js?01032014ver-20241803-01.00"></script>
+        {/* <script src={`/beeps/js/notification.js`}></script> */}
+        <script
           async
           src="https://www.googletagservices.com/tag/js/gpt.js"
         ></script>
+        {/* <script src={`/beeps/js/login.js`}></script> */}
       </body>
     </html>
   );
@@ -145,12 +153,39 @@ export default function App() {
       TagManager.initialize(tagManagerArgs);
     }
   }, [GTM_ID]);
+  useEffect(() => {
+    const logTriggerElements = document.querySelectorAll(".__log_trigger");
+    logTriggerElements.forEach(function (element) {
+      element.addEventListener("click", function () {
+        if (!window.parent_c_islogin()) {
+          let __rurl = window.location.href;
+          window.location.href =
+            "https://stage-auth.ndtv.com/w/sso.html?siteurl=" +
+            encodeURIComponent(__rurl);
+        } else {
+          const toggleClass = element.getAttribute("data-class");
+          document.body.classList.toggle(toggleClass);
+        }
+      });
+    });
+
+    const overlaySideNav = document.querySelector(".overlay__side-nav");
+    const logSdCls = document.querySelector(".LogSd-cls");
+    overlaySideNav?.addEventListener("click", removeJsSideNavClass);
+    logSdCls?.addEventListener("click", removeJsSideNavClass);
+
+    function removeJsSideNavClass() {
+      document.body.classList.remove("js_sid-nav-right");
+    }
+  }, []);
   return (
     <>
       <SvgIcons />
+      <div id="___ndtvpushdiv" className="npop_wrp t-center"></div>
+      <div className="__nlogin" id="__nlogin"></div>
       <Header />
       <SideNavigation />
-      <Login />
+      {/* <Login /> */}
       {/* <LanguageSwitch /> */}
       <MoreSwipe />
       <div>

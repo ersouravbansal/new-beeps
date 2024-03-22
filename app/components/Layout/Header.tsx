@@ -1,13 +1,18 @@
 import { Link, Outlet, useLocation } from "@remix-run/react";
 import React, { useEffect, useRef, useState } from "react";
 import { CATEGORY_LIST, CATEGORY_NAME } from "./CategoryName";
-import useGptSlot from "~/hooks/useGptSlot"
+import useGptSlot from "~/hooks/useGptSlot";
+import useStore from "~/stores/utilstore";
 
 const Header = () => {
   const location = useLocation();
   const [query, setQuery] = useState("");
   const [errors, setErrors] = useState("");
-  const gptRef=useRef()
+  const notificationAllowed = useStore((state) => state.notificationAllowed);
+  const setNotificationAllowed = useStore(
+    (state) => state.setNotificationAllowed
+  );
+  const gptRef = useRef();
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!query.trim()) {
@@ -18,11 +23,11 @@ const Header = () => {
     window.location.href = `/beeps/search/?q=` + query;
   };
 
-    useGptSlot({
-      path: '/6355419/Travel/Europe/France/Paris',
-      size: [300,"fluid"],
-      id: 'gpt-ad',
-     });
+  useGptSlot({
+    path: "/6355419/Travel/Europe/France/Paris",
+    size: [300, "fluid"],
+    id: "gpt-ad",
+  });
   return (
     <>
       {/*====== Content ( LHS, Main Content and RHS ) ======*/}
@@ -231,7 +236,7 @@ const Header = () => {
                     <div className="m-nv_Rt-wr">
                       {/* Login / Sign up */}
                       <div
-                        className="log_btn log_btn-ac t side-nav-trigger"
+                        className="log_btn log_btn-ac t side-nav-trigger __log_trigger"
                         data-trigger=".nav-trigger"
                         data-class="js_sid-nav-right"
                       >
@@ -266,12 +271,33 @@ const Header = () => {
                           <use xlinkHref="#vj_bell" />
                         </svg>
                         <div className="tip on-bottom">
-                          <div className="tip_wrp">
-                            News alerts are turned off.{" "}
-                            <a className="ttp-lnk" href="javascript:void(0);">
-                              Click here to turn on.
-                            </a>
-                          </div>
+                          {!notificationAllowed ? (
+                            <div className="tip_wrp crsr_ptr">
+                              News alerts are turned off.{" "}
+                              <div
+                                className="ttp-lnk"
+                                onClick={() => {
+                                  setNotificationAllowed(true);
+                                  window.__showSubscribePopup();
+                                }}
+                              >
+                                Click here to turn on.
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="tip_wrp crsr_ptr">
+                              You Have Subscribed To Our News Updates.
+                              <div
+                                className="ttp-lnk"
+                                onClick={() => {
+                                  setNotificationAllowed(false);
+                                  window.__alw(0);
+                                }}
+                              >
+                                To Unsubscribe
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </span>
                     </div>
