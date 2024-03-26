@@ -121,7 +121,7 @@ export function Layout({ children }: any) {
         <script src={`/beeps/js/beep-video.js`}></script>
         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js"></script>
-        <script src={`/beeps/js/world-fcm.js`}></script>
+        {/* <script src={`/beeps/js/world-fcm.js`}></script> */}
         <script
           async
           src="https://www.googletagservices.com/tag/js/gpt.js"
