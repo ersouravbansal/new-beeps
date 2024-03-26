@@ -19,7 +19,7 @@ const Content = (props: {
 }) => {
   const location = useLocation();
   const prevPath = useRef("");
-  const isPathChange= location.pathname !== prevPath.current
+  const isPathChange = location.pathname !== prevPath.current;
   // console.log("location is", location.pathname, prevPath.current, isPathChange);
   const isVideoAvailable = (props.videoData?.results?.length || 0) > 0;
   const clicked = useStore((state) => state.clicked);
@@ -195,15 +195,25 @@ const Content = (props: {
   //   },
   // };
   useEffect(() => {
+    const currentSlideIndex = mySwiper?.activeIndex || 0;
+    const currentVideoId = props.videoData?.results[currentSlideIndex]?.id;
+
     $(function () {
       // mySwiper = new Swiper(".BepSl_rw", swiperOptions);
-      if(isPathChange && mySwiper){
+      if (isPathChange && mySwiper) {
         mySwiper.destroy();
-        mySwiper=null
+        mySwiper = null;
       }
       if (mySwiper) {
         // console.log("old swiper found", mySwiper);
+        const updatedIndex = props.videoData?.results.findIndex(video => video.id === currentVideoId);
+        if (updatedIndex !== -1) {
+          mySwiper.slideTo(updatedIndex);
+        }
         mySwiper.update();
+        if (updatedIndex !== -1) {
+          mySwiper.slideTo(updatedIndex);
+        }
       } else {
         mySwiper = new Swiper(".BepSl_rw", {
           direction: "vertical" as any,
@@ -299,7 +309,7 @@ const Content = (props: {
   }, [clicked]);
   useEffect(() => {
     prevPath.current = location.pathname;
-  }, [location.pathname,]);
+  }, [location.pathname]);
   return (
     <>
       {/*============== Middle with two column option ==============*/}
@@ -381,4 +391,3 @@ const Content = (props: {
 };
 
 export default Content;
-

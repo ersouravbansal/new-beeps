@@ -182,7 +182,8 @@ const VideoSlide = (props: any) => {
 
   useEffect(() => {
     if (mySwiper) {
-      if (mySwiper.realIndex === 0 && mySwiper.realIndex === props.index) {
+      // console.log("active index",mySwiper?.activeIndex)
+      if (mySwiper.activeIndex === 0 && mySwiper.activeIndex === props.index) {
         if (urlupdate) {
           let newUrl: string;
           const autoStartEv = "true";
@@ -248,9 +249,12 @@ const VideoSlide = (props: any) => {
     unMuteVideo,
   ]);
   useEffect(() => {
+    // console.log("current video is sourav",props.index)
     if (mySwiper) {
       mySwiper.on("slideChange", () => {
-        if (mySwiper.realIndex === props.index) {
+        // console.log("active index slidechange",mySwiper?.activeIndex)
+        if (mySwiper.activeIndex === props.index) {
+          // console.log("souravcurrent video",mySwiper.activeIndex,props.index)
           handleSlide();
         } else {
           pauseVideo();

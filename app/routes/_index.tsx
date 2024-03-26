@@ -20,7 +20,6 @@ async function fetchVideos(pageNumber = 1) {
     typeof process !== "undefined" ? process.env.REMIX_API_URL || "" : "";
   const basepath =
     typeof process !== "undefined" ? process.env.REMIX_BASEPATH || "" : "";
-  console.log("fetch video called from index route", basepath);
   const response = await axios.get(
     `${api_url}${BASEPATH}/api/index1?pageNumber=${pageNumber}`
   );

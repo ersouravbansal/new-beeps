@@ -2,14 +2,14 @@ import { Link } from "@remix-run/react";
 import React, { useState } from "react";
 import { BASEPATH } from "~/constants";
 import useEnvStore from "~/stores/env_variables";
-import useStore from "~/stores/utilstore";
+// import useStore from "~/stores/utilstore";
 
 const SideNavigation = () => {
   const basepath = useEnvStore((state) => state.basePath);
-  const notificationAllowed = useStore((state) => state.notificationAllowed);
-  const setNotificationAllowed = useStore(
-    (state) => state.setNotificationAllowed
-  );
+  // const notificationAllowed = useStore((state) => state.notificationAllowed);
+  // const setNotificationAllowed = useStore(
+  //   (state) => state.setNotificationAllowed
+  // );
   const khabarlink = `${BASEPATH}/category/khabar`;
   const khabarlinkEnglish = `${BASEPATH}/category/news`;
   const [isEng, setIsEng] = useState(true);
@@ -93,7 +93,8 @@ const SideNavigation = () => {
                 </div>
               </span>
               {/* Login / Signup */}
-              <span className="t-icn-nv ttp __log_trigger">
+              {/* <span className="t-icn-nv ttp __log_trigger"> */}
+              <span className="t-icn-nv ttp ">
                 <svg className="vj_icn vj_login">
                   <use xlinkHref="#vj_login" />
                 </svg>
@@ -107,33 +108,10 @@ const SideNavigation = () => {
                   <use xlinkHref="#vj_bell" />
                 </svg>
                 <div className="tip on-bottom">
-                  {!notificationAllowed ? (
-                    <div className="tip_wrp crsr_ptr">
-                      News alerts are turned off.{" "}
-                      <div
-                        className="ttp-lnk"
-                        onClick={() => {
-                          setNotificationAllowed(true);
-                          window.__showSubscribePopup();
-                        }}
-                      >
-                        Click here to turn on.
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="tip_wrp crsr_ptr">
-                      You Have Subscribed To Our News Updates.
-                      <div
-                        className="ttp-lnk"
-                        onClick={() => {
-                          setNotificationAllowed(false);
-                          window.__alw(0);
-                        }}
-                      >
-                        To Unsubscribe
-                      </div>
-                    </div>
-                  )}
+                  <div className="tip_wrp crsr_ptr">
+                    News alerts are turned off.{" "}
+                    <div className="ttp-lnk">Click here to turn on.</div>
+                  </div>
                 </div>
               </span>
             </div>

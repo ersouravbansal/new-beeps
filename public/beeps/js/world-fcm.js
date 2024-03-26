@@ -1,9 +1,8 @@
 "use strict";
 //base_url = 'http://localhost:8000/';
 // base_url = 'https://stage82-www.ndtv.com/';
-// const base_url = "http://localhost:3000/beeps";
-const base_url="https://new-beeps.vercel.app/beeps"
 //base_url = 'https://www.ndtv.com/';
+const base_url = "http://localhost:3000";
 function get_browser_info() {
   var ua = navigator.userAgent,
     tem,
@@ -49,10 +48,8 @@ function isSupportedNotification() {
   ) {
     return true;
   }
-  return false; /*Â Â Â Â if (((__browser.name == 'opera' && __browser.version >= 26) || (__browser.name == 'chrome' && __browser.version >= 43) || (__browser.device != 'mobile' && __browser.name == 'firefox' && __browser.version >= 44))) {Â Â Â Â Â Â Â Â return true;Â Â Â Â }Â Â Â Â return false;Â Â Â Â */
+  return false; /*    if (((__browser.name == 'opera' && __browser.version >= 26) || (__browser.name == 'chrome' && __browser.version >= 43) || (__browser.device != 'mobile' && __browser.name == 'firefox' && __browser.version >= 44))) {        return true;    }    return false;    */
 }
-
-// function isSupportedNotification() { if ('serviceWorker' in navigator && 'PushManager' in window && window.safari === undefined) {Â return true;Â }Â return false;Â Â Â Â /*Â Â Â Â if (((__browser.name == 'opera' && __browser.version >= 26) || (__browser.name == 'chrome' && __browser.version >= 43) || (__browser.device != 'mobile' && __browser.name == 'firefox' && __browser.version >= 44))) {Â Â Â Â Â Â Â Â return true;Â Â Â Â }Â Â Â Â return false;Â Â Â Â */ }
 
 function querySt(e) {
   var hu = "",
@@ -98,17 +95,17 @@ switch (__pushSite) {
   case "news-tamil":
     sitetitle = "NDTV Tamil";
     usermsg = usermsg_re =
-      'à®¨à®¿à®¯à¯‚à®¸à¯ à®…à®²à¯†à®°à¯à®Ÿà¯ à®¨à®¿à®±à¯à®¤à¯à®¤à®¿ à®µà¯ˆà®•à¯à®•à®ªà¯à®ªà®Ÿà¯à®Ÿà¯à®³à¯à®³à®¤à¯. <a href="javascript:void(0);" style="color:#841111;" onclick="__showSubscribePopup();">à®†à®©à¯ à®šà¯†à®¯à¯à®¯ à®‡à®™à¯à®•à¯‡ à®•à¯à®³à®¿à®•à¯ à®šà¯†à®¯à¯à®¯à®µà¯à®®à¯.</a>';
+      'நியூஸ் அலெர்ட் நிறுத்தி வைக்கப்பட்டுள்ளது. <a href="javascript:void(0);" style="color:#841111;" onclick="__showSubscribePopup();">ஆன் செய்ய இங்கே க்ளிக் செய்யவும்.</a>';
     usermsg_un =
-      'à®¨à®¿à®¯à¯‚à®¸à¯ à®…à®²à¯†à®°à¯à®Ÿà¯ à®†à®©à¯ à®šà¯†à®¯à¯à®¯à®ªà¯à®ªà®Ÿà¯à®Ÿà¯à®³à¯à®³à®¤à¯. <a href="javascript:void(0);" style="color:#841111;"  onclick="__alw(1);">à®¨à®¿à®±à¯à®¤à¯à®¤à®¿ à®µà¯ˆà®•à¯à®• à®‡à®™à¯à®•à¯‡ à®•à¯à®³à®¿à®•à¯ à®šà¯†à®¯à¯à®¯à®µà¯à®®à¯.</a>';
+      'நியூஸ் அலெர்ட் ஆன் செய்யப்பட்டுள்ளது. <a href="javascript:void(0);" style="color:#841111;"  onclick="__alw(1);">நிறுத்தி வைக்க இங்கே க்ளிக் செய்யவும்.</a>';
     ___site = "ndtvtamil";
     break;
   case "news-bengali":
     sitetitle = "NDTV Bangla";
     usermsg = usermsg_re =
-      'à¦¨à¦¿à¦‰à¦œ à¦…à§à¦¯à¦¾à¦²à¦¾à¦°à§à¦Ÿ à¦¬à¦¨à§à¦§ à¦†à¦›à§‡à¥¤ <a href="javascript:void(0);" style="color:#841111;" onclick="__showSubscribePopup();">à¦à¦–à¦¾à¦¨à§‡ à¦•à§à¦²à¦¿à¦• à¦•à¦°à§‡ à¦…à¦¨ à¦•à¦°à§à¦¨</a>';
+      'নিউজ অ্যালার্ট বন্ধ আছে। <a href="javascript:void(0);" style="color:#841111;" onclick="__showSubscribePopup();">এখানে ক্লিক করে অন করুন</a>';
     usermsg_un =
-      'à¦¨à¦¿à¦‰à¦œ à¦…à§à¦¯à¦¾à¦²à¦¾à¦°à§à¦Ÿ à¦…à¦¨ à¦†à¦›à§‡à¥¤ <a href="javascript:void(0);" style="color:#841111;"  onclick="__alw(1);;">à¦à¦–à¦¾à¦¨à§‡ à¦•à§à¦²à¦¿à¦• à¦•à¦°à§‡ à¦¬à¦¨à§à¦§ à¦•à¦°à§à¦¨</a>';
+      'নিউজ অ্যালার্ট অন আছে। <a href="javascript:void(0);" style="color:#841111;"  onclick="__alw(1);;">এখানে ক্লিক করে বন্ধ করুন</a>';
     ___site = "ndtvbengali";
     break;
   case "education":
@@ -253,7 +250,7 @@ function sendThankYouNotification(token) {
 
 function sendThankYouNotification(token) {
   navigator.serviceWorker.register(
-    base_url + "world-firebase-messaging-sw.js?aajli"
+    base_url + "/beeps/js" + "/world-firebase-messaging-sw.js?aajli"
   );
   Notification.requestPermission().then((result) => {
     if (result === "granted") {
@@ -428,7 +425,7 @@ function __alw(flag) {
   //console.log('token recived111111');
   //alert('ddddddd');
   navigator.serviceWorker
-    .register(base_url + "world-firebase-messaging-sw.js?aajli")
+    .register(base_url + "/beeps/js" + "/world-firebase-messaging-sw.js?aajli")
     .then(function (registration) {
       /** Since we are using our own service worker ie firebase-messaging-sw.js file */
       messaging.useServiceWorker(registration);

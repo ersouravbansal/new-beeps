@@ -116,16 +116,12 @@ export function Layout({ children }: any) {
         <script src={`/beeps/js/jquery-min.js`}></script>
         <script src={`/beeps/js/custom.js`}></script>
         <script src={`/beeps/js/beep-element.js`}></script>
-        {/* <script src={`/beeps/js/notification.js`}></script> */}
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
         {/* <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> */}
         <script src={`/beeps/js/beep-video.js`}></script>
-        {/* <script
-          id="__loginScript"
-          src="https://stage-auth.ndtv.com/w/js/config.js?v=2023-10-27-01&site=swirlster&nocss=1"
-        ></script> */}
-        {/* <script src="https://stage82-www.ndtv.com/world-fcm.js?01032014ver-20241803-01.00"></script> */}
-        <script src={`/beeps/js/notification.js`}></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js"></script>
+        <script src={`/beeps/js/world-fcm.js`}></script>
         <script
           async
           src="https://www.googletagservices.com/tag/js/gpt.js"
@@ -172,7 +168,7 @@ export default function App() {
         const logTriggerElements = document.querySelectorAll(".__log_trigger");
         logTriggerElements.forEach((element) => {
           element.addEventListener("click", function () {
-            console.log("log set__")
+            console.log("log set__");
             if (!parent_c_islogin()) {
               let __rurl = window.location.href;
               window.location.href =

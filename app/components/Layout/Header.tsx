@@ -8,10 +8,6 @@ const Header = () => {
   const location = useLocation();
   const [query, setQuery] = useState("");
   const [errors, setErrors] = useState("");
-  const notificationAllowed = useStore((state) => state.notificationAllowed);
-  const setNotificationAllowed = useStore(
-    (state) => state.setNotificationAllowed
-  );
   const gptRef = useRef();
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -266,25 +262,25 @@ const Header = () => {
                         </svg>
                       </div>
                       {/* Notification Icon */}
-                      <span className="t-icn-nv t-icn-nt ttp">
+                      <span className="t-icn-nv t-icn-nt ttp" id="___ndtvspldiv">
                         <svg className="vj_icn vj_bell bell">
                           <use xlinkHref="#vj_bell" />
                         </svg>
                         <div className="tip on-bottom">
-                          {!notificationAllowed ? (
+                          {/* {!notificationAllowed ? ( */}
                             <div className="tip_wrp crsr_ptr">
                               News alerts are turned off.{" "}
                               <div
                                 className="ttp-lnk"
                                 onClick={() => {
-                                  setNotificationAllowed(true);
+                                  // setNotificationAllowed(true);
                                   window.__showSubscribePopup();
                                 }}
                               >
                                 Click here to turn on.
                               </div>
                             </div>
-                          ) : (
+                          {/* ) : (
                             <div className="tip_wrp crsr_ptr">
                               You Have Subscribed To Our News Updates.
                               <div
@@ -297,7 +293,7 @@ const Header = () => {
                                 To Unsubscribe
                               </div>
                             </div>
-                          )}
+                          )} */}
                         </div>
                       </span>
                     </div>
