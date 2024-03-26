@@ -1,5 +1,4 @@
-import { Link } from "@remix-run/react";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import VideoPlayer from "~/hooks/useVideoPlayer";
 import useStore from "~/stores/utilstore";
 import { isMobile } from "react-device-detect";
@@ -8,8 +7,6 @@ import { BASEPATH } from "~/constants";
 const VideoSlide = (props: any) => {
   const [getUrl, setGetUrl] = useState("None");
   const silent = useStore((state) => state.silent);
-  const setSilent = useStore((state) => state.setSilent);
-  const clicked = useStore((state) => state.clicked);
   const urlupdate = useStore((state) => state.urlupdate);
   const setClicked = useStore((state) => state.setClicked);
   const isVideoPlaying = useStore((state) => state.isVideoPlaying);

@@ -19,7 +19,6 @@ const Content = (props: {
   const isPathChange = location.pathname !== prevPath.current;
   const isVideoAvailable = (props.videoData?.results?.length || 0) > 0;
   const clicked = useStore((state) => state.clicked);
-  const setClicked = useStore((state) => state.setClicked);
 
   function playActiveSlideVideo(swiper) {
     var activeSlide = swiper.slides[swiper.activeIndex];
