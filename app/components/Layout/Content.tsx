@@ -75,6 +75,7 @@ const Content = (props: {
           direction: "vertical" as any,
           loop: false,
           centeredSlides: true,
+          initialSlide: isPathChange ? 0 : activeVideoIndex,
           cssMode: true,
           slidesPerView: "auto",
           mousewheel: true,
@@ -142,7 +143,7 @@ const Content = (props: {
         });
         mySwiper.init();
       }
-      mySwiper.slideTo(isPathChange ? 0 : activeVideoIndex);
+      // mySwiper.slideTo(isPathChange ? 0 : activeVideoIndex);
     });
 
     return () => {};

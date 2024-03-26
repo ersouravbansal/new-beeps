@@ -14,7 +14,7 @@ import { BASEPATH } from "~/constants";
 //     { name: "description", content: "Welcome to Remix!" },
 //   ];
 // };
-const pageSize = 40;
+const pageSize = 10;
 async function fetchVideos(pageNumber = 1) {
   const api_url =
     typeof process !== "undefined" ? process.env.REMIX_API_URL || "" : "";
