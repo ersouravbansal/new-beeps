@@ -177,39 +177,6 @@ const VideoSlide = (props: any) => {
     setGetUrl(currentUrl);
   }, [props.urltitle, props.videoID]);
 
-  useEffect(() => {
-    if (mySwiper) {
-      // console.log("active index",mySwiper?.activeIndex)
-      if (mySwiper.activeIndex === 0 && mySwiper.activeIndex === props.index) {
-        if (urlupdate) {
-          let newUrl: string;
-          const autoStartEv = "true";
-          document.title = props.title;
-          const urltitle = cleanUp(props.urltitle).toLowerCase();
-          const videoID = props.videoID;
-          const catName = props?.catName;
-          autoPlayVideo();
-          if (catName) {
-            newUrl = `${BASEPATH}/videos/${catName}/${urltitle}-${videoID}`;
-            window.history.pushState({}, "", newUrl);
-          } else {
-            newUrl = `${BASEPATH}/videos/${urltitle}-${videoID}`;
-            window.history.pushState({}, "", newUrl);
-          }
-          trackVideoPageView(newUrl, autoStartEv, props);
-        }
-      }
-    }
-  }, [
-    mySwiper,
-    props.index,
-    urlupdate,
-    autoPlayVideo,
-    props.urltitle,
-    props.videoID,
-    props.catName,
-    props.title,
-  ]);
   const handleSlide = useCallback(() => {
     if (urlupdate) {
       let newUrl: string;
@@ -247,18 +214,12 @@ const VideoSlide = (props: any) => {
   ]);
   useEffect(() => {
     // console.log("current video is sourav",props.index)
-    if (mySwiper) {
-      mySwiper.on("slideChange", () => {
-        // console.log("active index slidechange",mySwiper?.activeIndex)
-        if (mySwiper.activeIndex === props.index) {
-          // console.log("souravcurrent video",mySwiper.activeIndex,props.index)
-          handleSlide();
-        } else {
-          pauseVideo();
-        }
-      });
+    if (props.isActive) {
+      handleSlide();
+    } else {
+      pauseVideo();
     }
-  }, [mySwiper, props.index, handleSlide, pauseVideo]);
+  }, [props.isActive, handleSlide, pauseVideo]);
   return (
     <>
       <div

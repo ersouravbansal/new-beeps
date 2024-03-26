@@ -19,7 +19,7 @@ const Content = (props: {
   const isPathChange = location.pathname !== prevPath.current;
   const isVideoAvailable = (props.videoData?.results?.length || 0) > 0;
   const clicked = useStore((state) => state.clicked);
-
+  const [activeVideoIndex, setActiveVideoIndex] = useState(0);
   function playActiveSlideVideo(swiper) {
     var activeSlide = swiper.slides[swiper.activeIndex];
     var activeSlideVideo = activeSlide.querySelector("video");
@@ -70,7 +70,9 @@ const Content = (props: {
         mySwiper = null;
       }
       if (mySwiper) {
-        const updatedIndex = props.videoData?.results.findIndex(video => video.id === currentVideoId);
+        const updatedIndex = props.videoData?.results.findIndex(
+          (video) => video.id === currentVideoId
+        );
         if (updatedIndex !== -1) {
           mySwiper.slideTo(updatedIndex);
         }
@@ -136,6 +138,8 @@ const Content = (props: {
               playActiveSlideVideo(this);
             },
             slideChange: function () {
+              setActiveVideoIndex(this.activeIndex)
+              console.log(this.activeIndex)
               if (timeoutIDs[this.realIndex]) {
                 clearTimeout(timeoutIDs[this.realIndex]);
               }
@@ -177,6 +181,7 @@ const Content = (props: {
                     ? props.videoData?.results?.map(
                         (d: any, index: any, data) => {
                           // console.log("data(general):", d);
+                          const isActive = activeVideoIndex === index;
 
                           return (
                             <React.Fragment key={index}>
@@ -206,6 +211,7 @@ const Content = (props: {
                                 ref1={props.ref1}
                                 data={data}
                                 mySwiper={mySwiper}
+                                isActive={isActive}
                               ></VideoSlide>
                             </React.Fragment>
                           );
