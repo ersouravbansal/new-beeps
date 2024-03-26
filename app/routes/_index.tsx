@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { MetaFunction, json } from "@remix-run/node";
 import Content from "~/components/Layout/Content";
-import VideoData from "~/components/Layout/VideoData";
 import { useLoaderData } from "@remix-run/react";
 import axios from "axios";
 import useStore from "~/stores/utilstore";
@@ -14,7 +13,7 @@ import { BASEPATH } from "~/constants";
 //     { name: "description", content: "Welcome to Remix!" },
 //   ];
 // };
-const pageSize = 40;
+const pageSize = 10;
 async function fetchVideos(pageNumber = 1) {
   const api_url =
     typeof process !== "undefined" ? process.env.REMIX_API_URL || "" : "";

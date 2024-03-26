@@ -2,7 +2,7 @@
 import { json } from "@remix-run/node";
 import type { LoaderFunction } from "@remix-run/server-runtime";
 import axios from "axios";
-const pageSize = 40;
+const pageSize = 10;
 
 let search_api_url = "";
 if (typeof process !== "undefined") {
