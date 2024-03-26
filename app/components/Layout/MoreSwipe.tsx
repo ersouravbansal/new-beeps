@@ -19,8 +19,10 @@ const MoreSwipe = () => {
                 <div className="VdElCht_tl">Comments</div>
                 <div
                   className="VdElCht_cls"
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation();
                     setCmntInfo(null, null, null);
+                    $("body").removeClass('VdElCht_on');
                   }}
                 >
                   <svg className="vj_icn vj_close">
