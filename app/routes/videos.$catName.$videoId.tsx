@@ -8,7 +8,7 @@ import Content from "~/components/Layout/Content";
 import useStore from "~/stores/utilstore";
 import { BASEPATH } from "~/constants";
 
-const pageSize = 10;
+const pageSize = 40;
 const cleanUp = (st:String) => {
   return st
     .replace(/[^a-z0-9]+/gi, "-")

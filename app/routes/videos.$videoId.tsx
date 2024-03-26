@@ -9,7 +9,7 @@ import Content from "~/components/Layout/Content";
 import useStore from "~/stores/utilstore";
 import { BASEPATH } from "~/constants";
 
-const pageSize = 10;
+const pageSize = 40;
 const cleanUp = (st: string | undefined) => {
   if (st) {
     return st

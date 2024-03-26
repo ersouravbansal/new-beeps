@@ -9,7 +9,7 @@ import usePrevious from "~/hooks/usePreviousCustom";
 import Content from "~/components/Layout/Content";
 import useStore from "~/stores/utilstore";
 import { BASEPATH } from "~/constants";
-const pageSize = 10;
+const pageSize = 40;
 async function fetchVideos({ pageNumber, query }: any = {}) {
   let api_url = "";
   if (typeof process !== "undefined") {

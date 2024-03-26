@@ -11,7 +11,7 @@ import Content from "~/components/Layout/Content";
 import useStore from "~/stores/utilstore";
 import { BASEPATH } from "~/constants";
 
-const pageSize = 10;
+const pageSize = 40;
 async function fetchVideos({ pageNumber = 1, catName } = {}) {
   const api_url = typeof process !== "undefined" ? process.env.REMIX_API_URL || "" : "";
   const basepath = typeof process !== "undefined" ? process.env.REMIX_BASEPATH || "" : "";

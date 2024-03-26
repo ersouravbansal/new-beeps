@@ -2,7 +2,7 @@
 import { json } from "@remix-run/node";
 import type { LoaderFunction } from "@remix-run/server-runtime";
 import axios from "axios";
-const pageSize =10;
+const pageSize =40;
 
 export const loader: LoaderFunction = async ({ request }) => {
   try {
