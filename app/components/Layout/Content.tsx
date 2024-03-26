@@ -1,13 +1,10 @@
 // Content.tsx
-
-import { Link } from "@remix-run/react";
 import React, { useEffect, useRef, useState } from "react";
 import VideoSlide from "~/components/Layout/VideoSlide";
 import $ from "jquery";
 import Swiper from "swiper";
 import useStore from "~/stores/utilstore";
 import { useLocation } from "@remix-run/react";
-import { cli } from "@remix-run/dev";
 let mySwiper: any;
 let timeoutIDs: any = [];
 const Content = (props: {
@@ -20,7 +17,6 @@ const Content = (props: {
   const location = useLocation();
   const prevPath = useRef("");
   const isPathChange = location.pathname !== prevPath.current;
-  // console.log("location is", location.pathname, prevPath.current, isPathChange);
   const isVideoAvailable = (props.videoData?.results?.length || 0) > 0;
   const clicked = useStore((state) => state.clicked);
   const setClicked = useStore((state) => state.setClicked);
@@ -28,9 +24,6 @@ const Content = (props: {
   function playActiveSlideVideo(swiper) {
     var activeSlide = swiper.slides[swiper.activeIndex];
     var activeSlideVideo = activeSlide.querySelector("video");
-    // if (activeSlideVideo) {
-    //     activeSlideVideo.play();
-    // }
   }
   function handleTimeout(index: any) {
     var activeSlide = document.querySelectorAll(".swiper-slide")[index];
@@ -68,144 +61,16 @@ const Content = (props: {
       }
     }
   }
-
-  //   function handleTimeout(index:any) {
-  //     var activeSlide = $('.swiper-slide').eq(index);
-  //     $('.swiper-slide').removeClass('js_icon-more');
-
-  //     activeSlide.addClass('js_seek-vis-sec');
-  //     activeSlide.removeClass('js_swp-vis');
-  //     if ($(window).width() <= 560) {
-
-  //         if (!clicked) {
-  //             activeSlide.addClass('js_seek-vis-sec');
-  //             activeSlide.addClass('js_swp-vis');
-
-  //            setTimeout(function () {
-  //                 activeSlide.removeClass('js_seek-vis-sec');
-  //                 activeSlide.removeClass('js_icon-more');
-  //                 $("body").removeClass('VdElCht_on');
-
-  //             }, 6000);
-  //         }
-  //     }
-  //     if ($(window).width() >= 560) {
-
-  //         if (!clicked) {
-  //             activeSlide.addClass('js_seek-vis-sec');
-  //             //  activeSlide.addClass('js_swp-vis');
-
-  //             setTimeout(function () {
-  //                 activeSlide.removeClass('js_seek-vis-sec');
-  //                 activeSlide.removeClass('js_icon-more');
-
-  //             }, 6000);
-  //         }
-  //     }
-  // }
-
-  //   var activeSlide = $(".swiper-slide").eq(index);
-  //   $(".swiper-slide").removeClass("js_icon-more");
-
-  //   activeSlide.addClass("js_seek-vis-sec");
-  //   activeSlide.removeClass("js_swp-vis");
-  //   if ($(window).width() <= 560) {
-  //     if (!clicked) {
-  //       activeSlide.addClass("js_seek-vis-sec");
-  //       activeSlide.addClass("js_swp-vis");
-
-  //       setTimeout(function () {
-  //         activeSlide.removeClass("js_seek-vis-sec");
-  //         activeSlide.removeClass("js_icon-more");
-  //         $("body").removeClass("VdElCht_on");
-  //       }, 6000);
-  //     }
-  //   }
-  //   if ($(window).width() >= 560) {
-  //     if (!clicked) {
-  //       activeSlide.addClass("js_seek-vis-sec");
-  //       //  activeSlide.addClass('js_swp-vis');
-
-  //       setTimeout(function () {
-  //         activeSlide.removeClass("js_seek-vis-sec");
-  //         activeSlide.removeClass("js_icon-more");
-  //       }, 6000);
-  //     }
-  //   }
-  // };
-  //   direction: "vertical" as any,
-  //   loop: false,
-  //   centeredSlides: true,
-  //   cssMode: true,
-  //   slidesPerView: "auto",
-  //   mousewheel: true,
-  //   keyboard: true,
-  //   navigation: {
-  //     nextEl: ".BepNv_nxt",
-  //     prevEl: ".BepNv_prv",
-  //   },
-  //   breakpoints: {
-  //     768: {
-  //       centeredSlides: true,
-  //       cssMode: true,
-  //       direction: "horizontal",
-  //       loop: false,
-  //       slidesPerView: 1.35,
-  //       speed: 400,
-  //       mousewheel: true,
-  //       keyboard: true,
-  //     },
-  //     1024: {
-  //       centeredSlides: true,
-  //       cssMode: true,
-  //       direction: "horizontal",
-  //       loop: false,
-  //       slidesPerView: 1.6,
-  //       speed: 400,
-  //       mousewheel: true,
-  //       keyboard: true,
-  //     },
-  //     1200: {
-  //       centeredSlides: true,
-  //       cssMode: true,
-  //       direction: "horizontal",
-  //       loop: false,
-  //       slidesPerView: 2,
-  //       speed: 400,
-  //       mousewheel: true,
-  //       keyboard: true,
-  //     },
-  //   },
-  //   on: {
-  //     init: function () {
-  //       $(".swiper-slide").each(function (index) {
-  //         timeoutIDs[index] = setTimeout(function () {
-  //           handleTimeout(index);
-  //         }, 0);
-  //       });
-  //       playActiveSlideVideo(this);
-  //     },
-  //     slideChange: function () {
-  //       clearTimeout(timeoutIDs[this.realIndex]);
-  //       timeoutIDs[this.realIndex] = setTimeout(function () {
-  //         handleTimeout(mySwiper.realIndex);
-  //       }, 0);
-  //       playActiveSlideVideo(this);
-  //     },
-  //   },
-  // };
   useEffect(() => {
     const currentSlideIndex = mySwiper?.activeIndex || 0;
     const currentVideoId = props.videoData?.results[currentSlideIndex]?.id;
 
     $(function () {
-      // mySwiper = new Swiper(".BepSl_rw", swiperOptions);
       if (isPathChange && mySwiper) {
         mySwiper.destroy();
         mySwiper = null;
       }
       if (mySwiper) {
-        // console.log("old swiper found", mySwiper);
         const updatedIndex = props.videoData?.results.findIndex(video => video.id === currentVideoId);
         if (updatedIndex !== -1) {
           mySwiper.slideTo(updatedIndex);
@@ -282,19 +147,7 @@ const Content = (props: {
             },
           },
         });
-        // if ($(window).width() >= 560) {
-        // $('.VdEl_ovl').click(function (event) {
-        //     event.stopPropagation();
-        //     $(this).parents('.BepSl_li').toggleClass('js_seek-vis');
-        //     $(this).parents('.BepSl_li').removeClass('js_seek-vis-sec');
-        //     console.log("hi");
-        //     if ($(window).width() <= 560) {
-        //         $(this).parents('.BepSl_li').toggleClass('js_swp-vis');
-        //     }
-        // });
-        // }
         mySwiper.init();
-        // console.log("new swiper initiated", mySwiper);
       }
     });
 
