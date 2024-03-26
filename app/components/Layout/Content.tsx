@@ -61,8 +61,7 @@ const Content = (props: {
     }
   }
   useEffect(() => {
-    const currentSlideIndex = mySwiper?.activeIndex || 0;
-    const currentVideoId = props.videoData?.results[currentSlideIndex]?.id;
+    // const currentSlideIndex = mySwiper?.activeIndex || 0;
 
     $(function () {
       if (isPathChange && mySwiper) {
@@ -70,16 +69,7 @@ const Content = (props: {
         mySwiper = null;
       }
       if (mySwiper) {
-        const updatedIndex = props.videoData?.results.findIndex(
-          (video) => video.id === currentVideoId
-        );
-        if (updatedIndex !== -1) {
-          mySwiper.slideTo(updatedIndex);
-        }
         mySwiper.update();
-        if (updatedIndex !== -1) {
-          mySwiper.slideTo(updatedIndex);
-        }
       } else {
         mySwiper = new Swiper(".BepSl_rw", {
           direction: "vertical" as any,
@@ -138,8 +128,8 @@ const Content = (props: {
               playActiveSlideVideo(this);
             },
             slideChange: function () {
-              setActiveVideoIndex(this.activeIndex)
-              console.log(this.activeIndex)
+              setActiveVideoIndex(this.activeIndex);
+              console.log(this.activeIndex);
               if (timeoutIDs[this.realIndex]) {
                 clearTimeout(timeoutIDs[this.realIndex]);
               }
@@ -152,6 +142,7 @@ const Content = (props: {
         });
         mySwiper.init();
       }
+      mySwiper.slideTo(isPathChange ? 0 : activeVideoIndex);
     });
 
     return () => {};
