@@ -93,8 +93,8 @@ const SideNavigation = () => {
                 </div>
               </span>
               {/* Login / Signup */}
-              {/* <span className="t-icn-nv ttp __log_trigger"> */}
-              <span className="t-icn-nv ttp ">
+              <span className="t-icn-nv ttp __log_trigger">
+              {/* <span className="t-icn-nv ttp "> */}
                 <svg className="vj_icn vj_login">
                   <use xlinkHref="#vj_login" />
                 </svg>
