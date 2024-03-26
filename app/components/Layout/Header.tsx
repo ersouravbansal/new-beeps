@@ -1,14 +1,11 @@
 import { Link, Outlet, useLocation } from "@remix-run/react";
-import React, { useEffect, useRef, useState } from "react";
-import { CATEGORY_LIST, CATEGORY_NAME } from "./CategoryName";
+import React, { useState } from "react";
+import { CATEGORY_LIST} from "./CategoryName";
 import useGptSlot from "~/hooks/useGptSlot";
-import useStore from "~/stores/utilstore";
 
 const Header = () => {
-  const location = useLocation();
   const [query, setQuery] = useState("");
   const [errors, setErrors] = useState("");
-  const gptRef = useRef();
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!query.trim()) {
