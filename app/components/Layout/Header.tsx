@@ -1,38 +1,25 @@
 import { Link, Outlet, useLocation } from "@remix-run/react";
 import React, { useState } from "react";
-import { CATEGORY_LIST} from "./CategoryName";
-import useGptSlot from "~/hooks/useGptSlot";
-
+import CatNav from "./CatNav";
+import { isMobile } from "react-device-detect";
+import MainNav from "./MainNav";
 const Header = () => {
-  const [query, setQuery] = useState("");
-  const [errors, setErrors] = useState("");
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    if (!query.trim()) {
-      setErrors(" Please enter some text to search!");
-      return;
-    }
-    setErrors("");
-    window.location.href = `/beeps/search/?q=` + query;
-  };
-
-  useGptSlot({
-    path: "/6355419/Travel/Europe/France/Paris",
-    size: [300, "fluid"],
-    id: "gpt-ad",
-  });
   return (
     <>
       {/*====== Content ( LHS, Main Content and RHS ) ======*/}
       <div className="vjl-cntr_full h-100">
         <div className="vjl-row h-100">
           {/*=== LHS ===*/}
+          {!isMobile ? <CatNav /> : null}
+
           {/*=== Middle ===*/}
           <div
             className="VdPg-Col_Two VdPg-Col_P0"
             style={{ position: "fixed", right: 0, top: 0 }}
           >
             {/*====== Logo, Main Navigation & Right Icons Live Tv, Notification and Search ======*/}
+            {!isMobile ? <MainNav /> : null}
+
             {/*====== Sub Navigation Widget ======*/}
             <div className="VdPg_sub-nav">
               <div className="vjl-cntr">

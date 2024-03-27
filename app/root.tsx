@@ -28,12 +28,14 @@ import beepComments from "./styles/beepComments.css";
 import videoShareDropDown from "./styles/videoShareDropDown.css";
 import useEnvStore from "./stores/env_variables";
 import TagManager from "react-gtm-module";
+import { isMobile } from "react-device-detect";
 
 export const loader = async () => {
   const envStore = useEnvStore.getState();
   await envStore.setBasePath(process.env.REMIX_BASEPATH);
   await envStore.setClientUrl(process.env.REMIX_API_URL);
   return json({
+    GTM_ID: process.env.GTM_ID,
     APP_ENV: process.env.REMIX_APP_ENV,
     REMIX_BASEPATH: process.env.REMIX_BASEPATH,
     REMIX_API_URL: process.env.REMIX_API_URL,
@@ -132,7 +134,7 @@ export function Layout({ children }: any) {
 }
 
 export default function App() {
-  const { APP_ENV, REMIX_BASEPATH, REMIX_API_URL, ENV } =
+  const { GTM_ID, APP_ENV, REMIX_BASEPATH, REMIX_API_URL, ENV } =
     useLoaderData<typeof loader>();
   const envStore = useEnvStore.getState();
 
@@ -142,6 +144,12 @@ export default function App() {
     envStore.setClientUrl(REMIX_API_URL);
   }, [REMIX_BASEPATH, REMIX_API_URL, APP_ENV]);
 
+  useEffect(() => {
+    if (GTM_ID?.length) {
+      const tagManagerArgs = { gtmId: GTM_ID };
+      TagManager.initialize(tagManagerArgs);
+    }
+  }, [GTM_ID]);
 
   useEffect(() => {
     const loadScript = () => {
@@ -187,41 +195,13 @@ export default function App() {
         console.log("Error loading login script:", error);
       });
   }, []);
-  // useEffect(() => {
-  //   const logTriggerElements = document.querySelectorAll(".__log_trigger");
-  //   setTimeout(() => {
-  //     console.log("log set__")
-  //     logTriggerElements.forEach(function (element) {
-  //       element.addEventListener("click", function () {
-  //         if (!parent_c_islogin()) {
-  //           let __rurl = window.location.href;
-  //           window.location.href =
-  //             "https://stage-auth.ndtv.com/w/sso.html?siteurl=" +
-  //             encodeURIComponent(__rurl);
-  //         } else {
-  //           const toggleClass = element.getAttribute("data-class");
-  //           document.body.classList.toggle(toggleClass);
-  //         }
-  //       });
-  //     });
-
-  //     const overlaySideNav = document.querySelector(".overlay__side-nav");
-  //     const logSdCls = document.querySelector(".LogSd-cls");
-  //     overlaySideNav?.addEventListener("click", removeJsSideNavClass);
-  //     logSdCls?.addEventListener("click", removeJsSideNavClass);
-
-  //     function removeJsSideNavClass() {
-  //       document.body.classList.remove("js_sid-nav-right");
-  //     }
-  //   }, 5000);
-  // }, []);
   return (
     <>
       <SvgIcons />
       <div id="___ndtvpushdiv" className="npop_wrp t-center"></div>
       <div className="__nlogin" id="__nlogin"></div>
       <Header />
-      {/* <SideNavigation /> */}
+      {!isMobile ? <SideNavigation /> : null}
       {/* <Login /> */}
       {/* <LanguageSwitch /> */}
       <MoreSwipe />
