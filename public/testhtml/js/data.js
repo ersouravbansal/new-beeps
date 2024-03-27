@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const slideshowContainer = document.getElementById("swiper-wrapper BepSl_ul");
+  const slideshowContainers = document.getElementsByClassName("swiper-wrapper BepSl_ul");
+  const slideshowContainer = slideshowContainers[0]
 
   fetchVideos().then((videos) => {
     videos.map((video) => {
-      const videoUrl = video.url;
+      const videoUrl = video.link;
       const videoTitle = video.title;
 
       const slideDiv = document.createElement("div");
@@ -62,8 +63,8 @@ document.addEventListener("DOMContentLoaded", function () {
     return fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.videos);
-        return data.videos;
+        console.log(data.results);
+        return data.results;
       });
   }
 });
