@@ -2,8 +2,8 @@
 //base_url = 'http://localhost:8000/';
 // base_url = 'https://stage82-www.ndtv.com/';
 //base_url = 'https://www.ndtv.com/';
-// const base_url = "http://localhost:3000";
-const base_url = "https://new-beeps.vercel.app";
+const base_url = "http://localhost:3000";
+// const base_url = "https://new-beeps.vercel.app";
 function get_browser_info() {
   var ua = navigator.userAgent,
     tem,
