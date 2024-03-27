@@ -399,12 +399,12 @@ const VideoSlide = (props: any) => {
                   onLoadedMetadata={handleOnMetaLoaded}
                   // muted={silent}
                   // preload="auto"
-                  // preload="metadata"
-                  preload="none"
+                  preload="metadata"
+                  // preload="none"
                   width="100%"
                   height="100%"
-                  // loop
-                  // playsInline
+                  loop
+                  playsInline
                   controlsList="nodownload"
                 />
                 {/*====== Seek bar ( Play / Pause, Time, Next Prev, Progress Bar, Related Button ) ======*/}
