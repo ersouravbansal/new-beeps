@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import VideoPlayer from "~/hooks/useVideoPlayer";
 import useStore from "~/stores/utilstore";
-import { isMobile } from "react-device-detect";
+import { isChrome, isDesktop, isMobile, isMobileSafari } from "react-device-detect";
 import Hls from "hls.js";
 // import { trackVideoPageView } from "~/stores/eventTracker";
 import { BASEPATH } from "~/constants";
@@ -216,14 +216,14 @@ const VideoSlide = (props: any) => {
   useEffect(() => {
     // console.log("current video is sourav",props.index)
 
-    if (Hls.isSupported()) {
+    if (Hls.isSupported() && (!isMobileSafari || isChrome)) {
       const hls = new Hls();
       hls.loadSource(props.hlssrc);
       hls.attachMedia(videoElement.current);
       hls.on(Hls.Events.MANIFEST_PARSED, function () {
         console.log("hls parsed successfully")
       });
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+    } else {
       console.log("hls hls hls")
       videoElement.current.src = props.hlssrc;
 
@@ -406,7 +406,8 @@ const VideoSlide = (props: any) => {
                 {/* <div> */}
                 <video
                   className="BepSl_vdo"
-                  src={props.vidsrc}
+                  src={props.hlssrc}
+                  // src={props.vidsrc}
                   ref={videoElement}
                   onTimeUpdate={() => {
                     handleOnTimeUpdate();
