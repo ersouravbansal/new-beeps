@@ -397,7 +397,7 @@ const VideoSlide = (props: any) => {
                     handleOnTimeUpdate();
                   }}
                   onLoadedMetadata={handleOnMetaLoaded}
-                  // muted={silent}
+                  muted={silent}
                   // preload="auto"
                   preload="metadata"
                   // preload="none"
