@@ -13,7 +13,7 @@ import { BASEPATH } from "~/constants";
 //     { name: "description", content: "Welcome to Remix!" },
 //   ];
 // };
-const pageSize = 10;
+const pageSize = 40;
 async function fetchVideos(pageNumber = 1) {
   const api_url =
     typeof process !== "undefined" ? process.env.REMIX_API_URL || "" : "";
@@ -53,24 +53,24 @@ export default function Index() {
     }
   }, [urlupdate]);
 
-  async function loadMore() {
-    setLoading(true);
-    try {
-      console.log("calling load more");
-      const response = await fetchVideos(page);
-      if (!response.results) {
-        throw new Response("Not Found", { status: 404 });
-      }
-      setVideos((current) => [...current, ...response.results]);
-      setPage((page) => page + 1);
-      setHasNextPage(response.results.length === pageSize);
-    } catch (err) {
-      setError(err);
-      console.error("Error:", err);
-    } finally {
-      setLoading(false);
-    }
-  }
+  // async function loadMore() {
+  //   setLoading(true);
+  //   try {
+  //     console.log("calling load more");
+  //     const response = await fetchVideos(page);
+  //     if (!response.results) {
+  //       throw new Response("Not Found", { status: 404 });
+  //     }
+  //     setVideos((current) => [...current, ...response.results]);
+  //     setPage((page) => page + 1);
+  //     setHasNextPage(response.results.length === pageSize);
+  //   } catch (err) {
+  //     setError(err);
+  //     console.error("Error:", err);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }
   // const [infiniteRef] = useInfiniteScroll({
   //   loading,
   //   onLoadMore: loadMore,
@@ -79,20 +79,22 @@ export default function Index() {
   //   rootMargin: "0px 0px 400px 0px",
   // });
   // console.log("Sourav Bansal",useInfiniteScroll)
-  const [infiniteRef, { rootRef }] = useInfiniteScroll({
-    loading,
-    hasNextPage,
-    onLoadMore: loadMore,
-    disabled: !!error,
-    rootMargin: "0px 400px 0px 400px",
-  });
+
+
+  // const [infiniteRef, { rootRef }] = useInfiniteScroll({
+  //   loading,
+  //   hasNextPage,
+  //   onLoadMore: loadMore,
+  //   disabled: !!error,
+  //   rootMargin: "0px 400px 0px 400px",
+  // });
 
   return (
     <>
       <Content
         videoData={{ results: videos }}
-        ref1={infiniteRef}
-        ref2={rootRef}
+        // ref1={infiniteRef}
+        // ref2={rootRef}
       />
     </>
   );
