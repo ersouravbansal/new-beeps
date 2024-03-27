@@ -405,7 +405,8 @@ const VideoSlide = (props: any) => {
                   height="100%"
                   loop
                   playsInline
-                  controlsList="nodownload"
+                  controlsList="nodownload nofullscreen"
+                  
                 />
                 {/*====== Seek bar ( Play / Pause, Time, Next Prev, Progress Bar, Related Button ) ======*/}
                 <div className="VdEl_cn">
