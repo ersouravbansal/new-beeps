@@ -1,11 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const slideshowContainers = document.getElementsByClassName("swiper-wrapper BepSl_ul");
-  const slideshowContainer = slideshowContainers[0]
-
-  fetchVideos().then((videos) => {
+  const slideshowContainers = document.getElementsByClassName(
+    "swiper-wrapper BepSl_ul"
+  );
+  const slideshowContainer = slideshowContainers[0];
+  const pageSize = 50; // Example page size
+  const pageNumber = 1;
+  fetchVideos(pageSize, pageNumber).then((videos) => {
     videos.map((video) => {
-      const videoUrl = video.link;
+      const videoUrl = video["media:filepath"];
+      console.log("video url is ", video["media:filepath"]);
       const videoTitle = video.title;
+      console.log("title", videoTitle);
 
       const slideDiv = document.createElement("div");
       slideDiv.classList.add("swiper-slide", "BepSl_li");
@@ -44,11 +49,71 @@ document.addEventListener("DOMContentLoaded", function () {
       videoElement.height = "100%";
       videoElement.playsinline = true;
 
+      // Additional content sibling to video element
+      const additionalContentDiv = document.createElement("div");
+      additionalContentDiv.classList.add("sourav");
+      additionalContentDiv.innerHTML = `
+             <div class="VdEl_lod-rw">
+               <div class="VdEl_lod-cl">
+                 <div class="VdEl_inf-wr">
+                   <div class="VdEl_inf">${videoTitle}</div>
+                 </div>
+                 <!-- Additional icons -->
+                 <div class="VdEl_icn-wr">
+                   <!-- Chat -->
+                   <div class="VdEl_icn-lk">
+                     <div class="VdEl_icn js-MorInf">
+                       <svg class="vj_icn vj_chat">
+                         <use xlink:href="#vj_chat"></use>
+                       </svg>
+                     </div>
+                   </div>
+                   <!-- Share -->
+                   <div class="VdEl_icn-lk">
+                     <div class="VdEl_icn">
+                       <div class="SSR_drp SSR_btn-sm  SSR_drp-nav-tp VdEl_shr-pp">
+                         <!-- Share options -->
+                         <a class="SSR_btn-lnk" href="javascript:void(0)">
+                           <svg class="SSR_icn vj_icn vj_share2">
+                             <use xlink:href="#vj_share2"></use>
+                           </svg>
+                           <span class="SSR_btn-tx">Share</span>
+                         </a>
+                         <div class="SSR_drp-nav SSR_WEB">
+                           <ul class="SSR_drp-nav-ul">
+                             <!-- Share options list -->
+                             <!-- Add your share options here -->
+                           </ul>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                   <!-- More options -->
+                   <div class="VdEl_icn-lk">
+                     <div class="VdEl_icn VdEl_icn-mr">
+                       <svg class="vj_icn vj_more">
+                         <use xlink:href="#vj_more"></use>
+                       </svg>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+               <!-- Time and Progress Bar -->
+               <div class="VdEl_lod-cl">
+                 <div class="VdEl_lod-cn">
+                   <!-- Progress Bar -->
+                   <!-- Time -->
+                   <div class="VdEl_sk-tm">02:35/05:00</div>
+                 </div>
+               </div>
+             </div>`;
+
       swipeWrapperDiv.appendChild(swipeTextDiv);
       swipeWrapperDiv.appendChild(swipeLineDiv);
       swipeContainerDiv.appendChild(swipeWrapperDiv);
       videoWrapperDiv.appendChild(swipeContainerDiv);
       videoWrapperDiv.appendChild(videoElement);
+      videoWrapperDiv.appendChild(additionalContentDiv);
       videoContainerDiv.appendChild(videoWrapperDiv);
       cardDiv.appendChild(videoContainerDiv);
       cardWrapperDiv.appendChild(cardDiv);
@@ -60,7 +125,18 @@ document.addEventListener("DOMContentLoaded", function () {
   function fetchVideos() {
     const apiUrl =
       "https://search.ndtv.com/video/mjson/client_key/ndtv-news-2d972289359ce88a4ed1e2a3ee8fa5ae/";
-    return fetch(apiUrl)
+    const queryParams = [
+      "extra_params=ssl,show,gif,urltitle,source_id,fullimage,category,tmpcheck,newurl,ssl,sitelink,shorttitle,filepath,folder_path,preview,vertical",
+      "source=1",
+      "show_vertical=1",
+      "pageSize=" + pageSize,
+      "pageNumber=" + pageNumber,
+      "video_format=allformat",
+    ];
+
+    const url = apiUrl + "?" + queryParams.join("&");
+
+    return fetch(url)
       .then((response) => response.json())
       .then((data) => {
         console.log(data.results);
