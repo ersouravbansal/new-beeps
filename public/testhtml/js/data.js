@@ -1,3 +1,4 @@
+let dataLoaded =false;
 document.addEventListener("DOMContentLoaded", function () {
   const slideshowContainers = document.getElementsByClassName(
     "swiper-wrapper BepSl_ul"
@@ -140,13 +141,8 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((response) => response.json())
       .then((data) => {
         console.log(data.results);
+        dataLoaded=true
         return data.results;
       });
   }
 });
-
-//   return fetch(apiUrl,
-//     {
-//     mode: "no-cors",
-//   }
-//   )
