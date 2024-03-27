@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     "swiper-wrapper BepSl_ul"
   );
   const slideshowContainer = slideshowContainers[0];
-  fetchVideos(pageSize, pageNumber).then((videos) => {
+  fetchVideos().then((videos) => {
     videos.map((video) => {
       const videoUrl = video["media:filepath"];
       console.log("video url is ", video["media:filepath"]);
