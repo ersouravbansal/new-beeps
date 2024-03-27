@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     "swiper-wrapper BepSl_ul"
   );
   const slideshowContainer = slideshowContainers[0];
-  const pageSize = 50; // Example page size
+  const pageSize = 200;
   const pageNumber = 1;
   fetchVideos(pageSize, pageNumber).then((videos) => {
     videos.map((video) => {
