@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import VideoPlayer from "~/hooks/useVideoPlayer";
 import useStore from "~/stores/utilstore";
 import { isMobile } from "react-device-detect";
-import { trackVideoPageView } from "~/stores/eventTracker";
+// import { trackVideoPageView } from "~/stores/eventTracker";
 import { BASEPATH } from "~/constants";
 const VideoSlide = (props: any) => {
   const [getUrl, setGetUrl] = useState("None");
@@ -40,23 +40,23 @@ const VideoSlide = (props: any) => {
       pauseVideo();
       return;
     }
-    let playPromise = videoElement.current?.play();
-    if (playPromise != null) {
-      playPromise
-        .then(() => {
-          if (videoElement.current?.muted === false) {
-            unMuteVideo();
-          } else if (videoElement.current?.muted === true) {
-            muteVideo();
-          }
-          playVideo();
-        })
-        .catch(() => {
-          if (videoElement.current) {
-            videoElement.current.poster = props.imgsrc;
-          }
-        });
-    }
+    // let playPromise = videoElement.current?.play();
+    // if (playPromise != null) {
+    //   playPromise
+    //     .then(() => {
+    //       if (videoElement.current?.muted === false) {
+    //         unMuteVideo();
+    //       } else if (videoElement.current?.muted === true) {
+    //         muteVideo();
+    //       }
+    //       playVideo();
+    //     })
+    //     .catch(() => {
+    //       if (videoElement.current) {
+    //         videoElement.current.poster = props.imgsrc;
+    //       }
+    //     });
+    // }
   }, [muteVideo, unMuteVideo, playVideo, silent, isVideoPlaying, pauseVideo]);
 
   const cleanUp = (st: any) => {
@@ -181,13 +181,13 @@ const VideoSlide = (props: any) => {
     if (urlupdate) {
       let newUrl: string;
       const autoStartEv = "true";
-      if (silent) {
-        muteVideo();
-        playVideo();
-      } else {
-        unMuteVideo();
-        playVideo();
-      }
+      // if (silent) {
+      //   muteVideo();
+      //   playVideo();
+      // } else {
+      //   unMuteVideo();
+      //   playVideo();
+      // }
       document.title = props.title;
       const urltitle = cleanUp(props.urltitle).toLowerCase();
       const videoID = props.videoID;
@@ -199,7 +199,7 @@ const VideoSlide = (props: any) => {
         newUrl = `${BASEPATH}/videos/${urltitle}-${videoID}`;
         window.history.pushState({}, "", newUrl);
       }
-      trackVideoPageView(newUrl, autoStartEv, props);
+      // trackVideoPageView(newUrl, autoStartEv, props);
     }
   }, [
     playVideo,
@@ -397,13 +397,13 @@ const VideoSlide = (props: any) => {
                     handleOnTimeUpdate();
                   }}
                   onLoadedMetadata={handleOnMetaLoaded}
-                  muted={silent}
+                  // muted={silent}
                   // preload="auto"
                   preload="metadata"
                   width="100%"
                   height="100%"
-                  loop
-                  playsInline
+                  // loop
+                  // playsInline
                   controlsList="nodownload"
                 />
                 {/*====== Seek bar ( Play / Pause, Time, Next Prev, Progress Bar, Related Button ) ======*/}

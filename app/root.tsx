@@ -34,7 +34,6 @@ export const loader = async () => {
   await envStore.setBasePath(process.env.REMIX_BASEPATH);
   await envStore.setClientUrl(process.env.REMIX_API_URL);
   return json({
-    GTM_ID: process.env.GTM_ID,
     APP_ENV: process.env.REMIX_APP_ENV,
     REMIX_BASEPATH: process.env.REMIX_BASEPATH,
     REMIX_API_URL: process.env.REMIX_API_URL,
@@ -133,7 +132,7 @@ export function Layout({ children }: any) {
 }
 
 export default function App() {
-  const { GTM_ID, APP_ENV, REMIX_BASEPATH, REMIX_API_URL, ENV } =
+  const { APP_ENV, REMIX_BASEPATH, REMIX_API_URL, ENV } =
     useLoaderData<typeof loader>();
   const envStore = useEnvStore.getState();
 
@@ -143,12 +142,6 @@ export default function App() {
     envStore.setClientUrl(REMIX_API_URL);
   }, [REMIX_BASEPATH, REMIX_API_URL, APP_ENV]);
 
-  useEffect(() => {
-    if (GTM_ID?.length) {
-      const tagManagerArgs = { gtmId: GTM_ID };
-      TagManager.initialize(tagManagerArgs);
-    }
-  }, [GTM_ID]);
 
   useEffect(() => {
     const loadScript = () => {
