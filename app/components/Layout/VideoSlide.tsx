@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import VideoPlayer from "~/hooks/useVideoPlayer";
 import useStore from "~/stores/utilstore";
 import { isMobile } from "react-device-detect";
+import Hls from "hls.js";
 // import { trackVideoPageView } from "~/stores/eventTracker";
 import { BASEPATH } from "~/constants";
 const VideoSlide = (props: any) => {
@@ -214,6 +215,20 @@ const VideoSlide = (props: any) => {
   ]);
   useEffect(() => {
     // console.log("current video is sourav",props.index)
+
+    if (Hls.isSupported()) {
+      const hls = new Hls();
+      hls.loadSource(props.hlssrc);
+      hls.attachMedia(videoElement.current);
+      hls.on(Hls.Events.MANIFEST_PARSED, function () {
+        console.log("hls parsed successfully")
+      });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      console.log("hls hls hls")
+      videoElement.current.src = props.hlssrc;
+
+    }
+    //hls ends!!!
     if (props.isActive) {
       handleSlide();
     } else {
@@ -406,7 +421,6 @@ const VideoSlide = (props: any) => {
                   loop
                   playsInline
                   controlsList="nodownload nofullscreen"
-                  
                 />
                 {/*====== Seek bar ( Play / Pause, Time, Next Prev, Progress Bar, Related Button ) ======*/}
                 <div className="VdEl_cn">
