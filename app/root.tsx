@@ -221,7 +221,7 @@ export default function App() {
       <div id="___ndtvpushdiv" className="npop_wrp t-center"></div>
       <div className="__nlogin" id="__nlogin"></div>
       <Header />
-      <SideNavigation />
+      {/* <SideNavigation /> */}
       {/* <Login /> */}
       {/* <LanguageSwitch /> */}
       <MoreSwipe />
