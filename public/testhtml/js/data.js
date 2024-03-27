@@ -44,11 +44,11 @@ document.addEventListener("DOMContentLoaded", function () {
       const videoElement = document.createElement("video");
       videoElement.classList.add("BepSl_vdo");
       videoElement.src = videoUrl;
-      videoElement.muted = true;
       videoElement.preload = "auto";
       videoElement.width = "100%";
       videoElement.height = "100%";
-      videoElement.playsinline = true;
+      videoElement.setAttribute("playsinline", true);
+      videoElement.setAttribute("muted", true);
 
       // Additional content sibling to video element
       const additionalContentDiv = document.createElement("div");
