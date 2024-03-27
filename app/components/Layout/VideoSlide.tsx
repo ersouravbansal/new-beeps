@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import VideoPlayer from "~/hooks/useVideoPlayer";
 import useStore from "~/stores/utilstore";
-import { isChrome, isDesktop, isMobile, isMobileSafari } from "react-device-detect";
-import Hls from "hls.js";
+import { isMobile } from "react-device-detect";
 // import { trackVideoPageView } from "~/stores/eventTracker";
 import { BASEPATH } from "~/constants";
 const VideoSlide = (props: any) => {
@@ -215,20 +214,6 @@ const VideoSlide = (props: any) => {
   ]);
   useEffect(() => {
     // console.log("current video is sourav",props.index)
-
-    if (Hls.isSupported() && (!isMobileSafari || isChrome)) {
-      const hls = new Hls();
-      hls.loadSource(props.hlssrc);
-      hls.attachMedia(videoElement.current);
-      hls.on(Hls.Events.MANIFEST_PARSED, function () {
-        console.log("hls parsed successfully")
-      });
-    } else {
-      console.log("hls hls hls")
-      videoElement.current.src = props.hlssrc;
-
-    }
-    //hls ends!!!
     if (props.isActive) {
       handleSlide();
     } else {
@@ -239,7 +224,7 @@ const VideoSlide = (props: any) => {
     <>
       <div
         className="swiper-slide BepSl_li"
-        ref={props.index === props.data.length - 4 ? props.ref1 : null}
+        // ref={props.index === props.data.length - 4 ? props.ref1 : null}
       >
         <div className="BepSl_crd-wr">
           <div className="BepSl_crd" onClick={handleCardClick}>
@@ -406,8 +391,7 @@ const VideoSlide = (props: any) => {
                 {/* <div> */}
                 <video
                   className="BepSl_vdo"
-                  src={props.hlssrc}
-                  // src={props.vidsrc}
+                  src={props.vidsrc}
                   ref={videoElement}
                   onTimeUpdate={() => {
                     handleOnTimeUpdate();
@@ -416,12 +400,11 @@ const VideoSlide = (props: any) => {
                   muted={silent}
                   // preload="auto"
                   preload="metadata"
-                  // preload="none"
                   width="100%"
                   height="100%"
                   loop
                   playsInline
-                  controlsList="nodownload nofullscreen"
+                  controlsList="nodownload"
                 />
                 {/*====== Seek bar ( Play / Pause, Time, Next Prev, Progress Bar, Related Button ) ======*/}
                 <div className="VdEl_cn">
@@ -765,3 +748,4 @@ const VideoSlide = (props: any) => {
 };
 
 export default VideoSlide;
+
