@@ -4,8 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
     "swiper-wrapper BepSl_ul"
   );
   const slideshowContainer = slideshowContainers[0];
-  const pageSize = 200;
-  const pageNumber = 1;
   fetchVideos(pageSize, pageNumber).then((videos) => {
     videos.map((video) => {
       const videoUrl = video["media:filepath"];
@@ -130,8 +128,8 @@ document.addEventListener("DOMContentLoaded", function () {
       "extra_params=ssl,show,gif,urltitle,source_id,fullimage,category,tmpcheck,newurl,ssl,sitelink,shorttitle,filepath,folder_path,preview,vertical",
       "source=1",
       "show_vertical=1",
-      "pageSize=" + pageSize,
-      "pageNumber=" + pageNumber,
+      "pageSize=" + 100,
+      "pageNumber=" + 1,
       "video_format=allformat",
     ];
 
