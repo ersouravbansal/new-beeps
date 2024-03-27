@@ -195,8 +195,7 @@ const Content = (props: {
           <div className="BepSl_cn">
             <div className="BepSl_wr">
               <div className="swiper-container BepSl_rw">
-              <div className="swiper-wrapper BepSl_ul">
-                {/* <div className="swiper-wrapper BepSl_ul" ref={props.ref2}> */}
+                <div className="swiper-wrapper BepSl_ul" ref={props.ref2}>
                   {isVideoAvailable
                     ? props.videoData?.results?.map(
                         (d: any, index: any, data) => {
@@ -228,7 +227,7 @@ const Content = (props: {
                                 catName={props?.catName}
                                 catId={props?.catId}
                                 pubDate={d.pubDate}
-                                // ref1={props.ref1}
+                                ref1={props.ref1}
                                 data={data}
                                 mySwiper={mySwiper}
                                 isActive={isActive}
@@ -269,3 +268,4 @@ const Content = (props: {
 };
 
 export default Content;
+

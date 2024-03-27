@@ -40,23 +40,23 @@ const VideoSlide = (props: any) => {
       pauseVideo();
       return;
     }
-    // let playPromise = videoElement.current?.play();
-    // if (playPromise != null) {
-    //   playPromise
-    //     .then(() => {
-    //       if (videoElement.current?.muted === false) {
-    //         unMuteVideo();
-    //       } else if (videoElement.current?.muted === true) {
-    //         muteVideo();
-    //       }
-    //       playVideo();
-    //     })
-    //     .catch(() => {
-    //       if (videoElement.current) {
-    //         videoElement.current.poster = props.imgsrc;
-    //       }
-    //     });
-    // }
+    let playPromise = videoElement.current?.play();
+    if (playPromise != null) {
+      playPromise
+        .then(() => {
+          if (videoElement.current?.muted === false) {
+            unMuteVideo();
+          } else if (videoElement.current?.muted === true) {
+            muteVideo();
+          }
+          playVideo();
+        })
+        .catch(() => {
+          if (videoElement.current) {
+            videoElement.current.poster = props.imgsrc;
+          }
+        });
+    }
   }, [muteVideo, unMuteVideo, playVideo, silent, isVideoPlaying, pauseVideo]);
 
   const cleanUp = (st: any) => {
@@ -181,13 +181,13 @@ const VideoSlide = (props: any) => {
     if (urlupdate) {
       let newUrl: string;
       const autoStartEv = "true";
-      // if (silent) {
-      //   muteVideo();
-      //   playVideo();
-      // } else {
-      //   unMuteVideo();
-      //   playVideo();
-      // }
+      if (silent) {
+        muteVideo();
+        playVideo();
+      } else {
+        unMuteVideo();
+        playVideo();
+      }
       document.title = props.title;
       const urltitle = cleanUp(props.urltitle).toLowerCase();
       const videoID = props.videoID;
@@ -224,7 +224,7 @@ const VideoSlide = (props: any) => {
     <>
       <div
         className="swiper-slide BepSl_li"
-        // ref={props.index === props.data.length - 4 ? props.ref1 : null}
+        ref={props.index === props.data.length - 4 ? props.ref1 : null}
       >
         <div className="BepSl_crd-wr">
           <div className="BepSl_crd" onClick={handleCardClick}>
@@ -399,7 +399,8 @@ const VideoSlide = (props: any) => {
                   onLoadedMetadata={handleOnMetaLoaded}
                   // muted={silent}
                   // preload="auto"
-                  preload="metadata"
+                  // preload="metadata"
+                  preload="none"
                   width="100%"
                   height="100%"
                   // loop
