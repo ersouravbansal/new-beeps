@@ -118,19 +118,37 @@ const Content = (props: {
           },
           on: {
             init: function () {
-              $(".swiper-slide").each(function (index) {
-                if (timeoutIDs[index]) {
-                  clearTimeout(timeoutIDs[index]);
+              var swiperSlides =
+                document.getElementsByClassName("swiper-slide");
+              for (var i = 0; i < swiperSlides.length; i++) {
+                var slide = swiperSlides[i];
+                if (timeoutIDs[i]) {
+                  clearTimeout(timeoutIDs[i]);
                 }
-                timeoutIDs[index] = setTimeout(function () {
-                  handleTimeout(index);
-                }, 0);
-              });
+                timeoutIDs[i] = setTimeout(
+                  (function (index) {
+                    return function () {
+                      handleTimeout(index);
+                    };
+                  })(i),
+                  0
+                );
+              }
               playActiveSlideVideo(this);
+
+              // $(".swiper-slide").each(function (index) {
+              //   if (timeoutIDs[index]) {
+              //     clearTimeout(timeoutIDs[index]);
+              //   }
+              //   timeoutIDs[index] = setTimeout(function () {
+              //     handleTimeout(index);
+              //   }, 0);
+              // });
+              // playActiveSlideVideo(this);
             },
             slideChange: function () {
               setActiveVideoIndex(this.activeIndex);
-              console.log(this.activeIndex);
+
               if (timeoutIDs[this.realIndex]) {
                 clearTimeout(timeoutIDs[this.realIndex]);
               }
@@ -138,6 +156,15 @@ const Content = (props: {
                 handleTimeout(mySwiper.realIndex);
               }, 0);
               playActiveSlideVideo(this);
+              // setActiveVideoIndex(this.activeIndex);
+
+              // if (timeoutIDs[this.realIndex]) {
+              //   clearTimeout(timeoutIDs[this.realIndex]);
+              // }
+              // timeoutIDs[this.realIndex] = setTimeout(function () {
+              //   handleTimeout(mySwiper.realIndex);
+              // }, 0);
+              // playActiveSlideVideo(this);
             },
           },
         });
