@@ -32,32 +32,32 @@ const VideoSlide = (props: any) => {
     onSliderMove,
   } = VideoPlayer(videoElement, seekBar, progressBar, seekThumb);
 
-  const autoPlayVideo = useCallback(() => {
-    if (videoElement.current && silent) {
-      videoElement.current.muted = true;
-    }
-    if (!isVideoPlaying) {
-      pauseVideo();
-      return;
-    }
-    let playPromise = videoElement.current?.play();
-    if (playPromise != null) {
-      playPromise
-        .then(() => {
-          if (videoElement.current?.muted === false) {
-            unMuteVideo();
-          } else if (videoElement.current?.muted === true) {
-            muteVideo();
-          }
-          playVideo();
-        })
-        .catch(() => {
-          if (videoElement.current) {
-            videoElement.current.poster = props.imgsrc;
-          }
-        });
-    }
-  }, [muteVideo, unMuteVideo, playVideo, silent, isVideoPlaying, pauseVideo]);
+  // const autoPlayVideo = useCallback(() => {
+  //   if (videoElement.current && silent) {
+  //     videoElement.current.muted = true;
+  //   }
+  //   if (!isVideoPlaying) {
+  //     pauseVideo();
+  //     return;
+  //   }
+  //   let playPromise = videoElement.current?.play();
+  //   if (playPromise != null) {
+  //     playPromise
+  //       .then(() => {
+  //         if (videoElement.current?.muted === false) {
+  //           unMuteVideo();
+  //         } else if (videoElement.current?.muted === true) {
+  //           muteVideo();
+  //         }
+  //         playVideo();
+  //       })
+  //       .catch(() => {
+  //         if (videoElement.current) {
+  //           videoElement.current.poster = props.imgsrc;
+  //         }
+  //       });
+  //   }
+  // }, [muteVideo, unMuteVideo, playVideo, silent, isVideoPlaying, pauseVideo]);
 
   const cleanUp = (st: any) => {
     return st
@@ -224,7 +224,7 @@ const VideoSlide = (props: any) => {
     <>
       <div
         className="swiper-slide BepSl_li"
-        // ref={props.index === props.data.length - 4 ? props.ref1 : null}
+        ref={props.index === props.data.length - 4 ? props.ref1 : null}
       >
         <div className="BepSl_crd-wr">
           <div className="BepSl_crd" onClick={handleCardClick}>
