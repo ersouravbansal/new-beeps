@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function fetchVideos() {
-    const apiUrl = "/testhtml/js/sample.json";
+    const apiUrl = "/testhtml/js/sample1.json";
     // "https://search.ndtv.com/video/mjson/client_key/ndtv-news-2d972289359ce88a4ed1e2a3ee8fa5ae/";
     // const queryParams = [
     //   "extra_params=ssl,show,gif,urltitle,source_id,fullimage,category,tmpcheck,newurl,ssl,sitelink,shorttitle,filepath,folder_path,preview,vertical",
