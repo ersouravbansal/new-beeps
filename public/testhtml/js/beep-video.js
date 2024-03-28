@@ -136,7 +136,6 @@ function initializeSwiper() {
         }
     }
 function playActiveSlideVideo(swiper) {
-    // Pause all videos on slides except the active one
     $('.swiper-slide').each(function (index, slide) {
         if (index !== swiper.activeIndex) {
             var video = slide.querySelector('video');
@@ -146,7 +145,6 @@ function playActiveSlideVideo(swiper) {
         }
     });
 
-    // Play video on the active slide
     var activeSlide = swiper.slides[swiper.activeIndex];
     var activeSlideVideo = activeSlide.querySelector('video');
     if (activeSlideVideo) {
@@ -160,8 +158,6 @@ function playActiveSlideVideo(swiper) {
     //     var activeSlideVideo = activeSlide.querySelector('video');
     //     if (activeSlideVideo) {
     //         activeSlideVideo.play();
-    //     }else{
-
     //     }
     // }
 $(function () {

@@ -1,4 +1,4 @@
-let dataLoaded =false;
+let dataLoaded = false;
 document.addEventListener("DOMContentLoaded", function () {
   const slideshowContainers = document.getElementsByClassName(
     "swiper-wrapper BepSl_ul"
@@ -122,24 +122,24 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function fetchVideos() {
-    const apiUrl =
-      "https://search.ndtv.com/video/mjson/client_key/ndtv-news-2d972289359ce88a4ed1e2a3ee8fa5ae/";
-    const queryParams = [
-      "extra_params=ssl,show,gif,urltitle,source_id,fullimage,category,tmpcheck,newurl,ssl,sitelink,shorttitle,filepath,folder_path,preview,vertical",
-      "source=1",
-      "show_vertical=1",
-      "pageSize=" + 100,
-      "pageNumber=" + 1,
-      "video_format=allformat",
-    ];
-
-    const url = apiUrl + "?" + queryParams.join("&");
+    const apiUrl = "/public/testhtml/js/sample.json";
+    // "https://search.ndtv.com/video/mjson/client_key/ndtv-news-2d972289359ce88a4ed1e2a3ee8fa5ae/";
+    // const queryParams = [
+    //   "extra_params=ssl,show,gif,urltitle,source_id,fullimage,category,tmpcheck,newurl,ssl,sitelink,shorttitle,filepath,folder_path,preview,vertical",
+    //   "source=1",
+    //   "show_vertical=1",
+    //   "pageSize=" + 100,
+    //   "pageNumber=" + 1,
+    //   "video_format=allformat",
+    // ];
+    const url = apiUrl;
+    // const url = apiUrl + "?" + queryParams.join("&");
 
     return fetch(url)
       .then((response) => response.json())
       .then((data) => {
         console.log(data.results);
-        dataLoaded=true
+        dataLoaded = true;
         return data.results;
       });
   }
