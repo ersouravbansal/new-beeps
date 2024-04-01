@@ -7,7 +7,7 @@ import useStore from "~/stores/utilstore";
 import useInfiniteScroll from "~/hooks/useInfiniteScrollCustom";
 import { BASEPATH } from "~/constants";
 
-const pageSize = 40;
+const pageSize = 50;
 async function fetchVideos(pageNumber = 1) {
   const api_url =
     typeof process !== "undefined" ? process.env.REMIX_API_URL || "" : "";
