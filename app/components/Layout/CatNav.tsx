@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { CATEGORY_LIST } from "./CategoryName";
 import useGptSlot from "~/hooks/useGptSlot";
 import { Link } from "@remix-run/react";
-import { isMobile } from "react-device-detect";
 
 function CatNav() {
   useGptSlot({
@@ -151,19 +150,17 @@ function CatNav() {
             {/* placeholder image */}
           </div>
           {/*=== Advertisement ===*/}
-          {!isMobile ? (
-            <a className="ads-wrp" href="#">
-              <span className="ads-wrp_txt">Advertisement</span>
-              <div id="gpt-ad"></div>
-              {/* <img
+          <a className="ads-wrp" href="#">
+            <span className="ads-wrp_txt">Advertisement</span>
+            <div id="gpt-ad"></div>
+            {/* <img
                   src="https://s0.2mdn.net/simgad/1116328456205855164"
                   border={0}
                   width={300}
                   alt=""
                   className="img_ad"
                 /> */}
-            </a>
-          ) : null}
+          </a>
         </div>
       </div>
     </>
