@@ -35,7 +35,11 @@ const Header = () => {
                         <ul className="hr-scroll__content sub-nv_ul">
                           <li className="sub-nv_li m-nv_li">
                             <a
-                              href="javascript:void(0)"
+                              href=""
+                              onClick={(e) => {
+                                e.preventDefault();
+                              }}
+                              // href="javascript:void(0)"
                               className="VdPg_sub-nav_lnk"
                             >
                               <span className="LvVd_dot-blk" />
@@ -44,7 +48,11 @@ const Header = () => {
                           </li>
                           <li className="sub-nv_li m-nv_li">
                             <a
-                              href="javascript:void(0)"
+                              href=""
+                              onClick={(e) => {
+                                e.preventDefault();
+                              }}
+                              // href="javascript:void(0)"
                               className="VdPg_sub-nav_lnk"
                             >
                               नवीनतम वीडियो
@@ -52,7 +60,11 @@ const Header = () => {
                           </li>
                           <li className="sub-nv_li">
                             <a
-                              href="javascript:void(0)"
+                              href=""
+                              onClick={(e) => {
+                                e.preventDefault();
+                              }}
+                              // href="javascript:void(0)"
                               className="VdPg_sub-nav_lnk"
                             >
                               शीर्ष वीडियो
@@ -60,7 +72,11 @@ const Header = () => {
                           </li>
                           <li className="sub-nv_li">
                             <a
-                              href="javascript:void(0)"
+                              href=""
+                              onClick={(e) => {
+                                e.preventDefault();
+                              }}
+                              // href="javascript:void(0)"
                               className="VdPg_sub-nav_lnk"
                             >
                               श्रेणियाँ
@@ -68,7 +84,11 @@ const Header = () => {
                           </li>
                           <li className="sub-nv_li">
                             <a
-                              href="javascript:void(0)"
+                              href=""
+                              onClick={(e) => {
+                                e.preventDefault();
+                              }}
+                              // href="javascript:void(0)"
                               className="VdPg_sub-nav_lnk  VdPg_sub-nav_act"
                             >
                               Channels
@@ -76,7 +96,11 @@ const Header = () => {
                           </li>
                           <li className="sub-nv_li">
                             <a
-                              href="javascript:void(0)"
+                              href=""
+                              onClick={(e) => {
+                                e.preventDefault();
+                              }}
+                              // href="javascript:void(0)"
                               className="VdPg_sub-nav_lnk"
                             >
                               Shows
@@ -84,7 +108,11 @@ const Header = () => {
                           </li>
                           <li className="sub-nv_li">
                             <a
-                              href="javascript:void(0)"
+                              href=""
+                              onClick={(e) => {
+                                e.preventDefault();
+                              }}
+                              // href="javascript:void(0)"
                               className="VdPg_sub-nav_lnk"
                             >
                               NDTV Classics
@@ -92,7 +120,11 @@ const Header = () => {
                           </li>
                           <li className="sub-nv_li">
                             <a
-                              href="javascript:void(0)"
+                              href=""
+                              onClick={(e) => {
+                                e.preventDefault();
+                              }}
+                              // href="javascript:void(0)"
                               className="VdPg_sub-nav_lnk"
                             >
                               Shot on Samsung
@@ -100,7 +132,11 @@ const Header = () => {
                           </li>
                           <li className="sub-nv_li m-nv_li dd-nav_one dd-nav_hvr res">
                             <a
-                              href="javascript:void(0)"
+                              href=""
+                              onClick={(e) => {
+                                e.preventDefault();
+                              }}
+                              // href="javascript:void(0)"
                               className="VdPg_sub-nav_lnk res_sub-nav_pop"
                             >
                               जिला{" "}

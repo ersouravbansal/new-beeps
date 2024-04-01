@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { CATEGORY_LIST} from "./CategoryName";
+import { CATEGORY_LIST } from "./CategoryName";
 import useGptSlot from "~/hooks/useGptSlot";
 import { Link } from "@remix-run/react";
 
 function CatNav() {
-    useGptSlot({
-        path: "/6355419/Travel/Europe/France/Paris",
-        size: [300, "fluid"],
-        id: "gpt-ad",
-      });
+  useGptSlot({
+    path: "/6355419/Travel/Europe/France/Paris",
+    size: [300, "fluid"],
+    id: "gpt-ad",
+  });
   return (
     <>
       <div className="VdPg-Col_One VdPg-Col_P0">
@@ -21,7 +21,11 @@ function CatNav() {
                 <div className="brw-nav">
                   {/* Browse Button */}
                   <a
-                    href="javascript:void(0);"
+                    href=""
+                    onClick={(e) => {
+                      e.preventDefault();
+                    }}
+                    // href="javascript:void(0);"
                     className="sid-nav-icn_lnk side-nav-trigger"
                     data-trigger=".nav-trigger"
                     data-class="js_sid-nav"

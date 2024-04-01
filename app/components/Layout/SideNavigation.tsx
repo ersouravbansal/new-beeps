@@ -32,7 +32,14 @@ const SideNavigation = () => {
         <div className="sid-nav-wrp">
           <div className="m-nv m-nv_clr snv_cn-hed">
             {" "}
-            <a className="sid-nav-cls" href="javascript:void(0);">
+            <a
+              className="sid-nav-cls"
+              href=""
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+              // href="javascript:void(0);"
+            >
               <svg className="snv_cn-icn  vj_icn vj_close">
                 <use xlinkHref="#vj_close" />
               </svg>
@@ -94,7 +101,7 @@ const SideNavigation = () => {
               </span>
               {/* Login / Signup */}
               <span className="t-icn-nv ttp __log_trigger">
-              {/* <span className="t-icn-nv ttp "> */}
+                {/* <span className="t-icn-nv ttp "> */}
                 <svg className="vj_icn vj_login">
                   <use xlinkHref="#vj_login" />
                 </svg>

@@ -22,7 +22,11 @@ function MainNav() {
                 <div className="brw-nav">
                   {/* Browse Button */}
                   <a
-                    href="javascript:void(0);"
+                    href=""
+                    onClick={(e) => {
+                      e.preventDefault();
+                    }}
+                    // href="javascript:void(0);"
                     className="sid-nav-icn_lnk side-nav-trigger"
                     data-trigger=".nav-trigger"
                     data-class="js_sid-nav"

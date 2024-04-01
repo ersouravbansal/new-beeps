@@ -224,8 +224,7 @@ const VideoSlide = (props: any) => {
     <>
       <div
         className="swiper-slide BepSl_li"
-        ref={props.index === props.data.length - 4 ? props.ref1 : null}
-      >
+        ref={props.index === props.data.length - 4 ? props.ref1 : null}      >
         <div className="BepSl_crd-wr">
           <div className="BepSl_crd" onClick={handleCardClick}>
             <div className="VdEl_icn-wr1">
@@ -266,7 +265,14 @@ const VideoSlide = (props: any) => {
                       }
                     }}
                   >
-                    <a className="SSR_btn-lnk" href="javascript:void(0)">
+                    <a
+                      className="SSR_btn-lnk"
+                      href=""
+                      onClick={(e) => {
+                        e.preventDefault();
+                      }}
+                      // href="javascript:void(0)"
+                    >
                       <svg className="SSR_icn vj_icn vj_share2">
                         <use xlinkHref="#vj_share2"></use>
                       </svg>
@@ -537,7 +543,11 @@ const VideoSlide = (props: any) => {
                             >
                               <a
                                 className="SSR_btn-lnk"
-                                href="javascript:void(0)"
+                                href=""
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                }}
+                                // href="javascript:void(0)"
                               >
                                 <svg className="SSR_icn vj_icn vj_share2">
                                   <use xlinkHref="#vj_share2"></use>
@@ -748,4 +758,3 @@ const VideoSlide = (props: any) => {
 };
 
 export default VideoSlide;
-
