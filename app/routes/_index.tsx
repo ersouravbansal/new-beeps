@@ -13,7 +13,7 @@ import { BASEPATH } from "~/constants";
 //     { name: "description", content: "Welcome to Remix!" },
 //   ];
 // };
-const pageSize = 100;
+const pageSize = 40;
 async function fetchVideos(pageNumber = 1) {
   const api_url =
     typeof process !== "undefined" ? process.env.REMIX_API_URL || "" : "";
@@ -86,7 +86,7 @@ export default function Index() {
     hasNextPage,
     onLoadMore: loadMore,
     disabled: !!error,
-    rootMargin: "0px 0px 0px 0px",
+    rootMargin: "0px 400px 0px 400px",
   });
 
   return (
