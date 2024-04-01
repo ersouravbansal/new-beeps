@@ -224,7 +224,8 @@ const VideoSlide = (props: any) => {
     <>
       <div
         className="swiper-slide BepSl_li"
-        ref={props.index === props.data.length - 4 ? props.ref1 : null}      >
+        ref={props.index === props.data.length - 4 ? props.ref1 : null}
+      >
         <div className="BepSl_crd-wr">
           <div className="BepSl_crd" onClick={handleCardClick}>
             <div className="VdEl_icn-wr1">
@@ -493,8 +494,10 @@ const VideoSlide = (props: any) => {
                     <div className="VdEl_lod-cl">
                       <div className="VdEl_inf-wr">
                         <div className="VdEl_inf">
-                          {/* {props.title} */}
-                          {parseHTML(props.title)}
+                          {/* {parseHTML(props.title)} */}
+                          {parseHTML(props.title).map((item, index) => (
+                            <span key={index}>{item}</span>
+                          ))}
                         </div>
                         {/* <div class="VdEl_inf-mr">more</div> */}
                       </div>
