@@ -7,12 +7,6 @@ import useStore from "~/stores/utilstore";
 import useInfiniteScroll from "~/hooks/useInfiniteScrollCustom";
 import { BASEPATH } from "~/constants";
 
-// export const meta: MetaFunction = () => {
-//   return [
-//     { title: "New Remix App" },
-//     { name: "description", content: "Welcome to Remix!" },
-//   ];
-// };
 const pageSize = 40;
 async function fetchVideos(pageNumber = 1) {
   const api_url =

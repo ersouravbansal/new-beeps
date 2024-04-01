@@ -136,15 +136,6 @@ const Content = (props: {
               }
               playActiveSlideVideo(this);
 
-              // $(".swiper-slide").each(function (index) {
-              //   if (timeoutIDs[index]) {
-              //     clearTimeout(timeoutIDs[index]);
-              //   }
-              //   timeoutIDs[index] = setTimeout(function () {
-              //     handleTimeout(index);
-              //   }, 0);
-              // });
-              // playActiveSlideVideo(this);
             },
             slideChange: function () {
               setActiveVideoIndex(this.activeIndex);
@@ -156,21 +147,12 @@ const Content = (props: {
                 handleTimeout(mySwiper.realIndex);
               }, 0);
               playActiveSlideVideo(this);
-              // setActiveVideoIndex(this.activeIndex);
 
-              // if (timeoutIDs[this.realIndex]) {
-              //   clearTimeout(timeoutIDs[this.realIndex]);
-              // }
-              // timeoutIDs[this.realIndex] = setTimeout(function () {
-              //   handleTimeout(mySwiper.realIndex);
-              // }, 0);
-              // playActiveSlideVideo(this);
             },
           },
         });
         mySwiper.init();
       }
-      // mySwiper.slideTo(isPathChange ? 0 : activeVideoIndex);
     });
 
     return () => {};

@@ -9,13 +9,11 @@ const VideoSlide = (props: any) => {
   const silent = useStore((state) => state.silent);
   const urlupdate = useStore((state) => state.urlupdate);
   const setClicked = useStore((state) => state.setClicked);
-  const isVideoPlaying = useStore((state) => state.isVideoPlaying);
   const setCmntInfo = useStore((state) => state.setCmntInfo);
   const videoElement = useRef<HTMLVideoElement>(null);
   const seekBar = useRef(null);
   const progressBar = useRef(null);
   const seekThumb = useRef(null);
-  const mySwiper = props.mySwiper;
   const [isDragging, setIsDragging] = useState(false);
   const {
     toggleMute,
@@ -31,33 +29,6 @@ const VideoSlide = (props: any) => {
     handleVideoProgress,
     onSliderMove,
   } = VideoPlayer(videoElement, seekBar, progressBar, seekThumb);
-
-  // const autoPlayVideo = useCallback(() => {
-  //   if (videoElement.current && silent) {
-  //     videoElement.current.muted = true;
-  //   }
-  //   if (!isVideoPlaying) {
-  //     pauseVideo();
-  //     return;
-  //   }
-  //   let playPromise = videoElement.current?.play();
-  //   if (playPromise != null) {
-  //     playPromise
-  //       .then(() => {
-  //         if (videoElement.current?.muted === false) {
-  //           unMuteVideo();
-  //         } else if (videoElement.current?.muted === true) {
-  //           muteVideo();
-  //         }
-  //         playVideo();
-  //       })
-  //       .catch(() => {
-  //         if (videoElement.current) {
-  //           videoElement.current.poster = props.imgsrc;
-  //         }
-  //       });
-  //   }
-  // }, [muteVideo, unMuteVideo, playVideo, silent, isVideoPlaying, pauseVideo]);
 
   const cleanUp = (st: any) => {
     return st
@@ -213,7 +184,6 @@ const VideoSlide = (props: any) => {
     unMuteVideo,
   ]);
   useEffect(() => {
-    // console.log("current video is sourav",props.index)
     if (props.isActive) {
       handleSlide();
     } else {
@@ -234,7 +204,6 @@ const VideoSlide = (props: any) => {
                 <div
                   className="VdEl_icn js-MorInf"
                   onClick={(e) => {
-                    // console.log("comment button clicked");
                     handleComments(e);
                     const originUrl1 = window.location.href;
                     const currentUrl1 =
