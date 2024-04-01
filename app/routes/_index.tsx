@@ -86,7 +86,7 @@ export default function Index() {
     hasNextPage,
     onLoadMore: loadMore,
     disabled: !!error,
-    rootMargin: "0px 400px 0px 400px",
+    rootMargin: "0px 0px 0px 0px",
   });
 
   return (
