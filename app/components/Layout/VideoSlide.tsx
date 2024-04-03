@@ -192,13 +192,13 @@ const VideoSlide = (props: any) => {
   }, [props.isActive, handleSlide, pauseVideo]);
   return (
     <>
-      <div
+      {/* <div
         // className="swiper-slide BepSl_li"
         ref={props.index === props.data.length - 4 ? props.ref1 : null}
-      >
+      > */}
       <div
         className="BepSl_crd-wr"
-        // ref={props.index === props.data.length - 4 ? props.ref1 : null}
+        ref={props.index === props.data.length - 4 ? props.ref1 : null}
       >
         <div className="BepSl_crd" onClick={handleCardClick}>
           <div className="VdEl_icn-wr1">
@@ -723,7 +723,7 @@ const VideoSlide = (props: any) => {
           </div>
         </div>
       </div>
-      </div>
+      {/* </div> */}
     </>
   );
 };
