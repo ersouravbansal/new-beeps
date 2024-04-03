@@ -29,6 +29,7 @@ import videoShareDropDown from "./styles/videoShareDropDown.css";
 import useEnvStore from "./stores/env_variables";
 import TagManager from "react-gtm-module";
 import { isMobile } from "react-device-detect";
+import { register } from "swiper/element/bundle";
 
 export const loader = async () => {
   const envStore = useEnvStore.getState();
@@ -194,6 +195,9 @@ export default function App() {
       .catch((error) => {
         console.log("Error loading login script:", error);
       });
+  }, []);
+  useEffect(() => {
+    register();
   }, []);
   return (
     <>
