@@ -52,8 +52,8 @@ const Content = (props: {
         activeSlide?.classList.add("js_seek-vis-sec");
 
         setTimeout(function () {
-          activeSlide.classList.remove("js_seek-vis-sec");
-          activeSlide.classList.remove("js_icon-more");
+          activeSlide?.classList.remove("js_seek-vis-sec");
+          activeSlide?.classList.remove("js_icon-more");
         }, 6000);
       }
     }
@@ -79,132 +79,137 @@ const Content = (props: {
             <div className="BepSl_wr">
               {/* <div className="swiper-container BepSl_rw"> */}
               {/* <div className="swiper-container"> */}
-                {/* <div className="swiper-wrapper BepSl_ul" ref={props.ref2}> */}
-                  {isVideoAvailable ? (
-                    <Swiper
-                      className="BepSl_rw"
-                      modules={[Virtual, Navigation]}
-                      onSwiper={setSwiperRef}
-                      wrapperClass="BepSl_ul"
-                      direction="vertical"
-                      loop={false}
-                      centeredSlides={true}
-                      initialSlide={isPathChange ? 0 : activeVideoIndex}
-                      cssMode={true}
-                      slidesPerView={1}
-                      mousewheel={true}
-                      ref={props.ref2}
-                      keyboard={true}
-                      navigation={{
-                        prevEl: ".swiper-button-prev",
-                        nextEl: ".swiper-button-next",
-                      }}
-                      breakpoints={{
-                        768: {
-                          centeredSlides: true,
-                          cssMode: true,
-                          direction: "horizontal",
-                          loop: false,
-                          slidesPerView: 1.35,
-                          speed: 400,
-                          mousewheel: true,
-                          keyboard: true,
-                        },
-                        1024: {
-                          centeredSlides: true,
-                          cssMode: true,
-                          direction: "horizontal",
-                          loop: false,
-                          slidesPerView: 1.6,
-                          speed: 400,
-                          mousewheel: true,
-                          keyboard: true,
-                        },
-                        1200: {
-                          centeredSlides: true,
-                          cssMode: true,
-                          direction: "horizontal",
-                          loop: false,
-                          slidesPerView: 2,
-                          speed: 400,
-                          mousewheel: true,
-                          keyboard: true,
-                        },
-                      }}
-                      onInit={(params) => {
-                        var swiperSlides = params.virtual.slides;
-                        for (var i = 0; i < swiperSlides.length; i++) {
-                          var slide = swiperSlides[i];
-                          if (timeoutIDs[i]) {
-                            clearTimeout(timeoutIDs[i]);
-                          }
-                          timeoutIDs[i] = setTimeout(
-                            (function (index) {
-                              return function () {
-                                handleTimeout(index);
-                              };
-                            })(i),
-                            0
-                          );
-                        }
-                      }}
-                      onSlideChange={(params) => {
-                        setActiveVideoIndex(params.activeIndex);
+              {/* <div className="swiper-wrapper BepSl_ul" ref={props.ref2}> */}
+              {isVideoAvailable ? (
+                <Swiper
+                  className="BepSl_rw"
+                  modules={[Virtual, Navigation]}
+                  onSwiper={setSwiperRef}
+                  wrapperClass="BepSl_ul"
+                  direction="vertical"
+                  loop={false}
+                  centeredSlides={true}
+                  initialSlide={isPathChange ? 0 : activeVideoIndex}
+                  cssMode={true}
+                  slidesPerView={1}
+                  mousewheel={true}
+                  ref={props.ref2}
+                  keyboard={true}
+                  navigation={{
+                    prevEl: ".swiper-button-prev",
+                    nextEl: ".swiper-button-next",
+                  }}
+                  breakpoints={{
+                    768: {
+                      centeredSlides: true,
+                      cssMode: true,
+                      direction: "horizontal",
+                      loop: false,
+                      slidesPerView: 1.35,
+                      speed: 400,
+                      mousewheel: true,
+                      keyboard: true,
+                    },
+                    1024: {
+                      centeredSlides: true,
+                      cssMode: true,
+                      direction: "horizontal",
+                      loop: false,
+                      slidesPerView: 1.6,
+                      speed: 400,
+                      mousewheel: true,
+                      keyboard: true,
+                    },
+                    1200: {
+                      centeredSlides: true,
+                      cssMode: true,
+                      direction: "horizontal",
+                      loop: false,
+                      slidesPerView: 2,
+                      speed: 400,
+                      mousewheel: true,
+                      keyboard: true,
+                    },
+                  }}
+                  onInit={(params) => {
+                    var swiperSlides = params.virtual.slides;
+                    for (var i = 0; i < swiperSlides.length; i++) {
+                      var slide = swiperSlides[i];
+                      if (timeoutIDs[i]) {
+                        clearTimeout(timeoutIDs[i]);
+                      }
+                      timeoutIDs[i] = setTimeout(
+                        (function (index) {
+                          return function () {
+                            handleTimeout(index);
+                          };
+                        })(i),
+                        0
+                      );
+                    }
+                  }}
+                  onSlideChange={(params) => {
+                    setActiveVideoIndex(params.activeIndex);
 
-                        if (timeoutIDs[params.realIndex]) {
-                          clearTimeout(timeoutIDs[params.realIndex]);
-                        }
-                        timeoutIDs[params.realIndex] = setTimeout(function () {
-                          handleTimeout(params.realIndex);
-                        }, 0);
-                      }}
-                      virtual
-                    >
-                      {props.videoData.results.map(
-                        (slideContent, index, data) => {
-                          const isActive = activeVideoIndex === index;
-                          const d = slideContent;
-                          return (
-                            <SwiperSlide key={d.id} virtualIndex={index} className="BepSl_li">
-                              <VideoSlide
-                                vidsrc={
-                                  d["media:filepath"]
-                                    ? d["media:filepath"]
-                                    : "Video Not Available"
-                                }
-                                hlssrc={d["media:allfileformats"]?.ios}
-                                imgsrc={
-                                  d["media:fullimage"]
-                                    ? d["media:fullimage"]
-                                    : d["media:thumbnail"]
-                                }
-                                category={d["media:category"]}
-                                show={d["media:show"]}
-                                title={decodeURIComponent(escape(d.title))}
-                                videoID={d.id}
-                                link={d.link}
-                                urltitle={d.urltitle}
-                                channel_id={d["media:source_id"]}
-                                index={index}
-                                catName={props?.catName}
-                                catId={props?.catId}
-                                pubDate={d.pubDate}
-                                ref1={props.ref1}
-                                data={data}
-                                isActive={isActive}
-                              ></VideoSlide>
-                            </SwiperSlide>
-                          );
-                        }
-                      )}
-                    </Swiper>
-                  ) : null}
-                {/* </div> */}
-                <SwiperNav />
-              </div>
+                    if (timeoutIDs[params.realIndex]) {
+                      clearTimeout(timeoutIDs[params.realIndex]);
+                    }
+                    timeoutIDs[params.realIndex] = setTimeout(function () {
+                      handleTimeout(params.realIndex);
+                    }, 0);
+                  }}
+                  virtual
+                >
+                  {props.videoData.results.map((slideContent, index, data) => {
+                    const isActive = activeVideoIndex === index;
+                    const d = slideContent;
+                    return (
+                      <SwiperSlide
+                        key={d.id}
+                        virtualIndex={index}
+                        className="BepSl_li"
+                      >
+                        <VideoSlide
+                          vidsrc={
+                            d["media:filepath"]
+                              ? d["media:filepath"]
+                              : "Video Not Available"
+                          }
+                          hlssrc={d["media:allfileformats"]?.ios}
+                          imgsrc={
+                            d["media:fullimage"]
+                              ? d["media:fullimage"]
+                              : d["media:thumbnail"]
+                          }
+                          category={d["media:category"]}
+                          show={d["media:show"]}
+                          title={decodeURIComponent(escape(d.title))}
+                          videoID={d.id}
+                          link={d.link}
+                          urltitle={d.urltitle}
+                          channel_id={d["media:source_id"]}
+                          index={index}
+                          catName={props?.catName}
+                          catId={props?.catId}
+                          pubDate={d.pubDate}
+                          ref1={props.ref1}
+                          data={data}
+                          isActive={isActive}
+                        ></VideoSlide>
+                      </SwiperSlide>
+                    );
+                  })}
+                </Swiper>
+              ) : null}
+              {/* </div> */}
+              <div className="swiper-button-prev BepNv_prv"></div>
+              <div className="swiper-button-next BepNv_nxt"></div>
+
+              {/* <SwiperNav /> */}
             </div>
           </div>
         </div>
+      </div>
       {/* </div> */}
     </>
   );
