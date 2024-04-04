@@ -2,7 +2,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import VideoSlide from "~/components/Layout/VideoSlide";
 import useStore from "~/stores/utilstore";
-import { useLocation } from "@remix-run/react";
 import { Virtual, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperNav from "./SwiperNav";
@@ -14,10 +13,7 @@ const Content = (props: {
   catId?: number;
   catName?: string;
 }) => {
-  const location = useLocation();
-  const prevPath = useRef("");
   const [swiperRef, setSwiperRef] = useState(null);
-  const isPathChange = location.pathname !== prevPath.current;
   const isVideoAvailable = (props.videoData?.results?.length || 0) > 0;
   const clicked = useStore((state) => state.clicked);
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
@@ -65,9 +61,6 @@ const Content = (props: {
       }
     }
   }, [clicked]);
-  useEffect(() => {
-    prevPath.current = location.pathname;
-  }, [location.pathname]);
   return (
     <>
       {/*============== Middle with two column option ==============*/}
@@ -89,7 +82,7 @@ const Content = (props: {
                   direction="vertical"
                   loop={false}
                   centeredSlides={true}
-                  initialSlide={isPathChange ? 0 : activeVideoIndex}
+                  initialSlide={0}
                   cssMode={true}
                   slidesPerView={1}
                   mousewheel={true}
@@ -161,6 +154,7 @@ const Content = (props: {
                   virtual
                 >
                   {props.videoData.results.map((slideContent, index, data) => {
+                    console.log("hello sourav",activeVideoIndex)
                     const isActive = activeVideoIndex === index;
                     const d = slideContent;
                     return (
