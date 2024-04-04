@@ -8,6 +8,8 @@ const VideoSlide = (props: any) => {
   const [getUrl, setGetUrl] = useState("None");
   const silent = useStore((state) => state.silent);
   const urlupdate = useStore((state) => state.urlupdate);
+  const elementsVisible = useStore((state) => state.elementsVisible);
+  const setElementsVisible = useStore((state) => state.setElementsVisible);
   const setClicked = useStore((state) => state.setClicked);
   const setCmntInfo = useStore((state) => state.setCmntInfo);
   const videoElement = useRef<HTMLVideoElement>(null);
@@ -94,6 +96,52 @@ const VideoSlide = (props: any) => {
     }
     return elements;
   };
+  const domTitle = (htmlString: string) => {
+    const regex = /<[^>]*>/g;
+    return htmlString.replace(regex, "");
+  };
+  const handleClick = (e) => {
+    if (
+      elementsVisible &&
+      document.querySelector(".VdElMr_wr").offsetParent !== null &&
+      document.querySelector(".VdElMr_ovrly").offsetParent !== null
+    ) {
+      document
+        .querySelector(".VdElMr_wr")
+        .closest(".BepSl_li")
+        .classList.remove("js_icon-more");
+      setElementsVisible(false);
+    } else if (document.querySelector(".VdEl_ovl").offsetParent !== null) {
+      document
+        .querySelector(".VdEl_ovl")
+        .closest(".BepSl_li")
+        .classList.remove("js_seek-vis");
+    } else {
+      document
+        .querySelector(".VdElMr_wr")
+        .closest(".BepSl_li")
+        .classList.add("js_icon-more");
+      setElementsVisible(true);
+    }
+  };
+  const moreInfoHandler = (e) => {
+    e.stopPropagation();
+    const parent = e.target.closest(".BepSl_li");
+    if (!elementsVisible) {
+      parent.classList.add("js_icon-more");
+      setElementsVisible(true);
+    } else {
+      parent.classList.remove("js_icon-more");
+      setElementsVisible(false);
+    }
+  };
+  const overlayHandler = (e) => {
+    e.stopPropagation();
+    const parent = e.target.closest(".BepSl_li");
+    parent.classList.remove("js_icon-more");
+    setElementsVisible(false);
+  };
+
   const handleCardClick = (event) => {
     if (window.innerWidth <= 560) {
       setClicked(true);
@@ -159,7 +207,7 @@ const VideoSlide = (props: any) => {
         unMuteVideo();
         playVideo();
       }
-      document.title = props.title;
+      document.title = domTitle(props.title);
       const urltitle = cleanUp(props.urltitle).toLowerCase();
       const videoID = props.videoID;
       const catName = props?.catName;
@@ -199,6 +247,9 @@ const VideoSlide = (props: any) => {
       <div
         className="BepSl_crd-wr"
         ref={props.index === props.data.length - 4 ? props.ref1 : null}
+        onClick={(e) => {
+          handleClick(e);
+        }}
       >
         <div className="BepSl_crd" onClick={handleCardClick}>
           <div className="VdEl_icn-wr1">
@@ -609,7 +660,10 @@ const VideoSlide = (props: any) => {
                       </div>
                       {/* chat */}
                       <div className="VdEl_icn-lk">
-                        <div className="VdEl_icn VdEl_icn-mr">
+                        <div
+                          className="VdEl_icn VdEl_icn-mr"
+                          onClick={moreInfoHandler}
+                        >
                           <svg className="vj_icn vj_more">
                             <use xlinkHref="#vj_more"></use>
                           </svg>
@@ -715,7 +769,7 @@ const VideoSlide = (props: any) => {
                     </li>
                   </ul>
                 </div>
-                <div className="VdElMr_ovrly" />
+                <div className="VdElMr_ovrly" onClick={overlayHandler} />
                 {/* VOD Share Overlay */}
                 <div className="VdEl_ovl" />
               </div>

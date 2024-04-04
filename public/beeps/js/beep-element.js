@@ -22,39 +22,39 @@ $(document).ready(function () {
 
     // Update visibility based on active slide
    // if ($(window).width() <= 767) {
-        $('.VdElMr_wr').click(function (e) {
-            e.stopPropagation();
-        });
+        // $('.VdElMr_wr').click(function (e) {
+        //     e.stopPropagation();
+        // });
 
-        $(document).on('click', function (event) {
-            if (elementsVisible && $('.VdElMr_wr').is(':visible') && $(".VdElMr_ovrly").is(':visible')) {
-                $('.VdElMr_wr').parents('.BepSl_li').removeClass('js_icon-more');
-                elementsVisible = false;
-            } else if ($('.VdEl_ovl').is(':visible')) {
-                $('.VdEl_ovl').parents('.BepSl_li').removeClass('js_seek-vis');
+        // $(document).on('click', function (event) {
+        //     if (elementsVisible && $('.VdElMr_wr').is(':visible') && $(".VdElMr_ovrly").is(':visible')) {
+        //         $('.VdElMr_wr').parents('.BepSl_li').removeClass('js_icon-more');
+        //         elementsVisible = false;
+        //     } else if ($('.VdEl_ovl').is(':visible')) {
+        //         $('.VdEl_ovl').parents('.BepSl_li').removeClass('js_seek-vis');
 
-            } else {
-                $('.VdElMr_wr').parents('.BepSl_li').addClass('js_icon-more');
-                elementsVisible = true;
-            }
-        });
+        //     } else {
+        //         $('.VdElMr_wr').parents('.BepSl_li').addClass('js_icon-more');
+        //         elementsVisible = true;
+        //     }
+        // });
 
-        $('.VdEl_icn-mr').click(function (ev) {
-            ev.stopPropagation();
-            if (!elementsVisible) {
-                $(this).parents('.BepSl_li').toggleClass('js_icon-more');
-                elementsVisible = true;
-            } else {
-                $(this).parents('.BepSl_li').removeClass('js_icon-more');
-                elementsVisible = false;
-            }
-        });
+        // $('.VdEl_icn-mr').click(function (ev) {
+        //     ev.stopPropagation();
+        //     if (!elementsVisible) {
+        //         $(this).parents('.BepSl_li').toggleClass('js_icon-more');
+        //         elementsVisible = true;
+        //     } else {
+        //         $(this).parents('.BepSl_li').removeClass('js_icon-more');
+        //         elementsVisible = false;
+        //     }
+        // });
 
-        $('.VdElMr_ovrly').click(function (e) {
-            e.stopPropagation();
-            $(this).parents('.BepSl_li').removeClass('js_icon-more');
-            elementsVisible = false;
-        });
+        // $('.VdElMr_ovrly').click(function (e) {
+        //     e.stopPropagation();
+        //     $(this).parents('.BepSl_li').removeClass('js_icon-more');
+        //     elementsVisible = false;
+        // });
  //   }
 
    // Volume functionality

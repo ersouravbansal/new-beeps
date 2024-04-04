@@ -77,17 +77,16 @@ const Content = (props: {
           {/*====== video ======*/}
           <div className="BepSl_cn">
             <div className="BepSl_wr">
-              <div className="swiper-container BepSl_rw">
+              {/* <div className="swiper-container BepSl_rw"> */}
               {/* <div className="swiper-container"> */}
                 {/* <div className="swiper-wrapper BepSl_ul" ref={props.ref2}> */}
                   {isVideoAvailable ? (
                     <Swiper
-                      // className="BepSl_rw"
+                      className="BepSl_rw"
                       modules={[Virtual, Navigation]}
                       onSwiper={setSwiperRef}
                       wrapperClass="BepSl_ul"
-                      direction="horizontal"
-                      // direction="vertical"
+                      direction="vertical"
                       loop={false}
                       centeredSlides={true}
                       initialSlide={isPathChange ? 0 : activeVideoIndex}
@@ -206,7 +205,7 @@ const Content = (props: {
             </div>
           </div>
         </div>
-      </div>
+      {/* </div> */}
     </>
   );
 };

@@ -12,10 +12,12 @@ const useStore = create((set, get) => ({
   imaError: false,
   clicked: false,
   notificationAllowed: false,
+  elementsVisible:false,
 
   newTitle:
     "Food News, Health News, Indian Recipes, Healthy Recipes, Vegetarian Recipes, Indian Food recipes – NDTV Food",
   isVideoPlaying: true,
+  setElementsVisible: (newValue: boolean) => set({ moreInfoVisible: newValue }),
   setSidenavtoggle: (newValue: boolean) => set({ sidenavtoggle: newValue }),
   setIsVideoPlaying: (newValue: boolean) => set({ isVideoPlaying: newValue }),
   setClicked: (newValue: boolean) => set({ clicked: newValue }),
