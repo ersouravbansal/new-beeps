@@ -154,7 +154,6 @@ const Content = (props: {
                   virtual
                 >
                   {props.videoData.results.map((slideContent, index, data) => {
-                    console.log("hello sourav",activeVideoIndex)
                     const isActive = activeVideoIndex === index;
                     const d = slideContent;
                     return (
@@ -196,10 +195,10 @@ const Content = (props: {
                 </Swiper>
               ) : null}
               {/* </div> */}
-              <div className="swiper-button-prev BepNv_prv"></div>
-              <div className="swiper-button-next BepNv_nxt"></div>
+              {/* <div className="swiper-button-prev BepNv_prv"></div>
+              <div className="swiper-button-next BepNv_nxt"></div> */}
 
-              {/* <SwiperNav /> */}
+              <SwiperNav />
             </div>
           </div>
         </div>
