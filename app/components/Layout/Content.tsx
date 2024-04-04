@@ -96,8 +96,8 @@ const Content = (props: {
                   ref={props.ref2}
                   keyboard={true}
                   navigation={{
-                    prevEl: ".swiper-button-prev",
-                    nextEl: ".swiper-button-next",
+                    prevEl: ".BepNv_prv",
+                    nextEl: ".BepNv_nxt",
                   }}
                   breakpoints={{
                     768: {
