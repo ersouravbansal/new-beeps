@@ -17,6 +17,9 @@ const Content = (props: {
   const isVideoAvailable = (props.videoData?.results?.length || 0) > 0;
   const clicked = useStore((state) => state.clicked);
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
+  // const [slides, setSlides] = useState(
+  //   Array.from({ length: 500 }).map((_, index) => `Slide ${index + 1}`)
+  // );
   function handleTimeout(index: any) {
     var activeSlide = document.querySelectorAll(".swiper-slide-active")[index];
 
@@ -76,18 +79,19 @@ const Content = (props: {
               {isVideoAvailable ? (
                 <Swiper
                   className="BepSl_rw"
-                  modules={[Virtual, Navigation]}
+                  modules={[Virtual]}
                   onSwiper={setSwiperRef}
                   wrapperClass="BepSl_ul"
                   direction="vertical"
                   loop={false}
                   centeredSlides={true}
                   initialSlide={0}
-                  cssMode={true}
+                  // cssMode={true}
                   slidesPerView={1}
                   mousewheel={true}
                   ref={props.ref2}
                   keyboard={true}
+                  navigation={true}
                   navigation={{
                     prevEl: ".BepNv_prv",
                     nextEl: ".BepNv_nxt",
@@ -95,7 +99,7 @@ const Content = (props: {
                   breakpoints={{
                     768: {
                       centeredSlides: true,
-                      cssMode: true,
+                      // cssMode: true,
                       direction: "horizontal",
                       loop: false,
                       slidesPerView: 1.35,
@@ -105,7 +109,7 @@ const Content = (props: {
                     },
                     1024: {
                       centeredSlides: true,
-                      cssMode: true,
+                      // cssMode: true,
                       direction: "horizontal",
                       loop: false,
                       slidesPerView: 1.6,
@@ -115,11 +119,11 @@ const Content = (props: {
                     },
                     1200: {
                       centeredSlides: true,
-                      cssMode: true,
+                      // cssMode: true,
                       direction: "horizontal",
                       loop: false,
                       slidesPerView: 2,
-                      speed: 400,
+                      speed: 1000,
                       mousewheel: true,
                       keyboard: true,
                     },
@@ -153,6 +157,11 @@ const Content = (props: {
                   }}
                   virtual
                 >
+                  {/* {slides.map((slideContent, index) => (
+                    <SwiperSlide key={slideContent} virtualIndex={index}>
+                      {slideContent}
+                    </SwiperSlide>
+                  ))} */}
                   {props.videoData.results.map((slideContent, index, data) => {
                     const isActive = activeVideoIndex === index;
                     const d = slideContent;
