@@ -123,7 +123,7 @@ const Content = (props: {
                       direction: "horizontal",
                       loop: false,
                       slidesPerView: 2,
-                      speed: 1000,
+                      speed: 400,
                       mousewheel: true,
                       keyboard: true,
                     },
