@@ -26,6 +26,7 @@ import beepVideo from "./styles/beepVideo.css";
 import beepVideoElements from "./styles/beepVideoElements.css";
 import beepComments from "./styles/beepComments.css";
 import videoShareDropDown from "./styles/videoShareDropDown.css";
+import customCSS from "./styles/custom.css"
 import useEnvStore from "./stores/env_variables";
 import TagManager from "react-gtm-module";
 import { isMobile } from "react-device-detect";
@@ -68,6 +69,7 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: beepVideoElements },
   { rel: "stylesheet", href: beepComments },
   { rel: "stylesheet", href: videoShareDropDown },
+  { rel: "stylesheet", href: customCSS },
 ];
 export const meta: MetaFunction = () => [
   { name: "title", content: "NDTV Video Listing page" },
