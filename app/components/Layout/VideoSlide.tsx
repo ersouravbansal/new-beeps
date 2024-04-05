@@ -516,7 +516,7 @@ const VideoSlide = (props: any) => {
                       <div className="VdEl_inf">
                         {/* {parseHTML(props.title)} */}
                         {parseHTML(props.title).map((item, index) => (
-                          <span key={index}>{item}</span>
+                          <span key={index}>{item}{' '}{props.index}</span>
                         ))}
                       </div>
                       {/* <div class="VdEl_inf-mr">more</div> */}
