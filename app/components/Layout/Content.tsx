@@ -72,7 +72,7 @@ const Content = (props: {
         <div className="VdPg-Col_Two-a">
           {/*====== video ======*/}
           <div className="BepSl_cn">
-            <div className="BepSl_wr">
+            <div className="BepSl_wr" ref={props.ref2}>
               {/* <div className="swiper-container BepSl_rw"> */}
               {/* <div className="swiper-container"> */}
               {/* <div className="swiper-wrapper BepSl_ul" ref={props.ref2}> */}
@@ -89,7 +89,6 @@ const Content = (props: {
                   // cssMode={true}
                   slidesPerView={1}
                   mousewheel={true}
-                  ref={props.ref2}
                   keyboard={true}
                   navigation={true}
                   navigation={{
@@ -169,7 +168,7 @@ const Content = (props: {
                       <SwiperSlide
                         key={d.id}
                         virtualIndex={index}
-                        className="BepSl_li"
+                        className="BepSl_li Sv_trs"
                       >
                         <VideoSlide
                           vidsrc={
