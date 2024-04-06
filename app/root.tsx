@@ -31,7 +31,6 @@ import useEnvStore from "./stores/env_variables";
 import TagManager from "react-gtm-module";
 import { isMobile } from "react-device-detect";
 import { register } from "swiper/element/bundle";
-
 export const loader = async () => {
   const envStore = useEnvStore.getState();
   await envStore.setBasePath(process.env.REMIX_BASEPATH);
@@ -155,7 +154,10 @@ export default function App() {
   }, [GTM_ID]);
 
   useEffect(() => {
-    const loadScript = () => {
+    const ENVURL= REMIX_API_URL
+    window.ENVURL = ENVURL;
+
+    const loadScriptlogin = () => {
       return new Promise((resolve, reject) => {
         const script = document.createElement("script");
         script.id = "__loginScript";
@@ -166,8 +168,18 @@ export default function App() {
         document.body.appendChild(script);
       });
     };
-
-    loadScript()
+    const loadScriptnotification = () => {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        // script.id = "__loginScript";
+        script.src = "/beeps/js/world-fcm.js"
+        script.onload = resolve;
+        script.onerror = reject;
+        document.body.appendChild(script);
+      });
+    };
+    loadScriptlogin()
+    loadScriptnotification()
       .then(() => {
         const logTriggerElements = document.querySelectorAll(".__log_trigger");
         logTriggerElements.forEach((element) => {
