@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { CATEGORY_LIST } from "./CategoryName";
 import useGptSlot from "~/hooks/useGptSlot";
 import { Link } from "@remix-run/react";
+import useStore from "~/stores/utilstore";
 
 function CatNav() {
   useGptSlot({
@@ -9,6 +10,15 @@ function CatNav() {
     size: [300, "fluid"],
     id: "gpt-ad",
   });
+  const sidenavtoggle = useStore((state) => state.sidenavtoggle);
+  const setSidenavtoggle = useStore((state) => state.setSidenavtoggle);
+  const handleSidenav = () => {
+    if (sidenavtoggle == true) {
+      document.body.classList.add("js_sid-nav-right");
+    } else {
+      document.body.classList.remove("js_sid-nav-right");
+    }
+  };
   return (
     <>
       <div className="VdPg-Col_One VdPg-Col_P0">
@@ -30,7 +40,13 @@ function CatNav() {
                     data-trigger=".nav-trigger"
                     data-class="js_sid-nav"
                   >
-                    <div className="sid-nav-icn_wrp">
+                    <div
+                      className="sid-nav-icn_wrp"
+                      onClick={() => {
+                        setSidenavtoggle(!sidenavtoggle);
+                        handleSidenav();
+                      }}
+                    >
                       <svg className="vj_icn vj_menu">
                         <use xlinkHref="#vj_menu" />
                       </svg>
