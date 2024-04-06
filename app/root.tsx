@@ -179,7 +179,7 @@ export default function App() {
       });
     };
     loadScriptlogin()
-    loadScriptnotification()
+    // loadScriptnotification()
       .then(() => {
         const logTriggerElements = document.querySelectorAll(".__log_trigger");
         logTriggerElements.forEach((element) => {
