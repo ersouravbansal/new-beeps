@@ -401,7 +401,7 @@ function ndtvUnsubscribeButton() {
         id.innerHTML +=
           '<span><a href="javascript:void(0);" onclick="$(\'.popover\').toggle();" title="Breaking News Alerts"><span class="mpcg-noti_icn"><svg class="vj_icn vj_bell bell"><use xlink:href="#vj_bell"></use></svg></span></a><div class="tip on-bottom popover" style="display: ' +
           msgdispl +
-          ';" onclick="this.style.display=\'none\';"><div class="popover-content tip_wrp"><svg class="Ntyf-wg_cls vj_icn vj_close"><use xlink:href="#vj_close"></use></svg>' +
+          ';" onclick="this.style.display=\'none\';"><div class="popover-content tip_wrp crsr_ptr"><svg class="Ntyf-wg_cls vj_icn vj_close"><use xlink:href="#vj_close"></use></svg>' +
           msg +
           "</div></div></span>";
         //id.innerHTML += '<div class="tip on-bottom" style="display: '+msgdispl+';" onclick="this.style.display=\'none\';"><div class="tip_wrp">' + msg + '</div></div>';
