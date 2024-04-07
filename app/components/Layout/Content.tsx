@@ -166,7 +166,7 @@ const Content = (props: {
                             handleTimeout(index);
                           };
                         })(i),
-                        100
+                        1000
                       );
                     }
                   }}
