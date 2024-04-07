@@ -266,20 +266,20 @@ const VideoSlide = (props: any) => {
       pauseVideo();
     }
   }, [props.isActive, handleSlide, pauseVideo, props.isPathChange]);
-  useEffect(() => {
-    if (categoryWapToggle == true) {
-      document.body.classList.add("VdElCtg_on");
-    } else {
-      document.body.classList.remove("VdElCtg_on");
-    }
-  }, [categoryWapToggle]);
-  useEffect(() => {
-    if (videoWapToggle == true) {
-      document.body.classList.add("VdElVdCtg_on");
-    } else {
-      document.body.classList.remove("VdElVdCtg_on");
-    }
-  }, [videoWapToggle]);
+  // useEffect(() => {
+  //   if (categoryWapToggle == true) {
+  //     document.body.classList.add("VdElCtg_on");
+  //   } else {
+  //     document.body.classList.remove("VdElCtg_on");
+  //   }
+  // }, [categoryWapToggle]);
+  // useEffect(() => {
+  //   if (videoWapToggle == true) {
+  //     document.body.classList.add("VdElVdCtg_on");
+  //   } else {
+  //     document.body.classList.remove("VdElVdCtg_on");
+  //   }
+  // }, [videoWapToggle]);
   return (
     <>
       {/* <div

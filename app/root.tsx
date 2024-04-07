@@ -115,6 +115,8 @@ export const meta: MetaFunction = () => [
 
 export function Layout({ children }: any) {
   const sidenavtoggle = useStore((state) => state.sidenavtoggle);
+  const categoryWapToggle = useStore((state) => state.categoryWapToggle);
+  const videoWapToggle = useStore((state) => state.videoWapToggle);
   return (
     <html lang="en">
       <head>
@@ -128,7 +130,12 @@ export function Layout({ children }: any) {
         {/* <link rel="stylesheet" href="https://use.typekit.net/jkd2jqy.css" /> */}
       </head>
       <body
-        className={`nav-trigger Vd-list Vd-Lst-pg `+ (sidenavtoggle?'js_sid-nav ':"")}
+        className={
+          `nav-trigger Vd-list Vd-Lst-pg ` +
+          (sidenavtoggle ? "js_sid-nav " : "") +
+          (categoryWapToggle ? "VdElCtg_on " : "") +
+          (videoWapToggle ? "VdElVdCtg_on " : "")
+        }
         onClick={() => {
           document.body.classList.remove("Js-BepDrp_ovr");
         }}
