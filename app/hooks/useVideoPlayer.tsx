@@ -41,12 +41,12 @@ const useVideoPlayer = (
       return { ...previousplayerState };
     });
     videoElemRef.current.play();
-    setIsVideoPlaying(true)
+    setIsVideoPlaying(true);
   }, []);
 
   const pauseVideo = useCallback(() => {
     // console.log("pause video........")
-    setIsVideoPlaying(false)
+    setIsVideoPlaying(false);
     setPlayerState((previousplayerState) => {
       previousplayerState.isPlaying = false;
       return { ...previousplayerState };
@@ -95,8 +95,13 @@ const useVideoPlayer = (
       muteVideo();
     }
   }, [playerState.isMuted]);
-
+  const resetProgressBar = () => {
+    if (progressBarRef.current) {
+      progressBarRef.current.style.width = "0%";
+    }
+  };
   const handleOnMetaLoaded = useCallback(() => {
+    resetProgressBar();
     setPlayerState((prevState) => ({
       ...prevState,
       isMetaLoaded: true,
