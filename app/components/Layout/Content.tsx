@@ -166,7 +166,7 @@ const Content = (props: {
                             handleTimeout(index);
                           };
                         })(i),
-                        0
+                        100
                       );
                     }
                   }}
@@ -178,7 +178,7 @@ const Content = (props: {
                     }
                     timeoutIDs[params.realIndex] = setTimeout(function () {
                       handleTimeout(params.realIndex);
-                    }, 0);
+                    }, 100);
                   }}
                   virtual
                 >
