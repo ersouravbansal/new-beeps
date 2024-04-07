@@ -83,13 +83,13 @@ const Content = (props: {
       }
     }
   }, [clicked]);
-  useEffect(() => {
-    if (activeVideoIndex == 0) {
-      document.body.classList.add("BepSlDsp_lft");
-    } else {
-      document.body.classList.remove("BepSlDsp_lft");
-    }
-  }, [activeVideoIndex]);
+  // useEffect(() => {
+  //   if (activeVideoIndex == 0) {
+  //     document.body.classList.add("BepSlDsp_lft");
+  //   } else {
+  //     document.body.classList.remove("BepSlDsp_lft");
+  //   }
+  // }, [activeVideoIndex]);
   return (
     <>
       {/*============== Middle with two column option ==============*/}

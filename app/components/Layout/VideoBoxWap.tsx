@@ -9,7 +9,7 @@ function VideoBoxWap() {
           className="VdElVdCtg_ovrly"
           onClick={(e) => {
             e.stopPropagation();
-            document.body.classList.remove("VdElVdCtg_on");
+            // document.body.classList.remove("VdElVdCtg_on");
             setvideoWapToggle(false);
           }}
         />

@@ -11,7 +11,6 @@ function CategoryBoxWap() {
           className="VdElCtgr_ovrly"
           onClick={(e) => {
             e.stopPropagation();
-            document.body.classList.remove("VdElCtg_on");
             setCategoryWapToggle(false);
           }}
         />
@@ -28,7 +27,6 @@ function CategoryBoxWap() {
                     className="VdElCtgr_cls"
                     onClick={(e) => {
                       e.stopPropagation();
-                      document.body.classList.remove("VdElCtg_on");
                       setCategoryWapToggle(false);
                     }}
                   >

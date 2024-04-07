@@ -117,6 +117,8 @@ export function Layout({ children }: any) {
   const sidenavtoggle = useStore((state) => state.sidenavtoggle);
   const categoryWapToggle = useStore((state) => state.categoryWapToggle);
   const videoWapToggle = useStore((state) => state.videoWapToggle);
+  const activeVideoIndex = useStore((state) => state.activeVideoIndex);
+  const categoryToggle = useStore((state) => state.categoryToggle);
   return (
     <html lang="en">
       <head>
@@ -134,7 +136,9 @@ export function Layout({ children }: any) {
           `nav-trigger Vd-list Vd-Lst-pg ` +
           (sidenavtoggle ? "js_sid-nav " : "") +
           (categoryWapToggle ? "VdElCtg_on " : "") +
-          (videoWapToggle ? "VdElVdCtg_on " : "")
+          (videoWapToggle ? "VdElVdCtg_on " : "") +
+          (activeVideoIndex == 0 ? "BepSlDsp_lft " : "") +
+          (categoryToggle ? "Js-BepDrp_ovr " : "")
         }
         onClick={() => {
           document.body.classList.remove("Js-BepDrp_ovr");

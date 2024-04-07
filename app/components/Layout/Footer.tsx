@@ -6,13 +6,13 @@ function Footer() {
   const categoryToggle = useStore((state) => state.categoryToggle);
   const setCategoryToggle = useStore((state) => state.setCategoryToggle);
 
-  useEffect(() => {
-    if (categoryToggle == true) {
-      document.body.classList.add("Js-BepDrp_ovr");
-    } else {
-      document.body.classList.remove("Js-BepDrp_ovr");
-    }
-  }, [categoryToggle]);
+  // useEffect(() => {
+  //   if (categoryToggle == true) {
+  //     document.body.classList.add("Js-BepDrp_ovr");
+  //   } else {
+  //     document.body.classList.remove("Js-BepDrp_ovr");
+  //   }
+  // }, [categoryToggle]);
   return (
     <>
       <div className="BepDrp_ovrly" />
