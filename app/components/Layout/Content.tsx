@@ -223,6 +223,7 @@ const Content = (props: {
                           ref1={props.ref1}
                           data={data}
                           isActive={isActive}
+                          isPathChange={isPathChange}
                         ></VideoSlide>
                       </SwiperSlide>
                     );

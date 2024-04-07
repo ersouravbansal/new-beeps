@@ -260,12 +260,12 @@ const VideoSlide = (props: any) => {
     unMuteVideo,
   ]);
   useEffect(() => {
-    if (props.isActive) {
+    if (props.isActive || props.isPathChange) {
       handleSlide();
     } else {
       pauseVideo();
     }
-  }, [props.isActive, handleSlide, pauseVideo]);
+  }, [props.isActive, handleSlide, pauseVideo, props.isPathChange]);
   useEffect(() => {
     if (categoryWapToggle == true) {
       document.body.classList.add("VdElCtg_on");
@@ -573,7 +573,9 @@ const VideoSlide = (props: any) => {
                         {/* {parseHTML(props.title)} */}
                         {parseHTML(props.title).map((item, index) => (
                           <span key={index}>
-                            {item}{" - "}{props.index}
+                            {item}
+                            {" - "}
+                            {props.index}
                           </span>
                         ))}
                       </div>
