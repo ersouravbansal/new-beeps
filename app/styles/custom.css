@@ -1,3 +1,6 @@
 .Sv_trs{
     transition-property: transform !important;
   }
+.crsr_ptr{
+  cursor: pointer;
+}

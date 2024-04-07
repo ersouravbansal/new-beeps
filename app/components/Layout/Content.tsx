@@ -4,7 +4,10 @@ import VideoSlide from "~/components/Layout/VideoSlide";
 import useStore from "~/stores/utilstore";
 import { Virtual, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperNav from "./SwiperNav";
+import SwiperNav from "~/components/Layout/SwiperNav";
+import LeftPanel from "~/components/Layout/LeftPanel";
+import Footer from "~/components/Layout/Footer";
+import { useLocation } from "@remix-run/react";
 let timeoutIDs: any = [];
 const Content = (props: {
   videoData: any;
@@ -13,10 +16,16 @@ const Content = (props: {
   catId?: number;
   catName?: string;
 }) => {
+  const location = useLocation();
+  const prevPath = useRef("");
+  const isPathChange = location.pathname !== prevPath.current;
   const [swiperRef, setSwiperRef] = useState(null);
+  const swipeRef = useRef(null);
   const isVideoAvailable = (props.videoData?.results?.length || 0) > 0;
   const clicked = useStore((state) => state.clicked);
-  const [activeVideoIndex, setActiveVideoIndex] = useState(0);
+  const activeVideoIndex = useStore((state) => state.activeVideoIndex);
+  const setActiveVideoIndex = useStore((state) => state.setActiveVideoIndex);
+  // const [activeVideoIndex, setActiveVideoIndex] = useState(0);
   // const [slides, setSlides] = useState(
   //   Array.from({ length: 500 }).map((_, index) => `Slide ${index + 1}`)
   // );
@@ -57,6 +66,16 @@ const Content = (props: {
       }
     }
   }
+
+  useEffect(() => {
+    prevPath.current = location.pathname;
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if(isPathChange===true){
+    swipeRef.current.swiper.slideTo(0,0);
+  }
+  }, [isPathChange]);
   useEffect(() => {
     if (clicked === true) {
       if (activeVideoIndex && timeoutIDs[activeVideoIndex]) {
@@ -64,12 +83,19 @@ const Content = (props: {
       }
     }
   }, [clicked]);
+  useEffect(() => {
+    if (activeVideoIndex == 0) {
+      document.body.classList.add("BepSlDsp_lft");
+    } else {
+      document.body.classList.remove("BepSlDsp_lft");
+    }
+  }, [activeVideoIndex]);
   return (
     <>
       {/*============== Middle with two column option ==============*/}
-      <div className="VdPg-Col_Two-a-wr BepSlCol_wr">
+      <div className="VdPg-Col_Two-a-wr BepSlCol_1">
         {/*==== column one ====*/}
-        <div className="VdPg-Col_Two-a">
+        <div className="VdPg-Col_Two-a BepSlCol_rw">
           {/*====== video ======*/}
           <div className="BepSl_cn">
             <div className="BepSl_wr" ref={props.ref2}>
@@ -81,6 +107,7 @@ const Content = (props: {
                   className="BepSl_rw"
                   modules={[Virtual]}
                   onSwiper={setSwiperRef}
+                  ref={swipeRef}
                   wrapperClass="BepSl_ul"
                   direction="vertical"
                   loop={false}
@@ -90,7 +117,6 @@ const Content = (props: {
                   slidesPerView={1}
                   mousewheel={true}
                   keyboard={true}
-                  navigation={true}
                   navigation={{
                     prevEl: ".BepNv_prv",
                     nextEl: ".BepNv_nxt",
@@ -156,6 +182,7 @@ const Content = (props: {
                   }}
                   virtual
                 >
+                  <LeftPanel />
                   {/* {slides.map((slideContent, index) => (
                     <SwiperSlide key={slideContent} virtualIndex={index}>
                       {slideContent}
@@ -200,13 +227,13 @@ const Content = (props: {
                       </SwiperSlide>
                     );
                   })}
+                  <Footer />
+                  <SwiperNav />
                 </Swiper>
               ) : null}
               {/* </div> */}
               {/* <div className="swiper-button-prev BepNv_prv"></div>
               <div className="swiper-button-next BepNv_nxt"></div> */}
-
-              <SwiperNav />
             </div>
           </div>
         </div>

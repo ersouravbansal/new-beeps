@@ -1,6 +1,7 @@
 import React from "react";
-
+import useStore from "~/stores/utilstore";
 const Login = () => {
+  const setSidenavtoggle = useStore((state) => state.setSidenavtoggle);
   return (
     <>
       {/*======[ Side Login ]======*/}
@@ -8,7 +9,13 @@ const Login = () => {
         <div className="LogSd_cont">
           <div className="LogSd_wr">
             {/* close */}
-            <span className="LogSd-cls">
+            <span
+              className="LogSd-cls"
+              onClick={(e) => {
+                e.preventDefault();
+                setSidenavtoggle(false);
+              }}
+            >
               <svg className="vj_icn vj_close">
                 <use xlinkHref="#vj_close" />
               </svg>

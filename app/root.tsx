@@ -22,15 +22,24 @@ import $ from "jquery";
 import { LinksFunction, json } from "@remix-run/node";
 import atf from "./styles/atf.css";
 import atfVod from "./styles/atfVod.css";
+import atfBeepDetails from "./styles/atfBeepsDetail.css";
 import beepVideo from "./styles/beepVideo.css";
 import beepVideoElements from "./styles/beepVideoElements.css";
 import beepComments from "./styles/beepComments.css";
 import videoShareDropDown from "./styles/videoShareDropDown.css";
-import customCSS from "./styles/custom.css"
+import beepColumn from "./styles/beep-column.css";
+import beepHeader from "./styles/beep-header.css";
+import categoryDropDown from "./styles/categories-dropdown.css";
+import videoDropDown from "./styles/video-dropdown.css";
+import categoryMainNav from "./styles/category-mainnav.css";
+import customCSS from "./styles/custom.css";
 import useEnvStore from "./stores/env_variables";
 import TagManager from "react-gtm-module";
 import { isMobile } from "react-device-detect";
 import { register } from "swiper/element/bundle";
+import CategoryBoxWap from "./components/Layout/CategoryBoxWap";
+import VideoBoxWap from "./components/Layout/VideoBoxWap";
+import useStore from "~/stores/utilstore";
 export const loader = async () => {
   const envStore = useEnvStore.getState();
   await envStore.setBasePath(process.env.REMIX_BASEPATH);
@@ -59,15 +68,21 @@ export const links: LinksFunction = () => [
     href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@300;400;500;600;700&display=swap",
   },
   { rel: "stylesheet", href: atf },
-  { rel: "stylesheet", href: atfVod },
+  { rel: "stylesheet", href: atfBeepDetails },
+  // { rel: "stylesheet", href: atfVod },
   {
     rel: "stylesheet",
     href: "https://unpkg.com/swiper@11.0.7/swiper-bundle.min.css",
   },
   { rel: "stylesheet", href: beepVideo },
+  { rel: "stylesheet", href: beepColumn },
   { rel: "stylesheet", href: beepVideoElements },
   { rel: "stylesheet", href: beepComments },
   { rel: "stylesheet", href: videoShareDropDown },
+  { rel: "stylesheet", href: categoryMainNav },
+  { rel: "stylesheet", href: beepHeader },
+  { rel: "stylesheet", href: categoryDropDown },
+  { rel: "stylesheet", href: videoDropDown },
   { rel: "stylesheet", href: customCSS },
 ];
 export const meta: MetaFunction = () => [
@@ -99,6 +114,7 @@ export const meta: MetaFunction = () => [
 ];
 
 export function Layout({ children }: any) {
+  const sidenavtoggle = useStore((state) => state.sidenavtoggle);
   return (
     <html lang="en">
       <head>
@@ -111,7 +127,12 @@ export function Layout({ children }: any) {
         /> */}
         {/* <link rel="stylesheet" href="https://use.typekit.net/jkd2jqy.css" /> */}
       </head>
-      <body className="nav-trigger Vd-list Vd-Lst-pg">
+      <body
+        className={`nav-trigger Vd-list Vd-Lst-pg `+ (sidenavtoggle?'js_sid-nav ':"")}
+        onClick={() => {
+          document.body.classList.remove("Js-BepDrp_ovr");
+        }}
+      >
         {children}
         <Scripts />
         <ScrollRestoration />
@@ -125,10 +146,10 @@ export function Layout({ children }: any) {
         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js"></script>
         {/* <script src={`/beeps/js/world-fcm.js`}></script> */}
-        <script
+        {/* <script
           async
           src="https://www.googletagservices.com/tag/js/gpt.js"
-        ></script>
+        ></script> */}
         {/* <script src={`/beeps/js/login.js`}></script> */}
       </body>
     </html>
@@ -154,7 +175,7 @@ export default function App() {
   }, [GTM_ID]);
 
   useEffect(() => {
-    const ENVURL= REMIX_API_URL
+    const ENVURL = REMIX_API_URL;
     window.ENVURL = ENVURL;
 
     const loadScriptlogin = () => {
@@ -163,6 +184,8 @@ export default function App() {
         script.id = "__loginScript";
         script.src =
           "https://stage-auth.ndtv.com/w/js/config.js?v=2023-10-27-01&site=swirlster&nocss=1";
+        // script.src =
+        // "https://stage-auth.ndtv.com/w/js/config.js?v=2023-10-27-01&site=beeps&nocss=1";
         script.onload = resolve;
         script.onerror = reject;
         document.body.appendChild(script);
@@ -172,14 +195,14 @@ export default function App() {
       return new Promise((resolve, reject) => {
         const script = document.createElement("script");
         // script.id = "__loginScript";
-        script.src = "/beeps/js/world-fcm.js"
+        script.src = "/beeps/js/world-fcm.js";
         script.onload = resolve;
         script.onerror = reject;
         document.body.appendChild(script);
       });
     };
     loadScriptlogin()
-    // loadScriptnotification()
+      // loadScriptnotification()
       .then(() => {
         const logTriggerElements = document.querySelectorAll(".__log_trigger");
         logTriggerElements.forEach((element) => {
@@ -223,6 +246,8 @@ export default function App() {
       {/* <Login /> */}
       {/* <LanguageSwitch /> */}
       <MoreSwipe />
+      <CategoryBoxWap />
+      <VideoBoxWap />
       <div>
         {/*======[ Side nav Overlay ]======*/}
         <a href="#0" className="overlay__side-nav" />

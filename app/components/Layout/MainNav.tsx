@@ -13,8 +13,8 @@ function MainNav() {
   };
   return (
     <>
-      <nav className="m-nv m-nv_clr m-nv_out">
-        <div className="vjl-cntr_full">
+      <nav className="m-nv m-nv_clr m-nv_out BepHdr_wr">
+        <div className="vjl-cntr_full BepHdr_cn">
           <div className="vjl-row">
             <div className="vjl-md-12">
               <nav className="Mb-Nav">

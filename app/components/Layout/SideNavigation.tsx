@@ -2,7 +2,7 @@ import { Link } from "@remix-run/react";
 import React, { useState } from "react";
 import { BASEPATH } from "~/constants";
 import useEnvStore from "~/stores/env_variables";
-// import useStore from "~/stores/utilstore";
+import useStore from "~/stores/utilstore";
 
 const SideNavigation = () => {
   const basepath = useEnvStore((state) => state.basePath);
@@ -10,6 +10,7 @@ const SideNavigation = () => {
   // const setNotificationAllowed = useStore(
   //   (state) => state.setNotificationAllowed
   // );
+  const setSidenavtoggle = useStore((state) => state.setSidenavtoggle);
   const khabarlink = `${BASEPATH}/category/khabar`;
   const khabarlinkEnglish = `${BASEPATH}/category/news`;
   const [isEng, setIsEng] = useState(true);
@@ -37,6 +38,7 @@ const SideNavigation = () => {
               href=""
               onClick={(e) => {
                 e.preventDefault();
+                setSidenavtoggle(false)
               }}
               // href="javascript:void(0);"
             >

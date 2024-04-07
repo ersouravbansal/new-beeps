@@ -1,6 +1,58 @@
-/* .VdElCht_on {
-    overflow: hidden
-} */
+/*--====== Light ======--*/
+:root {
+    --vj-cl-BpCmt1: #000000;
+    --vj-cl-BpCmt2: #2b313e;
+    --vj-cl-BpCmt3: #c4dadf;
+    --vj-cl-BpCmt4: #20242e;
+    --vj-cl-BpCmt5: #ffffff;
+    --vj-cl-BpCmt6: #f16c6c;
+    --vj-cl-BpCmt7: #e6e6e6;
+    --vj-cl-BpCmt8: #2b74bd;
+    --vj-cl-BpCmt9: #394051;
+}
+
+/*--====== Dark ======--*/
+:root .day_night {
+    --vj-cl-BpCmt1: #000000;
+    --vj-cl-BpCmt2: #2b313e;
+    --vj-cl-BpCmt3: #c4dadf;
+    --vj-cl-BpCmt4: #20242e;
+    --vj-cl-BpCmt5: #ffffff;
+    --vj-cl-BpCmt6: #f16c6c;
+    --vj-cl-BpCmt7: #e6e6e6;
+    --vj-cl-BpCmt8: #2b74bd;
+    --vj-cl-BpCmt9: #394051;
+}
+
+/*--====== Dark Mode======--*/
+@media (prefers-color-scheme:dark) {
+
+    /*--====== Dark ======--*/
+    :root {
+        --vj-cl-BpCmt1: #000000;
+        --vj-cl-BpCmt2: #2b313e;
+        --vj-cl-BpCmt3: #c4dadf;
+        --vj-cl-BpCmt4: #20242e;
+        --vj-cl-BpCmt5: #ffffff;
+        --vj-cl-BpCmt6: #f16c6c;
+        --vj-cl-BpCmt7: #e6e6e6;
+        --vj-cl-BpCmt8: #2b74bd;
+        --vj-cl-BpCmt9: #394051;
+    }
+
+    /*--====== Light ======--*/
+    :root .day_night {
+        --vj-cl-BpCmt1: #000000;
+        --vj-cl-BpCmt2: #2b313e;
+        --vj-cl-BpCmt3: #c4dadf;
+        --vj-cl-BpCmt4: #20242e;
+        --vj-cl-BpCmt5: #ffffff;
+        --vj-cl-BpCmt6: #f16c6c;
+        --vj-cl-BpCmt7: #e6e6e6;
+        --vj-cl-BpCmt8: #2b74bd;
+        --vj-cl-BpCmt9: #394051;
+    }
+}
 
 .VdElCht_wdg {
     left: 0;
@@ -8,23 +60,11 @@
     height: 0;
     position: fixed;
     width: 0;
-    z-index: 100000000;
+    z-index: 100;
 }
 
-/* .VdElCht_wr {
-    height: 100%;
-    left: 0;
-    position: fixed;
-    width: 100%;
-    -webkit-transform: translateY(200%);
-    top: 0;
-    transform: translateY(200%);
-    z-index: 3;
-    transition: .3s
-} */
-
 .VdElCht_cn {
-    background-color: #2b313e;
+    background-color: var(--vj-cl-BpCmt2);
     border-radius: 10px 10px 0 0;
     bottom: 0;
     color: var(--vj-cl-dr);
@@ -45,7 +85,7 @@
 }
 
 .VdElCht_over-bg {
-    background: rgb(0 0 0);
+    background: var(--vj-cl-BpCmt1);
     backdrop-filter: blur(6px);
     height: 100%;
     left: 0;
@@ -64,8 +104,8 @@
 }
 
 /* .VdElCht_on {
-    overflow: hidden
-} */
+        overflow: hidden
+    } */
 
 .VdElCht_on .VdElCht_wdg1 .VdElCht_wr {
     pointer-events: none;
@@ -104,9 +144,9 @@
 
 .VdElCht_btn {
     align-items: center;
-    background: #025de9;
+    background: var(--vj-cl-BpCmt8);
     border-radius: 6px;
-    color: #e6e6e6;
+    color: var(--vj-cl-BpCmt7);
     display: flex;
     font-size: 14px;
     font-weight: 600;
@@ -118,8 +158,8 @@
 }
 
 .VdElCht_btn:hover {
-    background: rgb(241 108 108);
-    color: #fff;
+    background: var(--vj-cl-BpCmt6);
+    color: var(--vj-cl-BpCmt5);
 }
 
 .VdElCht_tl-wr {
@@ -130,15 +170,17 @@
 }
 
 .VdElCht_tl {
-    color: #fff;
+    color: var(--vj-cl-BpCmt5);
     font-size: 15px;
     font-weight: 600;
     line-height: 16px;
 }
 
 .VdElCht_cls {
-    color: #fff;
+    color: var(--vj-cl-BpCmt5);
     cursor: pointer;
+    cursor: url(../images/Bep_hand-pointer.svg), pointer;
+
     display: flex;
     font-size: 16px;
     line-height: 16px;
@@ -151,10 +193,10 @@
 }
 
 .VdElCht_frm textarea {
-    background: #20242e;
-    border: 1px solid rgb(57 64 81);
+    background: var(--vj-cl-BpCmt4);
+    border: 1px solid var(--vj-cl-BpCmt9);
     border-radius: 7px;
-    color: #c4dadf;
+    color: var(--vj-cl-BpCmt3);
     height: 160px;
     outline: none;
     padding: 10px;

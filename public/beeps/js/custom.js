@@ -16,7 +16,7 @@ $(document).ready(function () {
   });
 
   $(".overlay__side-nav, .sid-nav-cls, .SchLng_cls, .nav-cls, .LogSd-cls, .Ingr-Pop_cls").click(function () {
-    $('body').removeClass('js_sid-nav');
+    // $('body').removeClass('js_sid-nav');
     $('body').removeClass('js_ser-nav');
     $('body').removeClass('js_sid-nav-right');
     $('body').removeClass('js_SchLng');

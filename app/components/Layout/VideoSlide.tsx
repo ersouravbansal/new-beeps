@@ -10,6 +10,11 @@ const VideoSlide = (props: any) => {
   const urlupdate = useStore((state) => state.urlupdate);
   const elementsVisible = useStore((state) => state.elementsVisible);
   const setElementsVisible = useStore((state) => state.setElementsVisible);
+  const categoryWapToggle = useStore((state) => state.categoryWapToggle);
+  const setCategoryWapToggle = useStore((state) => state.setCategoryWapToggle);
+
+  const videoWapToggle = useStore((state) => state.videoWapToggle);
+  const setvideoWapToggle = useStore((state) => state.setVideoWapToggle);
   const setClicked = useStore((state) => state.setClicked);
   const setCmntInfo = useStore((state) => state.setCmntInfo);
   const videoElement = useRef<HTMLVideoElement>(null);
@@ -166,6 +171,29 @@ const VideoSlide = (props: any) => {
       }
     }
   };
+  const videoWapHandler = (e) => {
+    // Select all elements with class 'VdElMr_wr'
+    const elements = document.querySelectorAll(".VdElMr_wr");
+
+    // Loop through each element
+    elements.forEach((element) => {
+      // Find the closest parent element with class 'BepSl_li'
+      const parentElement = element.closest(".BepSl_li");
+
+      // If a parent element is found, remove the class 'js_icon-more'
+      if (parentElement) {
+        parentElement.classList.remove("js_icon-more");
+      }
+    });
+  };
+  const categoryHandler = (e) => {
+    document.querySelectorAll(".VdElMr_wr").forEach((element) => {
+      let parent = element.closest(".BepSl_li");
+      if (parent) {
+        parent.classList.remove("js_icon-more");
+      }
+    });
+  };
 
   const CopyLink = () => {
     const currentURL = window.location.href;
@@ -238,6 +266,20 @@ const VideoSlide = (props: any) => {
       pauseVideo();
     }
   }, [props.isActive, handleSlide, pauseVideo]);
+  useEffect(() => {
+    if (categoryWapToggle == true) {
+      document.body.classList.add("VdElCtg_on");
+    } else {
+      document.body.classList.remove("VdElCtg_on");
+    }
+  }, [categoryWapToggle]);
+  useEffect(() => {
+    if (videoWapToggle == true) {
+      document.body.classList.add("VdElVdCtg_on");
+    } else {
+      document.body.classList.remove("VdElVdCtg_on");
+    }
+  }, [videoWapToggle]);
   return (
     <>
       {/* <div
@@ -253,6 +295,20 @@ const VideoSlide = (props: any) => {
       >
         <div className="BepSl_crd" onClick={handleCardClick}>
           <div className="VdEl_icn-wr1">
+            {/* category */}
+            <div className="VdEl_icn-lk dsk-n">
+              <div
+                className="VdEl_icn VdEl_Ctgr js-MorInf1"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCategoryWapToggle(!categoryWapToggle);
+                }}
+              >
+                <svg className="vj_icn vj_category">
+                  <use xlinkHref="#vj_category"></use>
+                </svg>
+              </div>
+            </div>
             {/* chat */}
             <div className="VdEl_icn-lk">
               <div
@@ -516,12 +572,29 @@ const VideoSlide = (props: any) => {
                       <div className="VdEl_inf">
                         {/* {parseHTML(props.title)} */}
                         {parseHTML(props.title).map((item, index) => (
-                          <span key={index}>{item}{' '}{props.index}</span>
+                          <span key={index}>
+                            {item}{" - "}{props.index}
+                          </span>
                         ))}
                       </div>
                       {/* <div class="VdEl_inf-mr">more</div> */}
                     </div>
                     <div className="VdEl_icn-wr">
+                      {/* category mobile */}
+                      <div className="VdEl_icn-lk dsk-n">
+                        <div
+                          className="VdEl_icn VdEl_Ctgr js-MorInf1"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setCategoryWapToggle(!categoryWapToggle);
+                            categoryHandler(e);
+                          }}
+                        >
+                          <svg className="vj_icn vj_category">
+                            <use xlinkHref="#vj_category"></use>
+                          </svg>
+                        </div>
+                      </div>
                       {/* chat */}
                       <div className="VdEl_icn-lk">
                         <div
@@ -754,9 +827,23 @@ const VideoSlide = (props: any) => {
                   className="VdElMr_wr"
                   onClick={(e) => {
                     e.stopPropagation();
+                    setCategoryWapToggle(!categoryWapToggle);
                   }}
                 >
                   <ul className="VdElMr_ul">
+                    <li className="VdElMr_li-lk">
+                      <a
+                        href="#"
+                        className="VdElMr_li js-VdoInf"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setvideoWapToggle(true);
+                          videoWapHandler(e);
+                        }}
+                      >
+                        Videos
+                      </a>
+                    </li>
                     <li className="VdElMr_li-lk __log_trigger">
                       <a href="#" className="VdElMr_li">
                         Login
