@@ -44,7 +44,9 @@ function CategoryBoxWap() {
                     </a>
                   </div> */}
                   {CATEGORY_LIST().map((category) => (
-                    <div className="BepDrpNv_li-lk" key={category.title}>
+                    <div className="BepDrpNv_li-lk" key={category.title} onClick={()=>{
+                      setCategoryWapToggle(false);
+                    }}>
                       <Link className="BepDrpNv_li" to={category.link}>
                         <div className="BepDrpNv_tx">{category.title}</div>
                       </Link>
