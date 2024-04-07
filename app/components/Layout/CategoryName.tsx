@@ -71,10 +71,10 @@ export const CATEGORY_LIST = () => {
       title: "Food",
       link: `${basepath}/category/food`,
     },
-    {
-      title: "Auto",
-      link: `${basepath}/category/auto`,
-    },
+    // {
+    //   title: "Auto",
+    //   link: `${basepath}/category/auto`,
+    // },
     {
       title: "Health",
       link: `${basepath}/category/health`,
@@ -83,18 +83,18 @@ export const CATEGORY_LIST = () => {
       title: "Sports",
       link: `${basepath}/category/sports`,
     },
-    {
-      title: "Swirlster",
-      link: `${basepath}/category/swirlster`,
-    },
+    // {
+    //   title: "Swirlster",
+    //   link: `${basepath}/category/swirlster`,
+    // },
     {
       title: "Gadgets",
       link: `${basepath}/category/gadgets`,
     },
-    {
-      title: "World",
-      link: `${basepath}/category/world`,
-    },
+    // {
+    //   title: "World",
+    //   link: `${basepath}/category/world`,
+    // },
     {
       title: "Profit",
       link: `${basepath}/category/profit`,
