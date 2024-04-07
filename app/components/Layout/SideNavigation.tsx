@@ -93,26 +93,25 @@ const SideNavigation = () => {
                 </div>
               </div>
               {/* Bookmark */}
-              <span className="t-icn-nv ttp">
+              {/* <span className="t-icn-nv ttp">
                 <svg className="vj_icn vj_bookmark-outline">
                   <use xlinkHref="#vj_bookmark-outline" />
                 </svg>
                 <div className="tip on-bottom">
                   <div className="tip_wrp">Bookmark</div>
                 </div>
-              </span>
+              </span> */}
               {/* Login / Signup */}
-              <span className="t-icn-nv ttp __log_trigger">
-                {/* <span className="t-icn-nv ttp "> */}
+              {/* <span className="t-icn-nv ttp __log_trigger">
                 <svg className="vj_icn vj_login">
                   <use xlinkHref="#vj_login" />
                 </svg>
                 <div className="tip on-bottom">
                   <div className="tip_wrp">Login/Signup</div>
                 </div>
-              </span>
+              </span> */}
               {/* Notification Icon */}
-              <span className="t-icn-nv t-icn-nt ttp">
+              {/* <span className="t-icn-nv t-icn-nt ttp">
                 <svg className="vj_icn vj_bell bell">
                   <use xlinkHref="#vj_bell" />
                 </svg>
@@ -122,7 +121,7 @@ const SideNavigation = () => {
                     <div className="ttp-lnk">Click here to turn on.</div>
                   </div>
                 </div>
-              </span>
+              </span> */}
             </div>
           </div>
           <div className="sid-nav_wrp">
