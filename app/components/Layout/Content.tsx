@@ -43,13 +43,13 @@ const Content = (props: {
 
     if (window.innerWidth <= 560) {
       if (!clicked) {
-        activeSlide.classList.add("js_seek-vis-sec");
+        activeSlide?.classList.add("js_seek-vis-sec");
         if (index === 0) {
-          activeSlide.classList.add("js_swp-vis");
+          activeSlide?.classList.add("js_swp-vis");
         }
         setTimeout(function () {
-          activeSlide.classList.remove("js_seek-vis-sec");
-          activeSlide.classList.remove("js_icon-more");
+          activeSlide?.classList.remove("js_seek-vis-sec");
+          activeSlide?.classList.remove("js_icon-more");
           document.body.classList.remove("VdElCht_on");
         }, 6000);
       }
@@ -178,7 +178,7 @@ const Content = (props: {
                     }
                     timeoutIDs[params.realIndex] = setTimeout(function () {
                       handleTimeout(params.realIndex);
-                    }, 100);
+                    }, 0);
                   }}
                   virtual
                 >
