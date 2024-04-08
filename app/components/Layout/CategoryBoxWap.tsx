@@ -50,66 +50,6 @@ function CategoryBoxWap() {
                       </Link>
                     </div>
                   ))}
-                  {/* <div className="BepDrpNv_li-lk">
-                    <a className="BepDrpNv_li" href="#">
-                      <div className="BepDrpNv_tx"> Business</div>
-                    </a>
-                  </div>
-                  <div className="BepDrpNv_li-lk">
-                    <a className="BepDrpNv_li" href="#">
-                      <div className="BepDrpNv_tx"> Cricket</div>
-                    </a>
-                  </div>
-                  <div className="BepDrpNv_li-lk">
-                    <a className="BepDrpNv_li" href="#">
-                      <div className="BepDrpNv_tx"> Health</div>
-                    </a>
-                  </div>
-                  <div className="BepDrpNv_li-lk">
-                    <a className="BepDrpNv_li" href="#">
-                      <div className="BepDrpNv_tx"> Food</div>
-                    </a>
-                  </div>
-                  <div className="BepDrpNv_li-lk">
-                    <a className="BepDrpNv_li" href="#">
-                      <div className="BepDrpNv_tx"> Movies</div>
-                    </a>
-                  </div>
-                  <div className="BepDrpNv_li-lk">
-                    <a className="BepDrpNv_li" href="#">
-                      <div className="BepDrpNv_tx"> Tech</div>
-                    </a>
-                  </div>
-                  <div className="BepDrpNv_li-lk">
-                    <a className="BepDrpNv_li" href="#">
-                      <div className="BepDrpNv_tx"> Auto</div>
-                    </a>
-                  </div>
-                  <div className="BepDrpNv_li-lk">
-                    <a className="BepDrpNv_li" href="#">
-                      <div className="BepDrpNv_tx">Train</div>
-                    </a>
-                  </div>
-                  <div className="BepDrpNv_li-lk">
-                    <a className="BepDrpNv_li" href="#">
-                      <div className="BepDrpNv_tx"> Apps</div>
-                    </a>
-                  </div>
-                  <div className="BepDrpNv_li-lk">
-                    <a className="BepDrpNv_li" href="#">
-                      <div className="BepDrpNv_tx">Shopping</div>
-                    </a>
-                  </div>
-                  <div className="BepDrpNv_li-lk">
-                    <a className="BepDrpNv_li" href="#">
-                      <div className="BepDrpNv_tx"> Swasth</div>
-                    </a>
-                  </div>
-                  <div className="BepDrpNv_li-lk">
-                    <a className="BepDrpNv_li" href="#">
-                      <div className="BepDrpNv_tx"> Games</div>
-                    </a>
-                  </div> */}
                 </div>
               </div>
             </div>

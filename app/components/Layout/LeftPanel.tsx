@@ -14,9 +14,6 @@ function LeftPanel() {
             Done with India trip, Priyanka Chopra flies out of Mumbai with her
             husband Nick Jonas and daughter Malti Marie.
           </div>
-          {/* <div class="BepSlCol_btn-lk">
-                                                <div class="BepSlCol_btn"> Amit Shah, Home Minister </div>
-                                            </div> */}
           <div className="BepSlCol_btn-lk">
             <div className="ani-swp">
               <div className="ani-swp_cnt">
