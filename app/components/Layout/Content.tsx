@@ -25,10 +25,6 @@ const Content = (props: {
   const clicked = useStore((state) => state.clicked);
   const activeVideoIndex = useStore((state) => state.activeVideoIndex);
   const setActiveVideoIndex = useStore((state) => state.setActiveVideoIndex);
-  // const [activeVideoIndex, setActiveVideoIndex] = useState(0);
-  // const [slides, setSlides] = useState(
-  //   Array.from({ length: 500 }).map((_, index) => `Slide ${index + 1}`)
-  // );
   function handleTimeout(index: any) {
     var activeSlide = document.querySelectorAll(".swiper-slide-active")[index];
 
@@ -99,9 +95,6 @@ const Content = (props: {
           {/*====== video ======*/}
           <div className="BepSl_cn">
             <div className="BepSl_wr" ref={props.ref2}>
-              {/* <div className="swiper-container BepSl_rw"> */}
-              {/* <div className="swiper-container"> */}
-              {/* <div className="swiper-wrapper BepSl_ul" ref={props.ref2}> */}
               {isVideoAvailable ? (
                 <Swiper
                   className="BepSl_rw"
@@ -183,11 +176,6 @@ const Content = (props: {
                   virtual
                 >
                   <LeftPanel />
-                  {/* {slides.map((slideContent, index) => (
-                    <SwiperSlide key={slideContent} virtualIndex={index}>
-                      {slideContent}
-                    </SwiperSlide>
-                  ))} */}
                   {props.videoData.results.map((slideContent, index, data) => {
                     const isActive = activeVideoIndex === index;
                     const d = slideContent;
@@ -232,14 +220,10 @@ const Content = (props: {
                   <SwiperNav />
                 </Swiper>
               ) : null}
-              {/* </div> */}
-              {/* <div className="swiper-button-prev BepNv_prv"></div>
-              <div className="swiper-button-next BepNv_nxt"></div> */}
             </div>
           </div>
         </div>
       </div>
-      {/* </div> */}
     </>
   );
 };
