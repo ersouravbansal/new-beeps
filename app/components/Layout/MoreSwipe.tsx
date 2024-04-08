@@ -11,7 +11,12 @@ const MoreSwipe = () => {
     <>
       {/*======[ More info swipe up 1 ]======*/}
       <div className="VdElCht_wdg VdElCht_wdg1">
-        <div className="VdElCht_over-bg" />
+        <div
+          className="VdElCht_over-bg"
+          onClick={(e) => {
+            $("body").removeClass("VdElCht_on");
+          }}
+        />
         <div className="VdElCht_wr">
           <div className="VdElCht_cn">
             <div className="VdElCht_tp">
@@ -22,7 +27,7 @@ const MoreSwipe = () => {
                   onClick={(e) => {
                     e.stopPropagation();
                     setCmntInfo(null, null, null);
-                    $("body").removeClass('VdElCht_on');
+                    $("body").removeClass("VdElCht_on");
                   }}
                 >
                   <svg className="vj_icn vj_close">

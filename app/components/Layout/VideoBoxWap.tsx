@@ -22,6 +22,17 @@ function VideoBoxWap() {
                   <a className="BepDrp_tl" href="#0">
                     Choose the Videos Category
                   </a>
+                  <div
+                    className="VdElVdCtgr_cls"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setvideoWapToggle(false);
+                    }}
+                  >
+                    <svg className="vj_icn vj_close">
+                      <use xlinkHref="#vj_close" />
+                    </svg>
+                  </div>
                 </div>
                 <div className="BepDrpNv_ul VdElVdCtg_ul hr-scroll">
                   <div className="BepDrpNv_li-lk">

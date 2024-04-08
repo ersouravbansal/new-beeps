@@ -67,6 +67,13 @@
     will-change: transform;
     z-index: 100;
 }
+.VdElVdCtgr_cls {
+    color: var(--vj-cl-BpCmt5);
+    cursor: pointer;
+    display: flex;
+    font-size: 16px;
+    line-height: 16px;
+}
 
 .VdElVdCtg_cn:before {
     border-radius: 0 0 22px 22px;

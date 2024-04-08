@@ -148,7 +148,7 @@ const VideoSlide = (props: any) => {
   };
 
   const handleCardClick = (event) => {
-    if (window.innerWidth <= 560) {
+    if (window.innerWidth <= 767) {
       setClicked(true);
       event.stopPropagation();
 
