@@ -1,16 +1,14 @@
 import { Link, Outlet, useLocation } from "@remix-run/react";
-import React, { useState } from "react";
-import CatNav from "./CatNav";
-import { isMobile } from "react-device-detect";
-import MainNav from "./MainNav";
-import SecondaryNav from "./SecondaryNav";
 import MainNavigation from "./MainNavigation";
+import useStore from "~/stores/utilstore";
 const Header = () => {
   return (
     <>
       {/*====== Content ( LHS, Main Content and RHS ) ======*/}
       <div className="vjl-cntr_full h-100">
-        <div className="vjl-row h-100">
+        <div className="vjl-row h-100" onClick={(e)=>{
+          e.stopPropagation();
+        }}>
           {/*=== LHS ===*/}
 
           {/*=== Middle ===*/}
