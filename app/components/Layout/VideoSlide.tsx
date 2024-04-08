@@ -35,6 +35,7 @@ const VideoSlide = (props: any) => {
     playerState,
     handleVideoProgress,
     onSliderMove,
+    resetProgressBar,
   } = VideoPlayer(videoElement, seekBar, progressBar, seekThumb);
 
   const cleanUp = (st: any) => {
@@ -261,6 +262,7 @@ const VideoSlide = (props: any) => {
   ]);
   useEffect(() => {
     if (props.isActive || props.isPathChange) {
+      resetProgressBar();
       handleSlide();
     } else {
       pauseVideo();

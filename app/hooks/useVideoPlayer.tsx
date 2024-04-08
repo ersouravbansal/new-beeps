@@ -181,6 +181,7 @@ const useVideoPlayer = (
     muteVideo,
     unMuteVideo,
     onSliderMove,
+    resetProgressBar,
   };
 };
 

@@ -585,7 +585,7 @@ a:hover {
 
     .BepSl_crd {
         height: auto;
-        width: calc(52.25vh - 180px);
+        width: calc(52.25vh - 40px);
     }
 
     .BepSl_rw {
@@ -601,7 +601,13 @@ a:hover {
     }
 
 }
+@media (min-height:700px) {
+    .BepSl_crd {
+        height: auto;
+        width: calc(52.25vh - 180px);
+    }
 
+}
 @media (min-width:767px) {
 
     .BepNv_dsk-n {
@@ -768,6 +774,7 @@ a:hover {
         display: flex;
         flex-direction: column;
         justify-content: center;
+        
     }
 
     .BepSl_crd-wr {

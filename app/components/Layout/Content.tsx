@@ -26,41 +26,66 @@ const Content = (props: {
   const activeVideoIndex = useStore((state) => state.activeVideoIndex);
   const setActiveVideoIndex = useStore((state) => state.setActiveVideoIndex);
   function handleTimeout(index: any) {
-    var activeSlide = document.querySelectorAll(".swiper-slide-active")[index];
+    console.log("index", index);
+    var activeSlide = document.querySelectorAll(".BepSl_li")[index];
 
     var allSlides = document.querySelectorAll(".swiper-slide");
-
     allSlides.forEach((slide) => {
       slide.classList.remove("js_icon-more");
-    });
-
-    activeSlide?.classList.add("js_seek-vis-sec");
-    activeSlide?.classList.remove("js_swp-vis");
-
-    if (window.innerWidth <= 560) {
-      if (!clicked) {
-        activeSlide?.classList.add("js_seek-vis-sec");
-        if (index === 0) {
-          activeSlide?.classList.add("js_swp-vis");
+      slide.classList.add("js_seek-vis-sec");
+      if (window.innerWidth <= 560) {
+        if (!clicked) {
+          slide?.classList.add("js_seek-vis-sec");
+          if (index === 0) {
+            slide?.classList.add("js_swp-vis");
+          }
+          setTimeout(function () {
+            slide?.classList.remove("js_seek-vis-sec");
+            slide?.classList.remove("js_icon-more");
+            document.body.classList.remove("VdElCht_on");
+          }, 6000);
         }
-        setTimeout(function () {
-          activeSlide?.classList.remove("js_seek-vis-sec");
-          activeSlide?.classList.remove("js_icon-more");
-          document.body.classList.remove("VdElCht_on");
-        }, 6000);
       }
-    }
 
-    if (window.innerWidth >= 560) {
-      if (!clicked) {
-        activeSlide?.classList.add("js_seek-vis-sec");
+      if (window.innerWidth >= 560) {
+        if (!clicked) {
+          slide?.classList.add("js_seek-vis-sec");
 
-        setTimeout(function () {
-          activeSlide?.classList.remove("js_seek-vis-sec");
-          activeSlide?.classList.remove("js_icon-more");
-        }, 6000);
+          setTimeout(function () {
+            slide?.classList.remove("js_seek-vis-sec");
+            slide?.classList.remove("js_icon-more");
+          }, 6000);
+        }
       }
-    }
+    });
+    // activeSlide.classList.add("js_seek-vis-sec");
+    activeSlide.classList.remove("js_swp-vis");
+    console.log("hello mansi ndtv");
+
+    // if (window.innerWidth <= 560) {
+    //   if (!clicked) {
+    //     activeSlide?.classList.add("js_seek-vis-sec");
+    //     if (index === 0) {
+    //       activeSlide?.classList.add("js_swp-vis");
+    //     }
+    //     setTimeout(function () {
+    //       activeSlide?.classList.remove("js_seek-vis-sec");
+    //       activeSlide?.classList.remove("js_icon-more");
+    //       document.body.classList.remove("VdElCht_on");
+    //     }, 6000);
+    //   }
+    // }
+
+    // if (window.innerWidth >= 560) {
+    //   if (!clicked) {
+    //     activeSlide?.classList.add("js_seek-vis-sec");
+
+    //     setTimeout(function () {
+    //       activeSlide?.classList.remove("js_seek-vis-sec");
+    //       activeSlide?.classList.remove("js_icon-more");
+    //     }, 6000);
+    //   }
+    // }
   }
 
   useEffect(() => {
@@ -68,9 +93,9 @@ const Content = (props: {
   }, [location.pathname]);
 
   useEffect(() => {
-    if(isPathChange===true){
-    swipeRef.current.swiper.slideTo(0,0);
-  }
+    if (isPathChange === true) {
+      swipeRef.current.swiper.slideTo(0, 0);
+    }
   }, [isPathChange]);
   useEffect(() => {
     if (clicked === true) {
@@ -165,7 +190,6 @@ const Content = (props: {
                   }}
                   onSlideChange={(params) => {
                     setActiveVideoIndex(params.activeIndex);
-
                     if (timeoutIDs[params.realIndex]) {
                       clearTimeout(timeoutIDs[params.realIndex]);
                     }
