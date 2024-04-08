@@ -171,7 +171,7 @@ export default function App() {
   const { GTM_ID, APP_ENV, REMIX_BASEPATH, REMIX_API_URL, ENV } =
     useLoaderData<typeof loader>();
   const envStore = useEnvStore.getState();
-
+  const setSidenavtoggle = useStore((state) => state.setSidenavtoggle);
   useEffect(() => {
     console.log("environment:", APP_ENV);
     envStore.setBasePath(REMIX_BASEPATH);
@@ -261,7 +261,9 @@ export default function App() {
       <VideoBoxWap />
       <div>
         {/*======[ Side nav Overlay ]======*/}
-        <a href="#0" className="overlay__side-nav" />
+        <a href="#0" className="overlay__side-nav" onClick={()=>{
+          setSidenavtoggle(false)
+        }}/>
         {/*====== Back to top ======*/}
         <div className="back-to-top">
           <svg className="vj_icn vj_arrow-up">

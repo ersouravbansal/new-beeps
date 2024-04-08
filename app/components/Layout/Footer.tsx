@@ -15,7 +15,9 @@ function Footer() {
   // }, [categoryToggle]);
   return (
     <>
-      <div className="BepDrp_ovrly" />
+      <div className="BepDrp_ovrly" onClick={()=>{
+        setCategoryToggle(false)
+      }}/>
       <div className="BepBtm_cn">
         <div className="BepBtm_wr">
           {/*====== Bottom Sticky Nav Widget ======*/}
