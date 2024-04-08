@@ -23,7 +23,7 @@ function Footer() {
             <div
               className="BepDrp_cls"
               onClick={() => {
-                setCategoryToggle(!categoryToggle);
+                setCategoryToggle(false);
               }}
             >
               <svg className="vj_icn vj_close">
