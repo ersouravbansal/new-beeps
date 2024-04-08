@@ -6,9 +6,7 @@ const Header = () => {
     <>
       {/*====== Content ( LHS, Main Content and RHS ) ======*/}
       <div className="vjl-cntr_full h-100">
-        <div className="vjl-row h-100" onClick={(e)=>{
-          e.stopPropagation();
-        }}>
+        <div className="vjl-row h-100" >
           {/*=== LHS ===*/}
 
           {/*=== Middle ===*/}
