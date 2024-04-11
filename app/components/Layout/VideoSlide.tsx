@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import VideoPlayer from "~/hooks/useVideoPlayer";
 import useStore from "~/stores/utilstore";
 import { isMobile } from "react-device-detect";
-// import { trackVideoPageView } from "~/stores/eventTracker";
+import { trackVideoPageView } from "~/stores/eventTracker";
 import { BASEPATH } from "~/constants";
 const VideoSlide = (props: any) => {
   const [getUrl, setGetUrl] = useState("None");
@@ -12,6 +12,8 @@ const VideoSlide = (props: any) => {
   const setElementsVisible = useStore((state) => state.setElementsVisible);
   const categoryWapToggle = useStore((state) => state.categoryWapToggle);
   const setCategoryWapToggle = useStore((state) => state.setCategoryWapToggle);
+
+  const setIsVideoOverlayVisible = useStore((state) => state.setIsVideoOverlayVisible);
 
   const videoWapToggle = useStore((state) => state.videoWapToggle);
   const setvideoWapToggle = useStore((state) => state.setVideoWapToggle);
@@ -132,6 +134,7 @@ const VideoSlide = (props: any) => {
   };
   const moreInfoHandler = (e) => {
     e.stopPropagation();
+    setIsVideoOverlayVisible(true)
     const parent = e.target.closest(".BepSl_li");
     if (!elementsVisible) {
       parent.classList.add("js_icon-more");
@@ -145,6 +148,7 @@ const VideoSlide = (props: any) => {
     e.stopPropagation();
     const parent = e.target.closest(".BepSl_li");
     parent.classList.remove("js_icon-more");
+    setIsVideoOverlayVisible(false)
     setElementsVisible(false);
   };
 
@@ -247,7 +251,8 @@ const VideoSlide = (props: any) => {
         newUrl = `${BASEPATH}/videos/${urltitle}-${videoID}`;
         window.history.pushState({}, "", newUrl);
       }
-      // trackVideoPageView(newUrl, autoStartEv, props);
+      const trackingUrl= `${window.location.origin}${newUrl}`;
+      trackVideoPageView(trackingUrl, autoStartEv, props);
     }
   }, [
     playVideo,
@@ -304,6 +309,7 @@ const VideoSlide = (props: any) => {
                 onClick={(e) => {
                   e.stopPropagation();
                   setCategoryWapToggle(!categoryWapToggle);
+                  setIsVideoOverlayVisible(true)
                 }}
               >
                 <svg className="vj_icn vj_category">
@@ -316,6 +322,7 @@ const VideoSlide = (props: any) => {
               <div
                 className="VdEl_icn js-MorInf"
                 onClick={(e) => {
+                  setIsVideoOverlayVisible(true)
                   handleComments(e);
                   const originUrl1 = window.location.href;
                   const currentUrl1 =
@@ -591,6 +598,7 @@ const VideoSlide = (props: any) => {
                           onClick={(e) => {
                             e.stopPropagation();
                             setCategoryWapToggle(!categoryWapToggle);
+                            setIsVideoOverlayVisible(true)
                             categoryHandler(e);
                           }}
                         >
@@ -604,6 +612,7 @@ const VideoSlide = (props: any) => {
                         <div
                           className="VdEl_icn js-MorInf"
                           onClick={(e) => {
+                            setIsVideoOverlayVisible(true)
                             // console.log("comment button clicked");
                             handleComments(e);
                             const originUrl1 = window.location.href;
@@ -637,6 +646,7 @@ const VideoSlide = (props: any) => {
                               if (isMobile) {
                                 e.stopPropagation();
                                 handleShareClick(props.title, getUrl);
+                                setIsVideoOverlayVisible(true)
                               }
                             }}
                           >
@@ -874,3 +884,4 @@ const VideoSlide = (props: any) => {
 };
 
 export default VideoSlide;
+

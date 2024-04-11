@@ -9,6 +9,7 @@ import LeftPanel from "~/components/Layout/LeftPanel";
 import Footer from "~/components/Layout/Footer";
 import { useLocation } from "@remix-run/react";
 let timeoutIDs: any = [];
+const videoOverlayTimeoutIds = { current: null };
 const Content = (props: {
   videoData: any;
   ref1?: any;
@@ -25,67 +26,42 @@ const Content = (props: {
   const clicked = useStore((state) => state.clicked);
   const activeVideoIndex = useStore((state) => state.activeVideoIndex);
   const setActiveVideoIndex = useStore((state) => state.setActiveVideoIndex);
+  const isVideoOverlayVisible = useStore(
+    (state) => state.isVideoOverlayVisible
+  );
   function handleTimeout(index: any) {
-    console.log("index", index);
-    var activeSlide = document.querySelectorAll(".BepSl_li")[index];
-
+    var activeSlide = document.querySelectorAll(".swiper-slide-active")[0];
+    if (videoOverlayTimeoutIds.current) {
+      clearTimeout(videoOverlayTimeoutIds.current);
+    }
     var allSlides = document.querySelectorAll(".swiper-slide");
     allSlides.forEach((slide) => {
       slide.classList.remove("js_icon-more");
-      slide.classList.add("js_seek-vis-sec");
-      if (window.innerWidth <= 560) {
-        if (!clicked) {
-          slide?.classList.add("js_seek-vis-sec");
-          if (index === 0) {
-            slide?.classList.add("js_swp-vis");
-          }
-          setTimeout(function () {
-            slide?.classList.remove("js_seek-vis-sec");
-            slide?.classList.remove("js_icon-more");
-            document.body.classList.remove("VdElCht_on");
-          }, 6000);
-        }
-      }
-
-      if (window.innerWidth >= 560) {
-        if (!clicked) {
-          slide?.classList.add("js_seek-vis-sec");
-
-          setTimeout(function () {
-            slide?.classList.remove("js_seek-vis-sec");
-            slide?.classList.remove("js_icon-more");
-          }, 6000);
-        }
-      }
     });
-    // activeSlide.classList.add("js_seek-vis-sec");
-    activeSlide.classList.remove("js_swp-vis");
-    console.log("hello mansi ndtv");
-
-    // if (window.innerWidth <= 560) {
-    //   if (!clicked) {
-    //     activeSlide?.classList.add("js_seek-vis-sec");
-    //     if (index === 0) {
-    //       activeSlide?.classList.add("js_swp-vis");
-    //     }
-    //     setTimeout(function () {
-    //       activeSlide?.classList.remove("js_seek-vis-sec");
-    //       activeSlide?.classList.remove("js_icon-more");
-    //       document.body.classList.remove("VdElCht_on");
-    //     }, 6000);
-    //   }
-    // }
-
-    // if (window.innerWidth >= 560) {
-    //   if (!clicked) {
-    //     activeSlide?.classList.add("js_seek-vis-sec");
-
-    //     setTimeout(function () {
-    //       activeSlide?.classList.remove("js_seek-vis-sec");
-    //       activeSlide?.classList.remove("js_icon-more");
-    //     }, 6000);
-    //   }
-    // }
+    activeSlide?.classList.add("js_seek-vis-sec");
+    activeSlide?.classList.remove("js_swp-vis");
+    if (window.innerWidth <= 560) {
+      if (!clicked) {
+        activeSlide?.classList.add("js_seek-vis-sec");
+        if (index === 0) {
+          activeSlide?.classList.add("js_swp-vis");
+        }
+        videoOverlayTimeoutIds.current = setTimeout(function () {
+          activeSlide?.classList.remove("js_seek-vis-sec");
+          activeSlide?.classList.remove("js_icon-more");
+          document.body.classList.remove("VdElCht_on");
+        }, 6000);
+      }
+    }
+    if (window.innerWidth >= 560) {
+      if (!clicked) {
+        activeSlide?.classList.add("js_seek-vis-sec");
+        videoOverlayTimeoutIds.current = setTimeout(function () {
+          activeSlide?.classList.remove("js_seek-vis-sec");
+          activeSlide?.classList.remove("js_icon-more");
+        }, 6000);
+      }
+    }
   }
 
   useEffect(() => {
@@ -95,6 +71,7 @@ const Content = (props: {
   useEffect(() => {
     if (isPathChange === true) {
       swipeRef.current.swiper.slideTo(0, 0);
+      setActiveVideoIndex(0);
     }
   }, [isPathChange]);
   useEffect(() => {
@@ -104,13 +81,15 @@ const Content = (props: {
       }
     }
   }, [clicked]);
-  // useEffect(() => {
-  //   if (activeVideoIndex == 0) {
-  //     document.body.classList.add("BepSlDsp_lft");
-  //   } else {
-  //     document.body.classList.remove("BepSlDsp_lft");
-  //   }
-  // }, [activeVideoIndex]);
+  useEffect(() => {
+    if (isVideoOverlayVisible) {
+      if (videoOverlayTimeoutIds.current) {
+        clearTimeout(videoOverlayTimeoutIds.current);
+      }
+    }else{
+      handleTimeout(activeVideoIndex)
+    }
+  }, [isVideoOverlayVisible]);
   return (
     <>
       {/*============== Middle with two column option ==============*/}
@@ -172,21 +151,9 @@ const Content = (props: {
                     },
                   }}
                   onInit={(params) => {
-                    var swiperSlides = params.virtual.slides;
-                    for (var i = 0; i < swiperSlides.length; i++) {
-                      var slide = swiperSlides[i];
-                      if (timeoutIDs[i]) {
-                        clearTimeout(timeoutIDs[i]);
-                      }
-                      timeoutIDs[i] = setTimeout(
-                        (function (index) {
-                          return function () {
-                            handleTimeout(index);
-                          };
-                        })(i),
-                        1000
-                      );
-                    }
+                    setTimeout(() => {
+                      handleTimeout(0);
+                    }, 1000);
                   }}
                   onSlideChange={(params) => {
                     setActiveVideoIndex(params.activeIndex);
@@ -207,7 +174,9 @@ const Content = (props: {
                       <SwiperSlide
                         key={d.id}
                         virtualIndex={index}
-                        className="BepSl_li Sv_trs"
+                        className={`BepSl_li Sv_trs js_seek-vis-sec ${
+                          index == 0 ? "js_swp-vis" : ""
+                        }`}
                       >
                         <VideoSlide
                           vidsrc={

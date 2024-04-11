@@ -568,6 +568,9 @@
     background: var(--vj-cl-BpNv20);
 }
 
+.VdEl_Ctgr .vj_icn {
+    stroke-width: 1px;
+    }
 @media(min-width: 640px) {
     .BepBtmNv_ul {
         display: flex;

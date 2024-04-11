@@ -300,14 +300,14 @@
     border: 1px solid var(--vj-cl-BpEl4);
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.23);
     border-radius: 6px;
-    bottom: 71px;
+    bottom: 79px;
     display: flex;
     font-size: 14px;
     min-height: 53px;
     -webkit-transition: all 0.2s ease;
     opacity: 0;
     position: absolute;
-    right: 56px;
+    right: 58px;
     text-align: left;
     -webkit-transform-origin: right bottom;
     -webkit-transform: scale(0);

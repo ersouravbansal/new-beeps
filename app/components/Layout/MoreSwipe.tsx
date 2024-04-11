@@ -7,6 +7,7 @@ const MoreSwipe = () => {
   // const src1 =
   //   "https://social.ndtv.com/static/Comment/Widget/?&amp;key=ff1cab5239e6ac7906dd7848efba52cd&amp;link=https%3A%2F%2Fwww.ndtv.com%2Fvideo%2Fnews%2Fnews%2Fno-one-should-be-allowed-japan-pm-on-ukraine-pm-modi-by-his-side-624953&amp;title=%22No+One+Should+Be+Allowed...%22%3A+Japan+PM+On+Ukraine%2C+PM+Modi+By+His+Side&amp;ctype=video&amp;identifier=video-624953&amp;enableCommentsSubscription=1&amp;ver=1&amp;reply=1&amp;sorted_by=likes&amp;template=slide_new&amp;nodomain=1&amp;fordm=1";
   const encode_Src = src1;
+  const setIsVideoOverlayVisible = useStore((state) => state.setIsVideoOverlayVisible);
   return (
     <>
       {/*======[ More info swipe up 1 ]======*/}
@@ -14,6 +15,7 @@ const MoreSwipe = () => {
         <div
           className="VdElCht_over-bg"
           onClick={(e) => {
+            setIsVideoOverlayVisible(false)
             $("body").removeClass("VdElCht_on");
           }}
         />
@@ -27,6 +29,7 @@ const MoreSwipe = () => {
                   onClick={(e) => {
                     e.stopPropagation();
                     setCmntInfo(null, null, null);
+                    setIsVideoOverlayVisible(false)
                     $("body").removeClass("VdElCht_on");
                   }}
                 >
@@ -71,3 +74,4 @@ const MoreSwipe = () => {
 };
 
 export default MoreSwipe;
+

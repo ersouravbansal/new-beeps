@@ -20,6 +20,8 @@ const useStore = create((set, get) => ({
   categoryWapToggle: false,
   videoWapToggle: false,
   activeVideoIndex:0,
+  isVideoOverlayVisible:false,
+  setIsVideoOverlayVisible: (newValue: boolean) => set({ isVideoOverlayVisible: newValue }),
   setActiveVideoIndex:(newValue)=>set({activeVideoIndex:newValue}),
   setElementsVisible: (newValue: boolean) => set({ moreInfoVisible: newValue }),
   setCategoryWapToggle: (newValue: boolean) => set({ categoryWapToggle: newValue }),
@@ -42,3 +44,4 @@ const useStore = create((set, get) => ({
 }));
 
 export default useStore;
+

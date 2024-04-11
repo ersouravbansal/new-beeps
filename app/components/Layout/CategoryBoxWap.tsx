@@ -4,6 +4,7 @@ import { Link } from "@remix-run/react";
 import useStore from "~/stores/utilstore";
 function CategoryBoxWap() {
   const setCategoryWapToggle = useStore((state) => state.setCategoryWapToggle);
+  const setIsVideoOverlayVisible = useStore((state) => state.setIsVideoOverlayVisible);
   return (
     <>
       <div className="VdElCtgr_wdg">
@@ -12,6 +13,7 @@ function CategoryBoxWap() {
           onClick={(e) => {
             e.stopPropagation();
             setCategoryWapToggle(false);
+            setIsVideoOverlayVisible(false);
           }}
         />
         <div className="VdElCtgr_wr ">
@@ -28,6 +30,7 @@ function CategoryBoxWap() {
                     onClick={(e) => {
                       e.stopPropagation();
                       setCategoryWapToggle(false);
+                      setIsVideoOverlayVisible(false)
                     }}
                   >
                     <svg className="vj_icn vj_close">

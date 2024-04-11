@@ -172,6 +172,29 @@ export default function App() {
     useLoaderData<typeof loader>();
   const envStore = useEnvStore.getState();
   const setSidenavtoggle = useStore((state) => state.setSidenavtoggle);
+
+  useEffect(() => {
+    const updateHeight = () => {
+      const ht = window.innerHeight;
+      const svVertical2 = document.querySelector(".BepSl_cn");
+      svVertical2.style.height = `${ht - 71}px`;
+
+      if (window.innerWidth <= 560) {
+        svVertical2.style.height = `${ht}px`;
+      }
+      console.log("updateHeight",svVertical2.style.height)
+    };
+
+    if (window.innerWidth <= 767) {
+      updateHeight();
+      window.addEventListener("resize", updateHeight, true);
+    }
+
+    // Cleanup function
+    return () => {
+      window.removeEventListener("resize", updateHeight, true);
+    };
+  }, []);
   useEffect(() => {
     console.log("environment:", APP_ENV);
     envStore.setBasePath(REMIX_BASEPATH);
@@ -262,9 +285,13 @@ export default function App() {
       <VideoBoxWap />
       <div>
         {/*======[ Side nav Overlay ]======*/}
-        <a href="#0" className="overlay__side-nav" onClick={()=>{
-          setSidenavtoggle(false)
-        }}/>
+        <a
+          href="#0"
+          className="overlay__side-nav"
+          onClick={() => {
+            setSidenavtoggle(false);
+          }}
+        />
         {/*====== Back to top ======*/}
         <div className="back-to-top">
           <svg className="vj_icn vj_arrow-up">
