@@ -217,7 +217,7 @@ export default function App() {
         const script = document.createElement("script");
         script.id = "__loginScript";
         script.src =
-          "https://stage-auth.ndtv.com/w/js/config.js?v=2023-10-27-01&site=food&nocss=1";
+          "https://stage-auth.ndtv.com/w/js/config.js?v=2023-10-27-01&site=swirlster&nocss=1";
         // script.src =
         // "https://stage-auth.ndtv.com/w/js/config.js?v=2023-10-27-01&site=beeps&nocss=1";
         script.onload = resolve;
